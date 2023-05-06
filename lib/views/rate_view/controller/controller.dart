@@ -10,6 +10,7 @@ import '../../../models/collage_model.dart';
 import '../../../models/department_model.dart';
 import '../../../models/total_model.dart';
 import '../../../models/university_model.dart';
+import '../../collage_view/controller/controller.dart';
 
 class RateController extends GetxController {
   var selectedDurationIndex = 0;
@@ -263,6 +264,8 @@ class RateController extends GetxController {
   }
 
   void setUniversitiesAdmissionList() {
+    final controller = Get.find<CollageController>();
+
     universityAdmissionList.clear();
     for (var admissionModel in admissionList) {
       final universityModel = universityModelLists.firstWhere(
@@ -281,7 +284,8 @@ class RateController extends GetxController {
           .firstWhere((element) => element.dbId == admissionModel.sectorId);
       final categoryModel = specialtyCategoryList
           .firstWhere((element) => element.dbId == admissionModel.categoryId);
-      final genderModel = genderList.firstWhere((element) => element.dbId == admissionModel.genderId);
+      final genderModel = genderList
+          .firstWhere((element) => element.dbId == admissionModel.genderId);
       universityAdmissionList.add(UniversityAdmissionModel(
           universityModel: universityModel,
           sectorModel: sectorModel,
@@ -292,8 +296,13 @@ class RateController extends GetxController {
           totalModel: totalModel,
           rateModel: rateMode,
           superlativeModel: superlative));
-           filter();
-           isUniversityLoaded(false);
+
+      // controller.universityList.clear();
+      // controller.universityList.addAll(universityAdmissionList);
+      // controller.isUniversityLoading(false);
+
+      filter();
+      isUniversityLoaded(false);
     }
   }
 
@@ -308,19 +317,26 @@ class RateController extends GetxController {
     final List<UniversityAdmissionModel> tripList = [];
     for (var item in universityAdmissionList) {
       if (searcBox.isNotEmpty) {
-        if (searcBox.toLowerCase().contains(item.universityModel!.universityNameEn!.toLowerCase())
-            && item.rateModel!.total >= priceSliderStart &&
+        if (searcBox.toLowerCase().contains(
+                item.universityModel!.universityNameEn!.toLowerCase()) &&
+            item.rateModel!.total >= priceSliderStart &&
             item.rateModel!.total <= priceSliderEnd &&
             selectedGenderItem == item.genderModel!.dbId &&
             selectedSpecialtyCategoryItem == item.categoryModel!.dbId) {
           tripList.add(item);
         }
       } else {
-        if (searcBox.toLowerCase().contains(item.universityModel!.universityNameEn!.toLowerCase())
-            || searcBox.isNotEmpty ? searcBox.toLowerCase().contains(item.departmentModel!.departmentNameEn!.toLowerCase()) : false || item.rateModel!.total >= priceSliderStart &&
-            item.rateModel!.total <= priceSliderEnd &&
-            selectedGenderItem == item.genderModel!.dbId &&
-            selectedSpecialtyCategoryItem == item.categoryModel!.dbId) {
+        if (searcBox.toLowerCase().contains(
+                    item.universityModel!.universityNameEn!.toLowerCase()) ||
+                searcBox.isNotEmpty
+            ? searcBox
+                .toLowerCase()
+                .contains(item.departmentModel!.departmentNameEn!.toLowerCase())
+            : false ||
+                item.rateModel!.total >= priceSliderStart &&
+                    item.rateModel!.total <= priceSliderEnd &&
+                    selectedGenderItem == item.genderModel!.dbId &&
+                    selectedSpecialtyCategoryItem == item.categoryModel!.dbId) {
           tripList.add(item);
         }
       }

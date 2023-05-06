@@ -27,7 +27,7 @@ class _DynamicFieldsState extends State<FormView> {
         appBar: AppBar(
           backgroundColor: Colors.indigo,
           centerTitle: true,
-          title: const Text("Application Form"),),
+          title: const Text("Virtual Application Form"),),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Form(

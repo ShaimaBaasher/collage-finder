@@ -19,9 +19,13 @@ class UniversityModel {
   int? _universityId;
   String? _universityNameEn;
   int? _areaId;
+  List<Images>? _images;
 
   UniversityModel(
-      {String? img, String? universityNameAr, int? universityId, String? universityNameEn, int? areaId}) {
+      {String? img, String? universityNameAr, int? universityId, String? universityNameEn, int? areaId, List<Images>? images,}) {
+    if (images != null) {
+      this._images = images;
+    }
     if (img != null) {
       this._img = img;
     }
@@ -39,6 +43,10 @@ class UniversityModel {
     }
   }
 
+  List<Images>? get images => _images;
+
+  set images(List<Images>? images) => _images = images;
+
   String? get img => _img;
   set img(String? img) =>
       _img = img;
@@ -54,6 +62,12 @@ class UniversityModel {
       _universityNameEn = universityNameEn;
 
   UniversityModel.fromJson(Map<String, dynamic> json) {
+    if (json['images'] != null) {
+      _images = <Images>[];
+      json['images'].forEach((v) {
+        _images!.add(new Images.fromJson(v));
+      });
+    }
     _img = json['img'];
     _universityNameAr = json['university_name_ar'];
     _universityId = json['university_Id'];
@@ -63,6 +77,9 @@ class UniversityModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this._images != null) {
+      data['images'] = this._images!.map((v) => v.toJson()).toList();
+    }
     data['img'] = this._img;
     data['university_name_ar'] = this._universityNameAr;
     data['university_Id'] = this._universityId;
@@ -71,3 +88,28 @@ class UniversityModel {
     return data;
   }
 }
+
+class Images {
+  String? _imageUrl;
+
+  Images({String? imageUrl}) {
+    if (imageUrl != null) {
+      this._imageUrl = imageUrl;
+    }
+  }
+
+  String? get imageUrl => _imageUrl;
+
+  set imageUrl(String? imageUrl) => _imageUrl = imageUrl;
+
+  Images.fromJson(Map<String, dynamic> json) {
+    _imageUrl = json['imageUrl'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['imageUrl'] = this._imageUrl;
+    return data;
+  }
+}
+

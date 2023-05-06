@@ -1,5 +1,5 @@
 import 'package:collage_finder/views/rate_view/controller/controller.dart';
-import 'package:collage_finder/views/rate_view/view/row_university.dart';
+import 'package:collage_finder/views/rate_view/widgets/row_university.dart';
 import 'package:collage_finder/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

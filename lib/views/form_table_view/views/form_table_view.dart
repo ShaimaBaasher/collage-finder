@@ -25,8 +25,7 @@ class FormTableView extends StatelessWidget {
           SizedBox(width: 2.w,),
           Icon(
             Icons.download,
-            color: Colors.white,
-          ),
+            color: Colors.white,),
           SizedBox(width: 2.w,),
         ],
       ),
