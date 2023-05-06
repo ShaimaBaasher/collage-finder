@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "213271782765",
+    "project_id": "collage-finder-82d10",
+    "storage_bucket": "collage-finder-82d10.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:213271782765:android:8a52a85c7a13e5616c6664",
+        "android_client_info": {
+          "package_name": "com.collage_finder.www"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "213271782765-f3c6ocpdopo886ipii9pjc06is4pam47.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMiLm2wh9vCp4wHDDiog302j6M3vqDxvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "213271782765-f3c6ocpdopo886ipii9pjc06is4pam47.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
