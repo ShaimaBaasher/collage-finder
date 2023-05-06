@@ -56,8 +56,9 @@ class _DynamicFieldsState extends State<FormView> {
                         : Column(
                             children: [
                               ListView.builder(
-                                itemCount: controller.list.length,
                                 shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: controller.list.length,
                                 itemBuilder: (_, i) => buildField(i),
                               ),
                               const SizedBox(height: 12),
@@ -69,7 +70,7 @@ class _DynamicFieldsState extends State<FormView> {
                                               content: Text("Fields missing")));
                                     } else {
                                       // TODO Create Table View Form
-                                      itinerariesDialog(context);
+                                      confirmGenerateTableDialog(context);
                                     }
                                   },
                                   child: const Text("Validate")),
@@ -97,24 +98,53 @@ class _DynamicFieldsState extends State<FormView> {
     );
   }
 
-  itinerariesDialog(BuildContext context) {
+  confirmGenerateTableDialog(BuildContext context) {
     showDialog(
         barrierDismissible: true,
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text("Stored Colleges and Institutes"),
-            content: SizedBox(
-              width: double.maxFinite,
-              child: ListView(
-                shrinkWrap: true,
-                children:
-                    controller.items.map((e) => Text(e["itinerary"].trim())).toList(),
+            title: const Text("Generate Table"),
+            content: Text('Would you like to generate your selected Colleges ? '),
+            actions: [
+              TextButton(
+                // FlatButton widget is used to make a text to work like a button
+                onPressed: () {
+                  Navigator.pop(context);
+                }, // function used to perform after pressing the button
+                child: Text('Cancel'),
               ),
-            ),
+              TextButton(
+                // FlatButton widget is used to make a text to work like a button
+                onPressed: () {
+                  controller.goToGenerateFormTable();
+                  // Navigator.pop(context);
+                }, // function used to perform after pressing the button
+                child: Text('Generate'),
+              ),
+            ],
           );
         });
   }
+
+  // itinerariesDialog(BuildContext context) {
+  //   showDialog(
+  //       barrierDismissible: true,
+  //       context: context,
+  //       builder: (context) {
+  //         return AlertDialog(
+  //           title: const Text("Stored Colleges and Institutes"),
+  //           content: SizedBox(
+  //             width: double.maxFinite,
+  //             child: ListView(
+  //               shrinkWrap: true,
+  //               children:
+  //                   controller.items.map((e) => Text(e["itinerary"].trim())).toList(),
+  //             ),
+  //           ),
+  //         );
+  //       });
+  // }
 
   Widget buildField(int i) {
     return ListTile(
@@ -122,7 +152,7 @@ class _DynamicFieldsState extends State<FormView> {
         child: Text((i + 1).toString()),
       ),
       title: TextFormField(
-        initialValue: controller.items.isNotEmpty ? controller.items[i]["itinerary"] : null,
+        initialValue: controller.items.length > i ? controller.items[i]["itinerary"] : null,
         decoration: InputDecoration(
           border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(8))),
