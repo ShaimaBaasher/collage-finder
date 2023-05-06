@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import '../../../models/university_admission_model.dart';
 import '../../../models/university_model.dart';
 import '../../../utils/styles.dart';
 import '../../../widgets/loading_widget.dart';

@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
-import '../../../models/university_admission_model.dart';
 import '../../../models/university_model.dart';
 import '../../../utils/constaints.dart';
+import '../../../utils/routes/app_pages.dart';
 
 class CollageController extends GetxController {
 
@@ -13,6 +13,8 @@ class CollageController extends GetxController {
   var searchBox = '';
 
   var isUniversityLoading = false.obs;
+
+  UniversityModel? universityModel;
 
   @override
   void onInit() {
@@ -38,6 +40,7 @@ class CollageController extends GetxController {
           universityList.add(UniversityModel(
             img: element['img'],
             images: imgList,
+              about: element['about'],
             universityId: element['university_Id'],
             areaId: element['area_id'],
             universityNameEn: element['university_name_en'],
@@ -48,6 +51,11 @@ class CollageController extends GetxController {
 
   void filter() {
 
+  }
+
+  void openUniversityDetails(UniversityModel universityModel) {
+    this.universityModel = universityModel;
+    Get.toNamed(Routes.universityDetailsView,);
   }
 
 }

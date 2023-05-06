@@ -3,8 +3,10 @@ import 'package:collage_finder/views/form_table_view/views/form_table_view.dart'
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../views/collage_view/binding/binding.dart';
 import '../../views/splash_view/binding/binding.dart';
 import '../../views/splash_view/view/splash_view.dart';
+import '../../views/university_detials/view/university_detials_view.dart';
 part 'app_routes.dart';
 
 class AppPages {
@@ -25,6 +27,12 @@ class AppPages {
       name: _Paths.formview,
       page: () =>  FormTableView(),
       binding: FormTableBinding(),
+      transition: _transition,
+      transitionDuration: _transitionDuration,),
+    GetPage(
+      name: _Paths.universityDetailsView,
+      page: () =>  UniversityDetailsView(),
+      binding: CollageBinding(),
       transition: _transition,
       transitionDuration: _transitionDuration,),
   ];

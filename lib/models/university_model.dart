@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:collage_finder/models/department_model.dart';
 import 'package:collage_finder/models/filter_model.dart';
 
 String universityModelToJson(UniversityModel data) => json.encode(data.toJson());
@@ -15,14 +16,19 @@ String universityModelListToJson(List<UniversityModel> data) =>
 
 class UniversityModel {
   String? _img;
-  String? _universityNameAr;
   int? _universityId;
+  String? _universityNameAr;
   String? _universityNameEn;
+  String? _about;
   int? _areaId;
   List<Images>? _images;
 
   UniversityModel(
-      {String? img, String? universityNameAr, int? universityId, String? universityNameEn, int? areaId, List<Images>? images,}) {
+      {String? img, String? universityNameAr, int? universityId, String? universityNameEn, String? about,
+        int? areaId, List<Images>? images,}) {
+    if (about != null) {
+      this._about = about;
+    }
     if (images != null) {
       this._images = images;
     }
@@ -48,8 +54,11 @@ class UniversityModel {
   set images(List<Images>? images) => _images = images;
 
   String? get img => _img;
-  set img(String? img) =>
-      _img = img;
+  set img(String? img) => _img = img;
+
+  String? get about => _about;
+  set about(String? about) => _about = about;
+
   String? get universityNameAr => _universityNameAr;
   set universityNameAr(String? universityNameAr) =>
       _universityNameAr = universityNameAr;
@@ -69,6 +78,7 @@ class UniversityModel {
       });
     }
     _img = json['img'];
+    _about = json['about'];
     _universityNameAr = json['university_name_ar'];
     _universityId = json['university_Id'];
     _universityNameEn = json['university_name_en'];
@@ -81,6 +91,7 @@ class UniversityModel {
       data['images'] = this._images!.map((v) => v.toJson()).toList();
     }
     data['img'] = this._img;
+    data['about'] = this._about;
     data['university_name_ar'] = this._universityNameAr;
     data['university_Id'] = this._universityId;
     data['university_name_en'] = this._universityNameEn;

@@ -20,10 +20,11 @@ class CollageView extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
         child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.indigo,
-            centerTitle: true,
-            title: const Text("Universities"),),
+      appBar: AppBar(
+        backgroundColor: Colors.indigo,
+        centerTitle: true,
+        title: const Text("Universities"),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
@@ -42,7 +43,7 @@ class CollageView extends StatelessWidget {
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide:
-                              BorderSide(color: indicatorColor, width: 0.5),
+                              const BorderSide(color: indicatorColor, width: 0.5),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         prefixIcon: const Icon(Icons.search),
@@ -50,7 +51,7 @@ class CollageView extends StatelessWidget {
                             const EdgeInsets.symmetric(horizontal: 8),
                         border: OutlineInputBorder(
                           borderSide:
-                              BorderSide(width: 0.5, color: Colors.blue),
+                              const BorderSide(width: 0.5, color: Colors.blue),
                           //<-- SEE HERE
                           borderRadius: BorderRadius.circular(10.0),
                         ),
@@ -76,16 +77,20 @@ class CollageView extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 2.h,
-              ),
-              Obx(() => controller.isUniversityLoading.isTrue ? LoadingWidget() :   ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: controller.universityList.length,
-                  itemBuilder: (ctx, i) => RowUniversities(
-                      universityModel: controller.universityList[i])) )
-
+              SizedBox(height: 2.h,),
+              Obx(() => controller.isUniversityLoading.isTrue
+                  ? const LoadingWidget()
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: controller.universityList.length,
+                      itemBuilder: (ctx, i) => GestureDetector(
+                        onTap: () {
+                          controller.openUniversityDetails(controller.universityList[i]) ;
+                        },
+                        child: RowUniversities(
+                            universityModel: controller.universityList[i]),
+                      )))
             ],
           ),
         ),
