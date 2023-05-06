@@ -29,7 +29,7 @@ class RowUniversities extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.network(
-                  '${universityModel?.img}',
+                  '${universityModel.img}',
                   width: 100.w,
                   height: 20.h,
                   fit: BoxFit.cover, loadingBuilder: (BuildContext context,
@@ -63,7 +63,7 @@ class RowUniversities extends StatelessWidget {
                     ? const LoadingWidget()
                     : ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: universityModel?.images?.length,
+                  itemCount: universityModel.images?.length,
                   itemBuilder: (ctx, i) => GestureDetector(
                     onTap: () {
                       // controller.changeDisplayMainImage(
@@ -75,7 +75,7 @@ class RowUniversities extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(5),
                         child: Image.network(
-                          '${universityModel?.images?[i].imageUrl}',
+                          '${universityModel.images?[i].imageUrl}',
                           height: 5.h,
                           width: 19.w,
                           fit: BoxFit.cover,
@@ -135,9 +135,7 @@ class RowUniversities extends StatelessWidget {
                       style: kLabelSecondryTextStyle.copyWith(fontSize: 13, color: Colors.black87),
                     ),
                   ),
-                  SizedBox(
-                    height: 1.h,
-                  ),
+                  SizedBox(height: 1.h,),
                   Row(
                     children: [
                       Icon(

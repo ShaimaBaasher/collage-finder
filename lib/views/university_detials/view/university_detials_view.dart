@@ -17,7 +17,7 @@ class UniversityDetailsView extends StatelessWidget {
         child: Column(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(15.0),
                   bottomRight: Radius.circular(15.0)),
               child: GetBuilder<CollageController>(
@@ -65,21 +65,18 @@ class UniversityDetailsView extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 2.h,
+                    height: 1.h,
                   ),
                   Text('${controller.universityModel?.about}',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
-                    style: kLabelSecondryTextStyle.copyWith(fontSize: 12),
+                    style: kLabelSecondryTextStyle.copyWith(fontSize: 13),
                   ),
-                  SizedBox(
-                    height: 3.h,
-                  ),
+                  SizedBox(height: 2.h,),
                   Text(
-                    'About',
+                    'Departments',
                     textAlign: TextAlign.start,
-                    style: kLabelPrimaryTextStyle,
-                  ),
+                    style: kLabelPrimaryTextStyle,),
                 ],
               ),
             )
