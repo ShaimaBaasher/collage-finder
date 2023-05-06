@@ -1,3 +1,6 @@
+import 'package:collage_finder/views/form_table_view/binding/binding.dart';
+import 'package:collage_finder/views/form_table_view/views/form_table_view.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../views/splash_view/binding/binding.dart';
@@ -16,6 +19,12 @@ class AppPages {
       name: _Paths.splash,
       page: () =>  SplashView(),
       binding: SplashBinding(),
+      transition: _transition,
+      transitionDuration: _transitionDuration,),
+    GetPage(
+      name: _Paths.formview,
+      page: () =>  FormTableView(),
+      binding: FormTableBinding(),
       transition: _transition,
       transitionDuration: _transitionDuration,),
   ];

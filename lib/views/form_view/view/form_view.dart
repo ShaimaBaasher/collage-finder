@@ -13,10 +13,9 @@ class FormView extends StatefulWidget {
 }
 
 class _DynamicFieldsState extends State<FormView> {
-  List<Widget> list = [];
-  int fieldCount = 0;
+  // List<Widget> list = [];
 
-  List<Map<String, dynamic>> items = [];
+  // List<Map<String, dynamic>> items = [];
 
   final _formKey = GlobalKey<FormState>();
   final controller = Get.find<FormController>();
@@ -25,7 +24,10 @@ class _DynamicFieldsState extends State<FormView> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(backgroundColor: Colors.indigo, centerTitle: true, title: const Text("Form"),),
+        appBar: AppBar(
+          backgroundColor: Colors.indigo,
+          centerTitle: true,
+          title: const Text("Application Form"),),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Form(
@@ -37,42 +39,43 @@ class _DynamicFieldsState extends State<FormView> {
                   Text(
                     'application_for_colleges_and_institutes'.tr,
                     textAlign: TextAlign.start,
-                    style: kLabelPrimaryTextStyle.copyWith(fontSize: 19.sp),
-                  ),
+                    style: kLabelPrimaryTextStyle.copyWith(fontSize: 19.sp),),
                   SizedBox(height: 2.h),
-                  fieldCount == 0
-                      ?  Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "No Colleges and Institutes added!",
-                              style: kLabelSecondryTextStyle.copyWith(fontSize: 18.sp),
+                  Obx(() => controller.fieldCount.value == 0
+                        ? Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                "No Colleges and Institutes added!",
+                                style: kLabelSecondryTextStyle.copyWith(
+                                    fontSize: 18.sp),
+                              ),
                             ),
+                          )
+                        : Column(
+                            children: [
+                              ListView.builder(
+                                itemCount: controller.list.length,
+                                shrinkWrap: true,
+                                itemBuilder: (_, i) => buildField(i),
+                              ),
+                              const SizedBox(height: 12),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    if (!_formKey.currentState!.validate()) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                              content: Text("Fields missing")));
+                                    } else {
+                                      // TODO Create Table View Form
+                                      itinerariesDialog(context);
+                                    }
+                                  },
+                                  child: const Text("Validate")),
+                            ],
                           ),
-                        )
-                      : Column(
-                          children: [
-                            ListView.builder(
-                              itemCount: list.length,
-                              shrinkWrap: true,
-                              itemBuilder: (_, i) => buildField(i),
-                            ),
-                            const SizedBox(height: 12),
-                            ElevatedButton(
-                                onPressed: () {
-                                  if (!_formKey.currentState!.validate()) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
-                                            content: Text("Fields missing")));
-                                  } else {
-                                    // TODO Create Table View Form
-                                    itinerariesDialog(context);
-                                  }
-                                },
-                                child: const Text("Validate")),
-                          ],
-                        ),
+                  ),
                 ],
               ),
             ),
@@ -81,10 +84,11 @@ class _DynamicFieldsState extends State<FormView> {
         floatingActionButton: FloatingActionButton(
           child: const Text("ADD\nNEW"),
           onPressed: () {
+            // controller.addNewFiled();
             setState(() {
-              if (fieldCount <= 25) {
-                fieldCount++;
-                list.add(buildField(fieldCount));
+              if (controller.fieldCount.value <= 25) {
+                controller.fieldCount.value++;
+                controller.list.add(buildField(controller.fieldCount.value));
               }
             });
           },
@@ -104,7 +108,8 @@ class _DynamicFieldsState extends State<FormView> {
               width: double.maxFinite,
               child: ListView(
                 shrinkWrap: true,
-                children: items.map((e) => Text(e["itinerary"].trim())).toList(),
+                children:
+                    controller.items.map((e) => Text(e["itinerary"].trim())).toList(),
               ),
             ),
           );
@@ -117,24 +122,24 @@ class _DynamicFieldsState extends State<FormView> {
         child: Text((i + 1).toString()),
       ),
       title: TextFormField(
+        initialValue: controller.items.isNotEmpty ? controller.items[i]["itinerary"] : null,
         decoration: InputDecoration(
           border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(8))),
           labelText: "${'college_or_institute'.tr} ${i + 1}",
         ),
-        onChanged: (data) => storeValue(i + 1, data),
+        onChanged: (data) => controller.storeValue(i + 1, data),
         validator: (val) => val!.isEmpty ? "Required" : null,
       ),
       trailing: InkWell(
         child: const Icon(Icons.delete_outlined, color: Colors.red),
         onTap: () {
+          // controller.removeFiled();
           setState(() {
-            if (list.isNotEmpty) {
-              fieldCount--;
-              list.removeAt(i);
-              if (items.isNotEmpty) {
-                items.removeAt(i);
-              }
+            if (controller.list.isNotEmpty) {
+              controller.fieldCount.value--;
+              controller.list.removeAt(i);
+              controller.removeListData(i);
             }
           });
         },
@@ -142,20 +147,5 @@ class _DynamicFieldsState extends State<FormView> {
     );
   }
 
-  dynamic storeValue(int i, String v) {
-    bool valueFound = false;
-    for (int j = 0; j < items.length; j++) {
-      if (items[j].containsKey("field_id")) {
-        if (items[j]["field_id"] == i) {
-          valueFound = !valueFound;
-          break;
-        }
-      }
-    }
-    /// If value is found
-    if (valueFound) {
-      items.removeWhere((e) => e["field_id"] == i);
-    }
-    items.add({"field_id": i, "itinerary": v,});
-  }
+
 }
