@@ -52,9 +52,9 @@ class RateController extends GetxController {
     FilterModel(filterId: 7, filterName: 'Literary', dbId: 3)
   ];
   final genderList = [
+    FilterModel(filterId: 10, filterName: 'All', dbId: 1),
     FilterModel(filterId: 8, filterName: 'Male only', dbId: 3),
     FilterModel(filterId: 9, filterName: 'Female only', dbId: 2),
-    FilterModel(filterId: 10, filterName: 'All', dbId: 1)
   ];
   final dateList = [
     FilterModel(filterId: 11, filterName: '2019'),

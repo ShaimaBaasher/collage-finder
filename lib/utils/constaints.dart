@@ -4,6 +4,7 @@ import 'package:collage_finder/models/admission_model.dart';
 import 'firebase/firebase.dart';
 
 final UNIVERSITIES_REF = fireStore.collection('universities');
+final APP_ONLINE_REF = fireStore.collection('app-online');
 final UNIVERSITY_CATEGORY_REF = fireStore.collection('university-category');
 final UNIVERSITY_SECTOR_REF = fireStore.collection('university-sector');
 final COLLAGES_REF = fireStore.collection('collages');
