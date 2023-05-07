@@ -264,7 +264,6 @@ class RateController extends GetxController {
   }
 
   void setUniversitiesAdmissionList() {
-    final controller = Get.find<CollageController>();
 
     universityAdmissionList.clear();
     for (var admissionModel in admissionList) {
@@ -284,8 +283,7 @@ class RateController extends GetxController {
           .firstWhere((element) => element.dbId == admissionModel.sectorId);
       final categoryModel = specialtyCategoryList
           .firstWhere((element) => element.dbId == admissionModel.categoryId);
-      final genderModel = genderList
-          .firstWhere((element) => element.dbId == admissionModel.genderId);
+      final genderModel = genderList.firstWhere((element) => element.dbId == admissionModel.genderId);
       universityAdmissionList.add(UniversityAdmissionModel(
           universityModel: universityModel,
           sectorModel: sectorModel,

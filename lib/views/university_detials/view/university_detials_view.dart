@@ -1,8 +1,10 @@
+import 'package:collage_finder/views/university_detials/widgets/row_collage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../utils/styles.dart';
+import '../../../widgets/loading_widget.dart';
 import '../../collage_view/controller/controller.dart';
 
 class UniversityDetailsView extends StatelessWidget {
@@ -64,19 +66,24 @@ class UniversityDetailsView extends StatelessWidget {
                       fontSize: 19.sp,
                     ),
                   ),
-                  SizedBox(
-                    height: 1.h,
-                  ),
+                  SizedBox(height: 1.h,),
                   Text('${controller.universityModel?.about}',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
-                    style: kLabelSecondryTextStyle.copyWith(fontSize: 13),
-                  ),
+                    style: kLabelSecondryTextStyle.copyWith(fontSize: 13),),
                   SizedBox(height: 2.h,),
                   Text(
-                    'Departments',
+                    'Collages',
                     textAlign: TextAlign.start,
                     style: kLabelPrimaryTextStyle,),
+                  Obx(() => controller.isCollagesLoading.isTrue
+                      ? const LoadingWidget()
+                      : ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: controller.collageList.length,
+                      itemBuilder: (ctx, i) => RowCollage(
+                          collageModel: controller.collageList[i])))
                 ],
               ),
             )

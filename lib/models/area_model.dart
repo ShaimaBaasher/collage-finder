@@ -14,8 +14,7 @@ class AreaModel {
   int? _areaId;
   String? _areaName;
 
-  AreaModel(
-      {int? areaId, String? areaName}) {
+  AreaModel({int? areaId, String? areaName}) {
     if (areaId != null) {
       this._areaId = areaId;
     }
@@ -26,9 +25,8 @@ class AreaModel {
 
   int? get areaId => _areaId;
   set areaId(int? areaId) => _areaId = areaId;
-  String? get departmentNameEn => _areaName;
-  set areaName(String? areaName) =>
-      _areaName = areaName;
+  String? get areaName => _areaName;
+  set areaName(String? areaName) => _areaName = areaName;
 
   AreaModel.fromJson(Map<String, dynamic> json) {
     _areaId = json['area_Id'];
