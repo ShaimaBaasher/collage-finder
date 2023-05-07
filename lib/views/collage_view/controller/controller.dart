@@ -48,6 +48,7 @@ class CollageController extends GetxController {
       for (var imgElement in list) {
         imgList.add(Images(imageUrl: imgElement["imageUrl"]));
       }
+
       for (var cElement in colist) {
         cList.add(cElement);
       }

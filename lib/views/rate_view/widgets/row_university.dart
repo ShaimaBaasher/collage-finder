@@ -103,7 +103,7 @@ class RowUniversity extends StatelessWidget {
                           SizedBox(width: 1.w),
                           FittedBox(
                             child: Text(
-                              'location',
+                              '${universityModel.universityModel?.areaModel?.areaName}',
                               textAlign: TextAlign.start,
                               maxLines: 3,
                               style: kLabelSecondryTextStyle.copyWith(fontSize: 13, color: Colors.black87),

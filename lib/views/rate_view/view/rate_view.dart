@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
-import '../../../models/filter_model.dart';
+import '../../../models/area_model.dart';
 import '../../../utils/styles.dart';
 import '../widgets/row_filter.dart';
 
@@ -40,18 +40,18 @@ class RateView extends StatelessWidget {
                         'This is 2022 Admission Rate, Good Luck !',
                         textAlign: TextAlign.start,
                         style: kLabelPrimaryNormalTextStyle.copyWith(fontSize: 18.sp, color: Colors.white),),
-                        Obx(() => controller.isAreaLoading.isTrue ? LoadingWidget() : DropdownButton<FilterModel>(
+                        Obx(() => controller.isAreaLoading.isTrue ? LoadingWidget() : DropdownButton<AreaModel>(
                             dropdownColor: Colors.black87, //<-- SEE HERE
                             icon: Icon(
                               Icons.arrow_drop_down,
                               color: Colors.white, // <-- SEE HERE
                             ),
                             value: controller.areaList[0],
-                            items: controller.areaList.map<DropdownMenuItem<FilterModel>>((value) => DropdownMenuItem<FilterModel>(
+                            items: controller.areaList.map<DropdownMenuItem<AreaModel>>((value) => DropdownMenuItem<AreaModel>(
                               value: value,
                               child: FittedBox(
                                 child: Text(
-                                  '${value.filterName}',
+                                  '${value.areaName}',
                                   style: kLabelPrimaryNormalTextStyle.copyWith(fontSize: 17.sp, color: Colors.white),),
                               ),
                             )).toList(),

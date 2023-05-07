@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collage_finder/models/area_model.dart';
 import 'package:collage_finder/models/filter_model.dart';
 import 'package:collage_finder/models/admission_model.dart';
 import 'package:collage_finder/models/university_admission_model.dart';
@@ -36,7 +37,7 @@ class RateController extends GetxController {
 
   final universityList = [];
 
-  final areaList = <FilterModel>[];
+  final areaList = <AreaModel>[];
 
   final durationList = [
     FilterModel(filterId: 1, filterName: 'Morning', dbId: 1),
@@ -66,7 +67,7 @@ class RateController extends GetxController {
 
   late SfRangeValues sfRangeValues;
 
-  FilterModel? dropdownValue;
+  AreaModel? dropdownValue;
 
   var searcBox = '';
 
@@ -165,15 +166,17 @@ class RateController extends GetxController {
     final universities = allData[0] as Map<String, dynamic>;
     final list = universities['areas'] as List<dynamic>;
     for (var element in list) {
-      areaList.add(FilterModel(
-        filterId: element['area_Id'],
-        filterName: element['area_name'],
+      areaList.add(AreaModel(
+        areaId: element['area_Id'],
+        areaName: element['area_name'],
       ));
     }
     isAreaLoading(false);
   }
 
   Future getUniversities() async {
+    AreaModel? areaModel;
+
     universityModelLists.clear();
     QuerySnapshot querySnapshot = await UNIVERSITIES_REF.get();
     // Get data from docs and convert map to List
@@ -181,10 +184,17 @@ class RateController extends GetxController {
     final universities = allData[0] as Map<String, dynamic>;
     final list = universities['universities'] as List<dynamic>;
     for (var element in list) {
+
+      for (var areaElement in areaList) {
+        if (element['area_id'] == areaElement.areaId) {
+          areaModel = AreaModel(areaId: areaElement.areaId, areaName: areaElement.areaName);
+        }
+      }
+
       universityModelLists.add(UniversityModel(
           img: element['img'],
           universityId: element['university_Id'],
-          areaId: element['area_id'],
+          areaModel: areaModel,
           universityNameEn: element['university_name_en'],
           universityNameAr: element['university_name_ar']));
     }
