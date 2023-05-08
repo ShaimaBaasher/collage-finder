@@ -11,9 +11,12 @@ import '../../../models/collage_model.dart';
 import '../../../models/department_model.dart';
 import '../../../models/total_model.dart';
 import '../../../models/university_model.dart';
-import '../../collage_view/controller/controller.dart';
+import '../../form_view/controller/controller.dart';
 
 class RateController extends GetxController {
+
+  final formController = Get.find<FormController>();
+
   var selectedDurationIndex = 0;
   var selectedUniversityCategoryIndex = 0;
   var selectedSpecialtyCategoryIndex = 0;
@@ -350,4 +353,11 @@ class RateController extends GetxController {
     dropdownValue = newValue;
     update();
   }
+
+  void saveUniversityForm(UniversityAdmissionModel universityModel) {
+    printInfo(info: 'saveUniversityForm');
+      formController.addTextFormField();
+      formController.storeValue(formController.list.length - 1, universityModel.universityModel!.universityNameEn!);
+  }
+
 }

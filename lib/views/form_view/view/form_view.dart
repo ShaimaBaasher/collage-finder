@@ -13,9 +13,6 @@ class FormView extends StatefulWidget {
 }
 
 class _DynamicFieldsState extends State<FormView> {
-  // List<Widget> list = [];
-
-  // List<Map<String, dynamic>> items = [];
 
   final _formKey = GlobalKey<FormState>();
   final controller = Get.find<FormController>();
@@ -27,7 +24,8 @@ class _DynamicFieldsState extends State<FormView> {
         appBar: AppBar(
           backgroundColor: Colors.indigo,
           centerTitle: true,
-          title: const Text("Virtual Application Form"),),
+          title: const Text("Virtual Application Form"),
+        ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Form(
@@ -35,13 +33,17 @@ class _DynamicFieldsState extends State<FormView> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(height: 2.h,),
+                  SizedBox(
+                    height: 2.h,
+                  ),
                   Text(
                     'application_for_colleges_and_institutes'.tr,
                     textAlign: TextAlign.start,
-                    style: kLabelPrimaryTextStyle.copyWith(fontSize: 19.sp),),
+                    style: kLabelPrimaryTextStyle.copyWith(fontSize: 19.sp),
+                  ),
                   SizedBox(height: 2.h),
-                  Obx(() => controller.fieldCount.value == 0
+                  Obx(
+                    () => controller.fieldCount.value == 0
                         ? Padding(
                             padding: const EdgeInsets.all(15.0),
                             child: Align(
@@ -55,12 +57,14 @@ class _DynamicFieldsState extends State<FormView> {
                           )
                         : Column(
                             children: [
-                              ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: controller.list.length,
-                                itemBuilder: (_, i) => buildField(i),
-                              ),
+                              GetBuilder<FormController>(builder: (_) {
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: controller.list.length,
+                                  itemBuilder: (_, i) => buildField(i),
+                                );
+                              }),
                               const SizedBox(height: 12),
                               ElevatedButton(
                                   onPressed: () {
@@ -85,13 +89,7 @@ class _DynamicFieldsState extends State<FormView> {
         floatingActionButton: FloatingActionButton(
           child: const Text("ADD\nNEW"),
           onPressed: () {
-            // controller.addNewFiled();
-            setState(() {
-              if (controller.fieldCount.value <= 25) {
-                controller.fieldCount.value++;
-                controller.list.add(buildField(controller.fieldCount.value));
-              }
-            });
+            controller.addTextFormField();
           },
         ),
       ),
@@ -105,14 +103,15 @@ class _DynamicFieldsState extends State<FormView> {
         builder: (context) {
           return AlertDialog(
             title: const Text("Generate Table"),
-            content: Text('Would you like to generate your selected Colleges ? '),
+            content: const Text(
+                'Would you like to generate your selected Colleges ? '),
             actions: [
               TextButton(
                 // FlatButton widget is used to make a text to work like a button
                 onPressed: () {
                   Navigator.pop(context);
                 }, // function used to perform after pressing the button
-                child: Text('Cancel'),
+                child: const Text('Cancel'),
               ),
               TextButton(
                 // FlatButton widget is used to make a text to work like a button
@@ -120,31 +119,12 @@ class _DynamicFieldsState extends State<FormView> {
                   controller.goToGenerateFormTable();
                   // Navigator.pop(context);
                 }, // function used to perform after pressing the button
-                child: Text('Generate'),
+                child: const Text('Generate'),
               ),
             ],
           );
         });
   }
-
-  // itinerariesDialog(BuildContext context) {
-  //   showDialog(
-  //       barrierDismissible: true,
-  //       context: context,
-  //       builder: (context) {
-  //         return AlertDialog(
-  //           title: const Text("Stored Colleges and Institutes"),
-  //           content: SizedBox(
-  //             width: double.maxFinite,
-  //             child: ListView(
-  //               shrinkWrap: true,
-  //               children:
-  //                   controller.items.map((e) => Text(e["itinerary"].trim())).toList(),
-  //             ),
-  //           ),
-  //         );
-  //       });
-  // }
 
   Widget buildField(int i) {
     return ListTile(
@@ -152,7 +132,8 @@ class _DynamicFieldsState extends State<FormView> {
         child: Text((i + 1).toString()),
       ),
       title: TextFormField(
-        initialValue: controller.items.length > i ? controller.items[i]["itinerary"] : null,
+        initialValue: controller.items.length > i ? controller.items[i]["itinerary"]
+            : null,
         decoration: InputDecoration(
           border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(8))),
@@ -164,18 +145,9 @@ class _DynamicFieldsState extends State<FormView> {
       trailing: InkWell(
         child: const Icon(Icons.delete_outlined, color: Colors.red),
         onTap: () {
-          // controller.removeFiled();
-          setState(() {
-            if (controller.list.isNotEmpty) {
-              controller.fieldCount.value--;
-              controller.list.removeAt(i);
-              controller.removeListData(i);
-            }
-          });
+          controller.removeTextFormField(i);
         },
       ),
     );
   }
-
-
 }

@@ -5,10 +5,9 @@ import '../../../utils/routes/app_pages.dart';
 import '../../form_table_view/contoller/controller.dart';
 
 class FormController extends GetxController {
-
   final form = GlobalKey<FormState>();
 
-  List<Widget> list = [];
+  List<int> list = [];
 
   List<Map<String, dynamic>> items = [];
   var fieldCount = 0.obs;
@@ -28,10 +27,17 @@ class FormController extends GetxController {
         }
       }
     }
+
     /// If value is found
     if (valueFound) {
       items.removeWhere((e) => e["field_id"] == i);
     }
+
+    items.add({"field_id": i, "itinerary": v,});
+    update();
+  }
+
+  void storeValueFromRateController(int i, String v) {
     items.add({"field_id": i, "itinerary": v,});
   }
 
@@ -49,8 +55,24 @@ class FormController extends GetxController {
   void goToGenerateFormTable() {
     final controller = Get.find<FormTableController>();
     controller.items = items;
-    Get.toNamed(Routes.formview,);
+    Get.toNamed(
+      Routes.formview,
+    );
   }
 
+  void addTextFormField() {
+    if (fieldCount.value <= 35) {
+      fieldCount.value++;
+      list.add(fieldCount.value);
+    }
+    update();
+  }
 
+  void removeTextFormField(int i) {
+    if (list.isNotEmpty) {
+      fieldCount.value--;
+      list.removeAt(i);
+      removeListData(i);
+    }
+  }
 }
