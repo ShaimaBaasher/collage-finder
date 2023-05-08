@@ -10,6 +10,8 @@ class FormTableView extends StatelessWidget {
   final controller = Get.find<FormTableController>();
 
   FormTableView({Key? key}) : super(key: key);
+  static final GlobalKey _globalKey = GlobalKey();
+
 
   @override
   Widget build(BuildContext context) {
@@ -21,43 +23,52 @@ class FormTableView extends StatelessWidget {
         backgroundColor: Colors.indigo,
         actions: [
           SizedBox(width: 2.w,),
-          Icon(Icons.share, color: Colors.white),
+          IconButton(
+            icon: const Icon(Icons.share),
+            color: Colors.white, onPressed: () async {
+            await controller.shareReceipt(_globalKey);
+          },),
           SizedBox(width: 2.w,),
-          Icon(
-            Icons.download,
-            color: Colors.white,),
+          IconButton(
+            icon: const Icon(Icons.download),
+            color: Colors.white, onPressed: () async {
+              await controller.takeScreenshot(_globalKey);
+          },),
           SizedBox(width: 2.w,),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: 10.h,
-              width: size.width,
-              color: Colors.indigo,
-              child: Center(
-                  child: Text(
-                "Virtual Application Form",
-                style: kLabelPrimaryNormalTextStyle.copyWith(
-                    color: Colors.white, fontSize: 19.sp),
-              )),
-            ),
-            SizedBox(
-              height: 2.h,
-            ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              scrollDirection: Axis.vertical,
-              itemCount: controller.items.length,
-              itemBuilder: (ctx, index) {
-                return RowTableRow(
-                  index: index,
-                );
-              },
-            ),
-          ],
+      body: RepaintBoundary(
+        key: _globalKey,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: 10.h,
+                width: size.width,
+                color: Colors.indigo,
+                child: Center(
+                    child: Text(
+                  "Virtual Application Form",
+                  style: kLabelPrimaryNormalTextStyle.copyWith(
+                      color: Colors.white, fontSize: 19.sp),
+                )),
+              ),
+              SizedBox(
+                height: 2.h,
+              ),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                itemCount: controller.items.length,
+                itemBuilder: (ctx, index) {
+                  return RowTableRow(
+                    index: index,
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     ));
