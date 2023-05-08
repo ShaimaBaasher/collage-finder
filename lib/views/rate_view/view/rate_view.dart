@@ -32,41 +32,60 @@ class RateView extends StatelessWidget {
                   width: size.width,
                   color: Colors.indigo,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 3.h, horizontal: 10.w),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 3.h, horizontal: 10.w),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                      Text(
-                        'This is 2022 Admission Rate, Good Luck !',
-                        textAlign: TextAlign.start,
-                        style: kLabelPrimaryNormalTextStyle.copyWith(fontSize: 18.sp, color: Colors.white),),
-                        Obx(() => controller.isAreaLoading.isTrue ? const LoadingWidget() :
-                        GetBuilder<RateController>(
-                          builder: (_) {
-                            return DropdownButton<AreaModel>(
-                                dropdownColor: Colors.black87, //<-- SEE HERE
-                                icon: const Icon(
-                                  Icons.arrow_drop_down,
-                                  color: Colors.white, // <-- SEE HERE
-                                ),
-                                value: controller.dropdownValue,
-                                items: controller.areaList.map<DropdownMenuItem<AreaModel>>((value) => DropdownMenuItem<AreaModel>(
-                                  value: value,
-                                  child: FittedBox(
-                                    child: Text('${value.areaName}',
-                                      style: kLabelPrimaryNormalTextStyle.copyWith(fontSize: 17.sp, color: Colors.white),),
-                                  ),
-                                )).toList(),
-                                onChanged: (newValue) {
-                                  controller.changeDropdownValue(newValue!);
-                                  controller.filter();
-                                },
-                              );
-                          }
+                        Text(
+                          'This is 2022 Admission Rate, Good Luck !',
+                          textAlign: TextAlign.start,
+                          style: kLabelPrimaryNormalTextStyle.copyWith(
+                              fontSize: 18.sp, color: Colors.white),
                         ),
+                        Obx(
+                          () => controller.isAreaLoading.isTrue
+                              ? const LoadingWidget()
+                              : GetBuilder<RateController>(builder: (_) {
+                                  return DropdownButton<AreaModel>(
+                                    dropdownColor: Colors.black87,
+                                    //<-- SEE HERE
+                                    icon: const Icon(
+                                      Icons.arrow_drop_down,
+                                      color: Colors.white, // <-- SEE HERE
+                                    ),
+                                    value: controller.dropdownValue,
+                                    items: controller.areaList
+                                        .map<DropdownMenuItem<AreaModel>>(
+                                            (value) =>
+                                                DropdownMenuItem<AreaModel>(
+                                                  value: value,
+                                                  child: FittedBox(
+                                                    child: Text(
+                                                      '${value.areaName}',
+                                                      style:
+                                                          kLabelPrimaryNormalTextStyle
+                                                              .copyWith(
+                                                                  fontSize:
+                                                                      17.sp,
+                                                                  color: Colors
+                                                                      .white),
+                                                    ),
+                                                  ),
+                                                ))
+                                        .toList(),
+                                    onChanged: (newValue) {
+                                      controller.changeDropdownValue(newValue!);
+                                      controller.filter();
+                                    },
+                                  );
+                                }),
                         ),
-                        SizedBox(height: 5.h,),
-                      ],),
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -85,14 +104,17 @@ class RateView extends StatelessWidget {
                           textAlignVertical: TextAlignVertical.center,
                           decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: indicatorColor, width: 0.5),
+                                borderSide: const BorderSide(
+                                    color: indicatorColor, width: 0.5),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               prefixIcon: const Icon(Icons.search),
                               contentPadding:
                                   const EdgeInsets.symmetric(horizontal: 8),
                               border: OutlineInputBorder(
-                                borderSide: BorderSide(width: 0.5, color: Colors.blue), //<-- SEE HERE
+                                borderSide: const BorderSide(
+                                    width: 0.5, color: Colors.blue),
+                                //<-- SEE HERE
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               constraints: const BoxConstraints(
@@ -130,26 +152,26 @@ class RateView extends StatelessWidget {
                   Text(
                     'enter_rate'.tr,
                     textAlign: TextAlign.start,
-                    style: kLabelPrimaryNormalTextStyle.copyWith(fontSize: 18.sp),),
+                    style:
+                        kLabelPrimaryNormalTextStyle.copyWith(fontSize: 18.sp),
+                  ),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 5),
-                    child: GetBuilder<RateController>(
-                      builder: (_) {
-                        return SfRangeSlider(
-                          min: 10.0,
-                          max: 100.99,
-                          values: controller.sfRangeValues,
-                          showLabels: true,
-                          activeColor: kPurpleColor,
-                          // interval: 3000.0,
-                          enableTooltip: true,
-                          onChanged: (SfRangeValues newValues) {
-                            controller.updateRangeSlider(newValues);
-                            controller.sfRangeValues = newValues;
-                          },
-                        );
-                      }
-                    ),
+                    child: GetBuilder<RateController>(builder: (_) {
+                      return SfRangeSlider(
+                        min: 10.0,
+                        max: 100.99,
+                        values: controller.sfRangeValues,
+                        showLabels: true,
+                        activeColor: kPurpleColor,
+                        // interval: 3000.0,
+                        enableTooltip: true,
+                        onChanged: (SfRangeValues newValues) {
+                          controller.updateRangeSlider(newValues);
+                          controller.sfRangeValues = newValues;
+                        },
+                      );
+                    }),
                   ),
                   SizedBox(
                     height: 2.h,
@@ -215,7 +237,8 @@ class RateView extends StatelessWidget {
                                     return RowFilter(
                                         index: index,
                                         filterModel:
-                                            controller.genderList[index], isGenderOnly: 2);
+                                            controller.genderList[index],
+                                        isGenderOnly: 2);
                                   },
                                 ),
                               )),
@@ -252,13 +275,13 @@ class RateView extends StatelessWidget {
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
                               scrollDirection: Axis.horizontal,
-                              itemCount:
-                                  controller.specialtyCategoryList.length,
+                              itemCount: controller.specialtyCategoryList.length,
                               itemBuilder: (ctx, index) {
                                 return RowFilter(
                                     index: index,
-                                    filterModel: controller
-                                        .specialtyCategoryList[index], isGenderOnly: 1);
+                                    filterModel:
+                                        controller.specialtyCategoryList[index],
+                                    isGenderOnly: 1);
                               },
                             ),
                           )),
@@ -267,19 +290,16 @@ class RateView extends StatelessWidget {
                   Obx(
                     () => controller.isUniversityLoaded.isTrue
                         ? const LoadingWidget()
-                        : GetBuilder<RateController>(
-                          builder: (_) {
+                        : GetBuilder<RateController>(builder: (_) {
                             return ListView.builder(
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
-                                itemCount:
-                                    controller.filterList.length,
+                                itemCount: controller.filterList.length,
                                 itemBuilder: (ctx, i) => RowUniversity(
-                                      universityModel:
-                                          controller.filterList[i],
+                                      index: i,
+                                      universityModel: controller.filterList[i],
                                     ));
-                          }
-                        ),
+                          }),
                   )
                 ],
               ),

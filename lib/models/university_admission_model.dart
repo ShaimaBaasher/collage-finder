@@ -16,11 +16,15 @@ class UniversityAdmissionModel {
   TotalModel? _totalModel;
   TotalModel? _rateModel;
   TotalModel? _superlativeModel;
+  bool? _isSaved;
 
   UniversityAdmissionModel(
       {UniversityModel? universityModel, FilterModel? areaModel, FilterModel? sectorModel, FilterModel? categoryModel,
         FilterModel? genderModel, CollageModel? collageModel, DepartmentModel? departmentModel, TotalModel? totalModel,
-      TotalModel? rateModel, TotalModel? superlativeModel}) {
+      TotalModel? rateModel, TotalModel? superlativeModel, bool? isSaved}) {
+    if (isSaved != null) {
+      this._isSaved = isSaved;
+    }
     if (universityModel != null) {
       this._universityModel = universityModel;
     }
@@ -52,6 +56,11 @@ class UniversityAdmissionModel {
       this._superlativeModel = superlativeModel;
     }
   }
+
+  bool? get isSaved => _isSaved;
+
+  set isSaved(bool? isSaved) =>
+      _isSaved = isSaved;
 
   UniversityModel? get universityModel => _universityModel;
 

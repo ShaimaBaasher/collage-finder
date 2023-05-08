@@ -25,6 +25,8 @@ class RateController extends GetxController {
   var selectedSpecialtyCategoryItem = 1;
   var selectedGenderItem = 1;
 
+  var savedUniversityIndex = -1;
+
   var isUniversityLoaded = false.obs;
   var isAreaLoading = false.obs;
 
@@ -305,6 +307,7 @@ class RateController extends GetxController {
           categoryModel: categoryModel,
           collageModel: collageModel,
           departmentModel: departmentModel,
+          isSaved: false,
           totalModel: totalModel,
           rateModel: rateMode,
           superlativeModel: superlative));
@@ -354,10 +357,24 @@ class RateController extends GetxController {
     update();
   }
 
-  void saveUniversityForm(UniversityAdmissionModel universityModel) {
-    printInfo(info: 'saveUniversityForm');
+  void saveUniversityForm(int index, UniversityAdmissionModel universityModel) {
+      savedUniversityIndex = index;
+      universityModel.isSaved = true;
+      printInfo(info: 'saveUniversityForm');
       formController.addTextFormField();
-      formController.storeValue(formController.list.length - 1, universityModel.universityModel!.universityNameEn!);
+      formController.storeValue(formController.list.length - 1, '${universityModel.universityModel!.universityNameEn!}/${universityModel.collageModel!.collageNameEn}');
+      update();
+  }
+
+  void removeUniversityForm(int index, UniversityAdmissionModel universityModel) {
+      savedUniversityIndex = index;
+      universityModel.isSaved = false;
+      printInfo(info: 'saveUniversityForm');
+      if(formController.list.isNotEmpty) {
+        formController.removeTextFormField(formController.list.length - 1);
+        savedUniversityIndex = -1;
+      }
+      update();
   }
 
 }

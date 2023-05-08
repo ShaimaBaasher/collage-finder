@@ -9,9 +9,11 @@ import '../controller/controller.dart';
 
 class RowUniversity extends StatelessWidget {
   UniversityAdmissionModel universityModel;
+  int index;
+
   final controller = Get.find<RateController>();
 
-  RowUniversity({Key? key, required this.universityModel}) : super(key: key);
+  RowUniversity({Key? key, required this.index, required this.universityModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,17 +58,23 @@ class RowUniversity extends StatelessWidget {
                       }),
                     ),
                     Positioned(
-                      top: 15,
-                      right: 20,
+                      top: 5,
+                      left: 5,
                       child: CircleAvatar(
                         backgroundColor:
                             const Color(0xFFFFFFFF).withOpacity(0.6),
-                        child: IconButton(
-                          icon: const Icon(Icons.add, size: 22),
-                          color: Colors.white,
-                          onPressed: () {
-                            controller.saveUniversityForm(universityModel);
-                          },
+                        child: GetBuilder<RateController>(
+                          builder: (_) {
+                            return IconButton(
+                              icon:  Icon(universityModel.isSaved! || controller.savedUniversityIndex == index ? Icons.remove : Icons.add, size: 20),
+                              color: universityModel.isSaved! || controller.savedUniversityIndex == index ? Colors.red : Colors.green,
+                              onPressed: () {
+                                universityModel.isSaved! || controller.savedUniversityIndex == index ?
+                                controller.removeUniversityForm(index, universityModel) :
+                                controller.saveUniversityForm(index, universityModel);
+                              },
+                            );
+                          }
                         ),
                       ),
                     ),
