@@ -40,25 +40,30 @@ class RateView extends StatelessWidget {
                         'This is 2022 Admission Rate, Good Luck !',
                         textAlign: TextAlign.start,
                         style: kLabelPrimaryNormalTextStyle.copyWith(fontSize: 18.sp, color: Colors.white),),
-                        Obx(() => controller.isAreaLoading.isTrue ? LoadingWidget() : DropdownButton<AreaModel>(
-                            dropdownColor: Colors.black87, //<-- SEE HERE
-                            icon: Icon(
-                              Icons.arrow_drop_down,
-                              color: Colors.white, // <-- SEE HERE
-                            ),
-                            value: controller.areaList[0],
-                            items: controller.areaList.map<DropdownMenuItem<AreaModel>>((value) => DropdownMenuItem<AreaModel>(
-                              value: value,
-                              child: FittedBox(
-                                child: Text(
-                                  '${value.areaName}',
-                                  style: kLabelPrimaryNormalTextStyle.copyWith(fontSize: 17.sp, color: Colors.white),),
-                              ),
-                            )).toList(),
-                            onChanged: (newValue) {
-                              controller.dropdownValue = newValue!;
-                            },
-                          ),
+                        Obx(() => controller.isAreaLoading.isTrue ? const LoadingWidget() :
+                        GetBuilder<RateController>(
+                          builder: (_) {
+                            return DropdownButton<AreaModel>(
+                                dropdownColor: Colors.black87, //<-- SEE HERE
+                                icon: const Icon(
+                                  Icons.arrow_drop_down,
+                                  color: Colors.white, // <-- SEE HERE
+                                ),
+                                value: controller.dropdownValue,
+                                items: controller.areaList.map<DropdownMenuItem<AreaModel>>((value) => DropdownMenuItem<AreaModel>(
+                                  value: value,
+                                  child: FittedBox(
+                                    child: Text('${value.areaName}',
+                                      style: kLabelPrimaryNormalTextStyle.copyWith(fontSize: 17.sp, color: Colors.white),),
+                                  ),
+                                )).toList(),
+                                onChanged: (newValue) {
+                                  controller.changeDropdownValue(newValue!);
+                                  controller.filter();
+                                },
+                              );
+                          }
+                        ),
                         ),
                         SizedBox(height: 5.h,),
                       ],),
@@ -105,7 +110,7 @@ class RateView extends StatelessWidget {
                             return null;
                           },
                           onChanged: (value) {
-                            controller.searcBox = value;
+                            controller.searchBox = value;
                             controller.filter();
                           },
                           onFieldSubmitted: (_) {},
@@ -131,8 +136,8 @@ class RateView extends StatelessWidget {
                     child: GetBuilder<RateController>(
                       builder: (_) {
                         return SfRangeSlider(
-                          min: 10,
-                          max: 100,
+                          min: 10.0,
+                          max: 100.99,
                           values: controller.sfRangeValues,
                           showLabels: true,
                           activeColor: kPurpleColor,
@@ -261,7 +266,7 @@ class RateView extends StatelessWidget {
                   ),
                   Obx(
                     () => controller.isUniversityLoaded.isTrue
-                        ? LoadingWidget()
+                        ? const LoadingWidget()
                         : GetBuilder<RateController>(
                           builder: (_) {
                             return ListView.builder(

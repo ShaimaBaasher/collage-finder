@@ -37,6 +37,7 @@ class CollageController extends GetxController {
     final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
     final universities = allData[0] as Map<String, dynamic>;
     final list = universities['universities'] as List<dynamic>;
+    printInfo(info: 'universities>>${universities['universities']}');
 
     for (var element in list) {
       final imgList = <Images>[];
@@ -64,12 +65,15 @@ class CollageController extends GetxController {
           images: imgList,
           collages: cList,
           about: element['about'],
-          areaModel:  areaModel,
+          areaModel: areaModel,
           universityId: element['university_Id'],
           areaId: element['area_id'],
           universityNameEn: element['university_name_en'],
           universityNameAr: element['university_name_ar']));
     }
+
+    filterList.clear();
+    filterList.addAll(universityList);
     isUniversityLoading(false);
   }
 
@@ -81,7 +85,6 @@ class CollageController extends GetxController {
     // Get data from docs and convert map to List
     final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
     final universities = allData[0] as Map<String, dynamic>;
-
     for (var element in universities['collages']) {
       innerCollageList.add(CollageModel(
         collageId: element['collage_Id'],
@@ -89,13 +92,17 @@ class CollageController extends GetxController {
         collageNameAr: element['collage_name_ar'],
       ));
     }
+    printInfo(info: 'collages>>${collagesModelListToJson(innerCollageList)}');
+    printInfo(info: 'collagesList>>${universityModel!.collages!}');
 
     collageList.clear();
     for (var i = 0; i < universityModel!.collages!.length; i++) {
-      if (innerCollageList[i].collageId == universityModel!.collages![i]) {
-        collageList.add(CollageModel(
-            collageId: innerCollageList[i].collageId,
-            collageNameEn: innerCollageList[i].collageNameEn));
+      for (var k = 0; k < innerCollageList.length; k++) {
+        if (innerCollageList[k].collageId == universityModel!.collages![i]) {
+          collageList.add(CollageModel(
+              collageId: innerCollageList[i].collageId,
+              collageNameEn: innerCollageList[i].collageNameEn));
+        }
       }
     }
   }
@@ -118,11 +125,29 @@ class CollageController extends GetxController {
     printInfo(info: 'areas>>${areaModelListToJson(areaList!)}');
   }
 
-  void filter() {}
+  void filter() {
+    final List<UniversityModel> tripList = [];
+      if (searchBox.isNotEmpty) {
+        for (var item in universityList) {
+          if (searchBox.toLowerCase().contains(
+              item.universityNameEn!.toLowerCase())) {
+            tripList.add(item);
+          }
+        }
+        filterList.clear();
+        filterList.addAll(tripList);
+      } else {
+        filterList.clear();
+        filterList.addAll(universityList);
+      }
+
+      update();
+  }
 
   void openUniversityDetails(UniversityModel universityModel) async {
     isCollagesLoading(true);
     this.universityModel = universityModel;
+    printInfo(info: 'universityModel>>${universityModelToJson(universityModel)}');
     Get.toNamed(Routes.universityDetailsView,);
     await getCollages();
     isCollagesLoading(false);

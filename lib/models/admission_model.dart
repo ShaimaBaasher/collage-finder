@@ -18,7 +18,6 @@ class AdmissionModel {
   int? _rateId;
   int? _departmentId;
   int? _sectorId;
-  int? _genderId;
   int? _superlativeId;
 
   AdmissionModel(
@@ -29,7 +28,6 @@ class AdmissionModel {
         int? rateId,
         int? departmentId,
         int? sectorId,
-        int? genderId,
         int? superlativeId}) {
     if (totalId != null) {
       this._totalId = totalId;
@@ -52,9 +50,6 @@ class AdmissionModel {
     if (sectorId != null) {
       this._sectorId = sectorId;
     }
-    if (genderId != null) {
-      this._genderId = genderId;
-    }
     if (superlativeId != null) {
       this._superlativeId = superlativeId;
     }
@@ -74,8 +69,6 @@ class AdmissionModel {
   set departmentId(int? departmentId) => _departmentId = departmentId;
   int? get sectorId => _sectorId;
   set sectorId(int? sectorId) => _sectorId = sectorId;
-  int? get genderId => _genderId;
-  set genderId(int? genderId) => _genderId = genderId;
   int? get superlativeId => _superlativeId;
   set superlativeId(int? superlativeId) => _superlativeId = superlativeId;
 
@@ -87,7 +80,6 @@ class AdmissionModel {
     _rateId = json['rate_Id'];
     _departmentId = json['department_Id'];
     _sectorId = json['sector_Id'];
-    _genderId = json['gender_Id'];
     _superlativeId = json['superlative_Id'];
   }
 
@@ -100,7 +92,6 @@ class AdmissionModel {
     data['rate_Id'] = this._rateId;
     data['department_Id'] = this._departmentId;
     data['sector_Id'] = this._sectorId;
-    data['gender_Id'] = this._genderId;
     data['superlative_Id'] = this._superlativeId;
     return data;
   }

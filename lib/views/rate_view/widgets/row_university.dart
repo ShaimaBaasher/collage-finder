@@ -84,7 +84,7 @@ class RowUniversity extends StatelessWidget {
                       SizedBox(
                         width: size.width / 2,
                         child: Text(
-                          '${universityModel.departmentModel?.departmentNameEn}',
+                          universityModel.departmentModel?.departmentNameEn ?? '',
                           textAlign: TextAlign.start,
                           maxLines: 3,
                           softWrap: false,

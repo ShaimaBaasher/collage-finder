@@ -69,7 +69,8 @@ class RateController extends GetxController {
 
   AreaModel? dropdownValue;
 
-  var searcBox = '';
+  var searchBox = '';
+
 
   void goToHomeScreen() async {
     await Future.delayed(const Duration(seconds: 3));
@@ -135,7 +136,6 @@ class RateController extends GetxController {
         categoryId: element['category_Id'],
         collageId: element['collage_Id'],
         departmentId: element['department_Id'],
-        genderId: element['gender_Id'],
         rateId: element['rate_Id'],
         superlativeId: element['superlative_Id'],
         totalId: element['total_Id'],
@@ -171,6 +171,7 @@ class RateController extends GetxController {
         areaName: element['area_name'],
       ));
     }
+    dropdownValue = areaList[0];
     isAreaLoading(false);
   }
 
@@ -191,12 +192,17 @@ class RateController extends GetxController {
         }
       }
 
+
       universityModelLists.add(UniversityModel(
           img: element['img'],
           universityId: element['university_Id'],
+          genderId: element['gender_Id'],
+          areaId: element['area_id'],
           areaModel: areaModel,
           universityNameEn: element['university_name_en'],
           universityNameAr: element['university_name_ar']));
+
+      printInfo(info: 'areaModel>>${universityModelListToJson(universityModelLists!)}');
     }
   }
 
@@ -274,40 +280,31 @@ class RateController extends GetxController {
   }
 
   void setUniversitiesAdmissionList() {
+    DepartmentModel? departmentModel;
 
+    // department_Id
     universityAdmissionList.clear();
     for (var admissionModel in admissionList) {
-      final universityModel = universityModelLists.firstWhere(
-          (element) => element.universityId == admissionModel.universityId);
+      final universityModel = universityModelLists.firstWhere((element) => element.universityId == admissionModel.universityId);
       final collageModel = collageList.firstWhereOrNull(
           (element) => element.collageId == admissionModel.collageId);
-      final departmentModel = departmentList.firstWhere(
-          (element) => element.departmentId == admissionModel.departmentId);
-      final totalModel = totalList
-          .firstWhere((element) => element.totalId == admissionModel.totalId);
-      final rateMode = rateList
-          .firstWhere((element) => element.totalId == admissionModel.rateId);
+      if (departmentList.isNotEmpty) {
+          departmentModel = departmentList.firstWhereOrNull((element) => element.departmentId == admissionModel.departmentId);
+      }
+      final totalModel = totalList.firstWhere((element) => element.totalId == admissionModel.totalId);
+      final rateMode = rateList.firstWhere((element) => element.totalId == admissionModel.rateId);
       final superlative = superlativeList.firstWhere(
           (element) => element.totalId == admissionModel.superlativeId);
-      final sectorModel = universitySectorList
-          .firstWhere((element) => element.dbId == admissionModel.sectorId);
       final categoryModel = specialtyCategoryList
           .firstWhere((element) => element.dbId == admissionModel.categoryId);
-      final genderModel = genderList.firstWhere((element) => element.dbId == admissionModel.genderId);
       universityAdmissionList.add(UniversityAdmissionModel(
           universityModel: universityModel,
-          sectorModel: sectorModel,
           categoryModel: categoryModel,
-          genderModel: genderModel,
           collageModel: collageModel,
           departmentModel: departmentModel,
           totalModel: totalModel,
           rateModel: rateMode,
           superlativeModel: superlative));
-
-      // controller.universityList.clear();
-      // controller.universityList.addAll(universityAdmissionList);
-      // controller.isUniversityLoading(false);
 
       filter();
       isUniversityLoaded(false);
@@ -323,35 +320,34 @@ class RateController extends GetxController {
 
   void filter() {
     final List<UniversityAdmissionModel> tripList = [];
-    for (var item in universityAdmissionList) {
-      if (searcBox.isNotEmpty) {
-        if (searcBox.toLowerCase().contains(
-                item.universityModel!.universityNameEn!.toLowerCase()) &&
-            item.rateModel!.total >= priceSliderStart &&
-            item.rateModel!.total <= priceSliderEnd &&
-            selectedGenderItem == item.genderModel!.dbId &&
-            selectedSpecialtyCategoryItem == item.categoryModel!.dbId) {
-          tripList.add(item);
+      if (searchBox.isNotEmpty) {
+        for (var item in universityAdmissionList) {
+          if (searchBox.toLowerCase().contains(item.universityModel!.universityNameEn!.toLowerCase()) || searchBox.toLowerCase().contains(item.collageModel!.collageNameEn!.toLowerCase()) &&
+              item.rateModel!.total >= priceSliderStart &&
+              item.rateModel!.total <= priceSliderEnd &&
+              selectedGenderItem == item.universityModel!.genderId &&
+              selectedSpecialtyCategoryItem == item.categoryModel!.dbId && dropdownValue!.areaId == item.universityModel!.areaId) {
+            tripList.add(item);
+          }
         }
       } else {
-        if (searcBox.toLowerCase().contains(
-                    item.universityModel!.universityNameEn!.toLowerCase()) ||
-                searcBox.isNotEmpty
-            ? searcBox
-                .toLowerCase()
-                .contains(item.departmentModel!.departmentNameEn!.toLowerCase())
-            : false ||
-                item.rateModel!.total >= priceSliderStart &&
-                    item.rateModel!.total <= priceSliderEnd &&
-                    selectedGenderItem == item.genderModel!.dbId &&
-                    selectedSpecialtyCategoryItem == item.categoryModel!.dbId) {
-          tripList.add(item);
+        for (var item in universityAdmissionList) {
+          if (item.rateModel!.total >= priceSliderStart &&
+                  item.rateModel!.total <= priceSliderEnd &&
+                  selectedGenderItem == item.universityModel!.genderId &&
+                  selectedSpecialtyCategoryItem == item.categoryModel!.dbId && dropdownValue!.areaId == item.universityModel!.areaId) {
+            tripList.add(item);
+          }
         }
       }
-    }
 
     filterList.clear();
     filterList.addAll(tripList);
+    update();
+  }
+
+  void changeDropdownValue(AreaModel newValue) {
+    dropdownValue = newValue;
     update();
   }
 }

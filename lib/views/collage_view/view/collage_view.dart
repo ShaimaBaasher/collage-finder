@@ -80,17 +80,21 @@ class CollageView extends StatelessWidget {
               SizedBox(height: 2.h,),
               Obx(() => controller.isUniversityLoading.isTrue
                   ? const LoadingWidget()
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: controller.universityList.length,
-                      itemBuilder: (ctx, i) => GestureDetector(
-                        onTap: () {
-                          controller.openUniversityDetails(controller.universityList[i]) ;
-                        },
-                        child: RowUniversities(
-                            universityModel: controller.universityList[i]),
-                      )))
+                  : GetBuilder<CollageController>(
+                    builder: (_) {
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: controller.filterList.length,
+                          itemBuilder: (ctx, i) => GestureDetector(
+                            onTap: () {
+                              controller.openUniversityDetails(controller.universityList[i]) ;
+                            },
+                            child: RowUniversities(
+                                universityModel: controller.filterList[i]),
+                          ));
+                    }
+                  ))
             ],
           ),
         ),
