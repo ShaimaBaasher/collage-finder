@@ -370,11 +370,16 @@ class RateController extends GetxController {
       savedUniversityIndex = index;
       universityModel.isSaved = false;
       printInfo(info: 'saveUniversityForm');
-      if(formController.list.isNotEmpty) {
+      if (formController.list.isNotEmpty) {
         formController.removeTextFormField(formController.list.length - 1);
         savedUniversityIndex = -1;
       }
       update();
+  }
+
+  void updateRateController() {
+    savedUniversityIndex = -1;
+    update();
   }
 
 }

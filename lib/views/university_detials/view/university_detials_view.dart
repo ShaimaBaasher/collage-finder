@@ -82,7 +82,7 @@ class UniversityDetailsView extends StatelessWidget {
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: controller.collageList.length,
-                      itemBuilder: (ctx, i) => RowCollage(
+                      itemBuilder: (ctx, i) => RowCollage(index: i,
                           collageModel: controller.collageList[i])))
                 ],
               ),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:collage_finder/models/area_model.dart';
+import 'package:collage_finder/models/collage_model.dart';
 import 'package:collage_finder/models/department_model.dart';
 import 'package:collage_finder/models/filter_model.dart';
 
@@ -26,6 +27,7 @@ class UniversityModel {
   int? _areaId;
   int? _genderId;
   AreaModel? _areaModel;
+  List<CollageModel>? _internalCollageList;
   List<int>? _collages;
   List<Images>? _images;
 
@@ -33,6 +35,7 @@ class UniversityModel {
     String? img,
     String? universityNameAr,
     int? universityId,
+    List<CollageModel>? internalCollageList,
     List<int>? collages,
     int? genderId,
     String? universityNameEn,
@@ -41,6 +44,9 @@ class UniversityModel {
     int? areaId,
     List<Images>? images,
   }) {
+    if (internalCollageList != null) {
+      this._internalCollageList = internalCollageList;
+    }
     if (areaModel != null) {
       this._areaModel = areaModel;
     }
@@ -76,6 +82,10 @@ class UniversityModel {
   List<int>? get collages => _collages;
 
   set collages(List<int>? collages) => _collages = collages;
+
+  List<CollageModel>? get internalCollageList => _internalCollageList;
+
+  set internalCollageList(List<CollageModel>? internalCollageList) => _internalCollageList = internalCollageList;
 
   List<Images>? get images => _images;
 

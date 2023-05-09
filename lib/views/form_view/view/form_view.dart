@@ -34,17 +34,14 @@ class _DynamicFieldsState extends State<FormView> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 2.h,
-                  ),
+                    height: 2.h,),
                   Text(
                     'application_for_colleges_and_institutes'.tr,
                     textAlign: TextAlign.start,
-                    style: kLabelPrimaryTextStyle.copyWith(fontSize: 19.sp),
-                  ),
+                    style: kLabelPrimaryTextStyle.copyWith(fontSize: 19.sp),),
                   SizedBox(height: 2.h),
                   Obx(
-                    () => controller.fieldCount.value == 0
-                        ? Padding(
+                    () => controller.fieldCount.value == 0 ? Padding(
                             padding: const EdgeInsets.all(15.0),
                             child: Align(
                               alignment: Alignment.center,
@@ -57,6 +54,14 @@ class _DynamicFieldsState extends State<FormView> {
                           )
                         : Column(
                             children: [
+                              Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Text(
+                                  'You still need to add ${controller.remainingCollagesCount.value} Collages, Collages Added ${controller.fieldCount.value}',
+                                  textAlign: TextAlign.start,
+                                  style: kLabelPrimaryNormalTextStyle.copyWith(fontSize: 18.sp),
+                                ),
+                              ),
                               GetBuilder<FormController>(builder: (_) {
                                 return ListView.builder(
                                   shrinkWrap: true,
@@ -67,6 +72,8 @@ class _DynamicFieldsState extends State<FormView> {
                               }),
                               const SizedBox(height: 12),
                               ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.indigo,),
                                   onPressed: () {
                                     if (!_formKey.currentState!.validate()) {
                                       ScaffoldMessenger.of(context)
@@ -87,6 +94,7 @@ class _DynamicFieldsState extends State<FormView> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.indigo,
           child: const Text("ADD\nNEW"),
           onPressed: () {
             controller.addTextFormField();
@@ -129,9 +137,11 @@ class _DynamicFieldsState extends State<FormView> {
   Widget buildField(int i) {
     return ListTile(
       leading: CircleAvatar(
+        backgroundColor: Colors.indigo,
         child: Text((i + 1).toString()),
       ),
       title: TextFormField(
+        key: Key(controller.list[i].toString()), // <- Magic!
         initialValue: controller.items.length > i ? controller.items[i]["itinerary"]
             : null,
         decoration: InputDecoration(
@@ -139,7 +149,7 @@ class _DynamicFieldsState extends State<FormView> {
               borderRadius: BorderRadius.all(Radius.circular(8))),
           labelText: "${'college_or_institute'.tr} ${i + 1}",
         ),
-        onChanged: (data) => controller.storeValue(i + 1, data),
+        onChanged: (data) => controller.storeValue(i, data),
         validator: (val) => val!.isEmpty ? "Required" : null,
       ),
       trailing: InkWell(

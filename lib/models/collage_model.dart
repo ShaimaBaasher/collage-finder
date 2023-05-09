@@ -14,8 +14,12 @@ class CollageModel {
   String? _collageNameEn;
   int? _collageId;
   String? _collageNameAr;
+  bool? _isSaved;
 
-  CollageModel({String? collageNameEn, int? collageId, String? collageNameAr}) {
+  CollageModel({String? collageNameEn, int? collageId, bool? isSaved, String? collageNameAr}) {
+    if (isSaved != null) {
+      this._isSaved = isSaved;
+    }
     if (collageNameEn != null) {
       this._collageNameEn = collageNameEn;
     }
@@ -26,6 +30,9 @@ class CollageModel {
       this._collageNameAr = collageNameAr;
     }
   }
+
+  bool? get isSaved => _isSaved;
+  set isSaved(bool? isSaved) => _isSaved = isSaved;
 
   String? get collageNameEn => _collageNameEn;
   set collageNameEn(String? collageNameEn) => _collageNameEn = collageNameEn;

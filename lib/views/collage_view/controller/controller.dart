@@ -1,19 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collage_finder/models/area_model.dart';
 import 'package:collage_finder/models/collage_model.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
+import '../../../models/save_uni_model.dart';
 import '../../../models/university_model.dart';
 import '../../../utils/constaints.dart';
 import '../../../utils/routes/app_pages.dart';
+import '../../../utils/storage/storage_service.dart';
+import '../../form_view/controller/controller.dart';
 
 class CollageController extends GetxController {
+
   final universityList = <UniversityModel>[];
   final filterList = <UniversityModel>[];
   final collageList = <CollageModel>[];
   final areaList = <AreaModel>[];
+  final saveUniversityList = <SavedUniModel>[];
 
   var searchBox = '';
+  var savedUniversityIndex = -1;
 
   var isUniversityLoading = false.obs;
   var isCollagesLoading = false.obs;
@@ -56,7 +63,8 @@ class CollageController extends GetxController {
 
       for (var areaElement in areaList) {
         if (element['area_id'] == areaElement.areaId) {
-          areaModel = AreaModel(areaId: areaElement.areaId, areaName: areaElement.areaName);
+          areaModel = AreaModel(
+              areaId: areaElement.areaId, areaName: areaElement.areaName);
         }
       }
 
@@ -92,19 +100,24 @@ class CollageController extends GetxController {
         collageNameAr: element['collage_name_ar'],
       ));
     }
-    printInfo(info: 'collages>>${collagesModelListToJson(innerCollageList)}');
-    printInfo(info: 'collagesList>>${universityModel!.collages!}');
 
     collageList.clear();
+    universityModel!.internalCollageList?.clear();
+
     for (var i = 0; i < universityModel!.collages!.length; i++) {
       for (var k = 0; k < innerCollageList.length; k++) {
         if (innerCollageList[k].collageId == universityModel!.collages![i]) {
           collageList.add(CollageModel(
               collageId: innerCollageList[i].collageId,
-              collageNameEn: innerCollageList[i].collageNameEn));
+              collageNameEn: innerCollageList[i].collageNameEn,
+              isSaved: false));
         }
       }
     }
+
+    checkIfCollageIsInLocalStorage();
+
+    this.universityModel!.internalCollageList = collageList;
   }
 
   Future getAreas() async {
@@ -117,40 +130,146 @@ class CollageController extends GetxController {
     final list = universities['areas'] as List<dynamic>;
     printInfo(info: 'areas>>${universities['areas']}');
     for (var element in list) {
-      areaList.add(AreaModel(
-        areaId: element['area_Id'],
-        areaName: element['area_name'],
-      ));
+      areaList.add(AreaModel(areaId: element['area_Id'], areaName: element['area_name'],));
     }
     printInfo(info: 'areas>>${areaModelListToJson(areaList!)}');
   }
 
   void filter() {
     final List<UniversityModel> tripList = [];
-      if (searchBox.isNotEmpty) {
-        for (var item in universityList) {
-          if (searchBox.toLowerCase().contains(
-              item.universityNameEn!.toLowerCase())) {
-            tripList.add(item);
-          }
+    if (searchBox.isNotEmpty) {
+      for (var item in universityList) {
+        if (searchBox
+            .toLowerCase()
+            .contains(item.universityNameEn!.toLowerCase())) {
+          tripList.add(item);
         }
-        filterList.clear();
-        filterList.addAll(tripList);
-      } else {
-        filterList.clear();
-        filterList.addAll(universityList);
       }
+      filterList.clear();
+      filterList.addAll(tripList);
+    } else {
+      filterList.clear();
+      filterList.addAll(universityList);
+    }
 
-      update();
+    update();
   }
 
   void openUniversityDetails(UniversityModel universityModel) async {
     isCollagesLoading(true);
     this.universityModel = universityModel;
-    printInfo(info: 'universityModel>>${universityModelToJson(universityModel)}');
     Get.toNamed(Routes.universityDetailsView,);
     await getCollages();
     isCollagesLoading(false);
   }
 
+  void checkIfCollageIsInLocalStorage() async {
+    final list = await getSavedUniList();
+    if (list!.isNotEmpty) {
+      await getSavedCollagesFromStorage(list);
+    }
+  }
+
+  Future getSavedCollagesFromStorage(List<SavedUniModel> list,) async {
+    saveUniversityList.clear();
+    saveUniversityList.addAll(list);
+    for (var i = 0; i < saveUniversityList.length; i++) {
+      for (var k = 0; k < collageList.length; k++) {
+        if (saveUniversityList[i].un_Id == universityModel!.universityId && saveUniversityList[i].cat_Id == collageList[k].collageId) {
+          collageList[k].isSaved = true;
+        }
+      }
+    }
+    update();
+  }
+
+  Future<bool> checkIfAlreadyExistDontAddUniversityElseAdd(CollageModel collageModel) async {
+    var isAlreadyExist = false;
+    if (saveUniversityList.isNotEmpty) {
+      for (var i = 0; i < saveUniversityList.length; i++) {
+        for (var k = 0; k < collageList.length; k++) {
+          if (saveUniversityList[i].un_Id == universityModel!.universityId && saveUniversityList[i].cat_Id == collageList[k].collageId) {
+              isAlreadyExist = true;
+          }
+        }
+      }
+    } else {
+      isAlreadyExist = false;
+    }
+
+    if (!isAlreadyExist) {
+      printInfo(info: 'isAlreadyExist');
+      saveUniversityList.add(SavedUniModel(uniCollageName: '${universityModel!.universityNameEn}/${collageModel.collageNameEn}' ,un_Id: universityModel!.universityId, cat_Id: collageModel.collageId));
+      StorageService.to.setUniversityList(saveUniversityList);
+    }
+
+    return isAlreadyExist;
+  }
+
+  void removeCollage() async {
+    if (saveUniversityList.isNotEmpty) {
+      for (var i = 0; i < saveUniversityList.length; i++) {
+        for (var k = 0; k < collageList.length; k++) {
+          if (saveUniversityList[i].un_Id == universityModel!.universityId && saveUniversityList[i].cat_Id == collageList[k].collageId) {
+            saveUniversityList.removeAt(i);
+            StorageService.to.setUniversityList(saveUniversityList!);
+            return;
+          }
+        }
+      }
+    }
+  }
+
+  Future<List<SavedUniModel>?> getSavedUniList() {
+    return StorageService.to.getUniversityList();
+  }
+
+  void saveUniversityForm(int index, CollageModel collageModel) async {
+    final formController = Get.find<FormController>();
+    savedUniversityIndex = index;
+    collageModel.isSaved = true;
+    formController.addTextFormField();
+    formController.storeValue(formController.list.length - 1, '${universityModel!.universityNameEn!}/${collageModel.collageNameEn}');
+    savedUniversityIndex = -1;
+    update();
+    if (await checkIfAlreadyExistDontAddUniversityElseAdd(collageModel)) {
+      EasyLoading.showError('Collage Already Exist');
+    } else {
+      StorageService.to.setUniversityList(saveUniversityList!);
+    }
+  }
+
+  void removeUniversityForm(int index, CollageModel collageModel) {
+    final formController = Get.find<FormController>();
+    savedUniversityIndex = index;
+    collageModel.isSaved = false;
+    if (formController.list.isNotEmpty) {
+      formController.removeTextFormField(formController.list.length - 1);
+    }
+    savedUniversityIndex = -1;
+    update();
+    removeCollage();
+  }
+
+  void removeFromSavedListCollageController(String uniCollageName) async {
+    final list = await getSavedUniList();
+    if (list!.isNotEmpty) {
+      saveUniversityList.clear();
+      saveUniversityList.addAll(list);
+        for (var i = 0; i < saveUniversityList.length; i++) {
+          for (var k = 0; k < collageList.length; k++) {
+            if (saveUniversityList[i].uniCollageName == uniCollageName) {
+              saveUniversityList.removeAt(i);
+              StorageService.to.setUniversityList(saveUniversityList);
+              return;
+            }
+          }
+        }
+    }
+  }
+
+  void updateCollageController() {
+    savedUniversityIndex = -1;
+    update();
+  }
 }

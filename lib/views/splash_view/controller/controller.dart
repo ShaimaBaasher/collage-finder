@@ -1,5 +1,7 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collage_finder/utils/constaints.dart';
+import 'package:collage_finder/utils/storage/storage_service.dart';
 import 'package:collage_finder/views/free_trial_view/view/FreeTrialView.dart';
 import 'package:get/get.dart';
 
@@ -27,6 +29,7 @@ class SplashController extends GetxController {
     isAppOnline = universities['isOnline'] as bool;
 
     if (isAppOnline) {
+       StorageService.to.reset();
       goToHomeScreen();
     } else {
       Get.off(() => const FreeTrailView());

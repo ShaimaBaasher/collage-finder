@@ -26,7 +26,7 @@ class RowTableRow extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
               Text(
-                '${controller.items[index]["field_id"]} - ',
+                '${index + 1} - ',
                 style: kLabelPrimaryTextStyle.copyWith(
                     fontSize: 18.sp, color: Colors.black87),),
               SizedBox(width: 2.w,),

@@ -14,30 +14,31 @@ import 'dart:ui' as ui;
 import 'package:share_plus/share_plus.dart';
 
 class FormTableController extends GetxController {
-
   List<Map<String, dynamic>> items = [];
   var imgPath = '';
 
-@override
+  @override
   void onInit() {
     super.onInit();
   }
 
-  Future<String?> takeScreenshot(GlobalKey<State<StatefulWidget>> globalKey) async {
-
+  Future<String?> takeScreenshot(
+      GlobalKey<State<StatefulWidget>> globalKey) async {
     try {
       if (await Permission.storage.request().isRestricted) {
-        await [Permission.storage,].request();
+        await [
+          Permission.storage,
+        ].request();
       }
 
       final status = await Permission.storage.status;
 
-      if(status.isGranted) {
-        RenderRepaintBoundary boundary =
-        globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
+      if (status.isGranted) {
+        RenderRepaintBoundary boundary = globalKey.currentContext
+            ?.findRenderObject() as RenderRepaintBoundary;
         ui.Image image = await boundary.toImage();
         ByteData? byteData =
-        await image.toByteData(format: ui.ImageByteFormat.png);
+            await image.toByteData(format: ui.ImageByteFormat.png);
         var pngBytes = byteData?.buffer.asUint8List();
         var bs64 = base64Encode(pngBytes!);
         print(pngBytes);
@@ -47,9 +48,8 @@ class FormTableController extends GetxController {
         // setState(() {});
         return savedPath;
       } else {
-        EasyLoading.showInfo('receipt_saved_successfully'.tr);
+        EasyLoading.showInfo('Form Successfully Saved');
       }
-
     } catch (e) {
       print(e);
     }
@@ -58,7 +58,7 @@ class FormTableController extends GetxController {
   Future<String> savePng(Uint8List capturedImage) async {
     final tempDir = await syspaths.getTemporaryDirectory();
     String tempPath = tempDir.path;
-    final fileName = "yallabook_receipt_${DateTime.now().millisecondsSinceEpoch}";
+    final fileName = "collage_finder${DateTime.now().millisecondsSinceEpoch}";
     String imgFilePath = '$tempPath/$fileName.png';
     io.File imgFile = io.File(imgFilePath);
     await imgFile.writeAsBytes(capturedImage);
@@ -68,14 +68,13 @@ class FormTableController extends GetxController {
   }
 
   Future shareReceipt(GlobalKey<State<StatefulWidget>> globalKey) async {
-
     final imgFilePath = await takeScreenshot(globalKey);
-    if(imgFilePath != null) {
-      Share.shareFiles(
+
+    if (imgFilePath != null) {
+      await Share.shareFiles(
         [imgFilePath],
         text: 'collage_finder',
       );
     }
   }
-
 }

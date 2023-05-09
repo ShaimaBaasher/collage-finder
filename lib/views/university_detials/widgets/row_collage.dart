@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import '../../../models/university_model.dart';
 import '../../../utils/styles.dart';
 import '../../../widgets/divider_widget.dart';
 
 class RowCollage extends StatelessWidget {
   final controller = Get.find<CollageController>();
   CollageModel collageModel;
+  int index;
 
-  RowCollage({Key? key, required this.collageModel}) : super(key: key);
+  RowCollage({Key? key, required this.index, required this.collageModel}) : super(key: key);
 
   // FilterModel filterModel;
 
@@ -27,12 +27,28 @@ class RowCollage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                CircleAvatar(
+                  backgroundColor:
+                  const Color(0xFFFFFFFF).withOpacity(0.6),
+                  child: GetBuilder<CollageController>(
+                      builder: (_) {
+                        return IconButton(
+                          icon:  Icon(collageModel.isSaved! || controller.savedUniversityIndex == index ? Icons.remove : Icons.add, size: 20),
+                          color: collageModel.isSaved! || controller.savedUniversityIndex == index ? Colors.red : Colors.green,
+                          onPressed: () {
+                            collageModel.isSaved! || controller.savedUniversityIndex == index ?
+                            controller.removeUniversityForm(index, collageModel) :
+                            controller.saveUniversityForm(index, collageModel);
+                          },
+                        );
+                      }
+                  ),
+                ),
               Expanded(
                 child: Text(
                   '${collageModel.collageNameEn}',
                   style: kLabelPrimaryNormalTextStyle.copyWith(
-                      fontSize: 18.sp, color: Colors.black87),),
-              ),
+                      fontSize: 18.sp, color: Colors.black87),),),
             ],),
             const DividerWidget()
           ],
