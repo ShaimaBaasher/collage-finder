@@ -39,10 +39,6 @@ class FormController extends GetxController {
 
     items.add({"field_id": i, "itinerary": v,});
 
-    printInfo(info: 'storeValue>${i},${v}');
-    printInfo(info: 'storeValue>${items[i]['field_id']}');
-    printInfo(info: 'storeValue>${items[i]['itinerary']}');
-
     update();
   }
 
@@ -54,9 +50,6 @@ class FormController extends GetxController {
 
   void removeListData(int i) {
     if (items.isNotEmpty) {
-      printInfo(info: 'itinerary>${i}');
-      printInfo(info: 'itinerary>${items[i]['field_id']}');
-      printInfo(info: 'itinerary>${items[i]['itinerary']}');
       final rateController = Get.find<RateController>();
       final collageController = Get.find<CollageController>();
       final collageNameEn = items[i]['itinerary'] as String;
@@ -69,9 +62,6 @@ class FormController extends GetxController {
       collageController.updateCollageController();
       rateController.updateRateController();
       items.removeAt(i);
-      printInfo(info: 'itinerary>${i}');
-      printInfo(info: 'itinerary>${items[i]['field_id']}');
-      printInfo(info: 'itinerary>${items[i]['itinerary']}');
       update();
     }
   }
@@ -93,7 +83,6 @@ class FormController extends GetxController {
 
   void removeTextFormField(int i) {
     if (list.isNotEmpty) {
-      printInfo(info: 'list ${i}');
       fieldCount.value--;
       remainingCollagesCount.value++;
       list.removeAt(i);

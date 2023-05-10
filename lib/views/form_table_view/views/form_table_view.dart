@@ -18,7 +18,8 @@ class FormTableView extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
         child: Scaffold(
-      appBar: AppBar(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.indigo,
         actions: [

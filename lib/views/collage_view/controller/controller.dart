@@ -187,18 +187,15 @@ class CollageController extends GetxController {
     var isAlreadyExist = false;
     if (saveUniversityList.isNotEmpty) {
       for (var i = 0; i < saveUniversityList.length; i++) {
-        for (var k = 0; k < collageList.length; k++) {
-          if (saveUniversityList[i].un_Id == universityModel!.universityId && saveUniversityList[i].cat_Id == collageList[k].collageId) {
+          if (saveUniversityList[i].un_Id == universityModel!.universityId && saveUniversityList[i].cat_Id == collageModel.collageId) {
               isAlreadyExist = true;
           }
-        }
       }
     } else {
       isAlreadyExist = false;
     }
 
     if (!isAlreadyExist) {
-      printInfo(info: 'isAlreadyExist');
       saveUniversityList.add(SavedUniModel(uniCollageName: '${universityModel!.universityNameEn}/${collageModel.collageNameEn}' ,un_Id: universityModel!.universityId, cat_Id: collageModel.collageId));
       StorageService.to.setUniversityList(saveUniversityList);
     }
@@ -231,6 +228,7 @@ class CollageController extends GetxController {
     formController.addTextFormField();
     formController.storeValue(formController.list.length - 1, '${universityModel!.universityNameEn!}/${collageModel.collageNameEn}');
     savedUniversityIndex = -1;
+    printInfo(info: 'collageModel>>${collagesModelToJson(collageModel)}');
     update();
     if (await checkIfAlreadyExistDontAddUniversityElseAdd(collageModel)) {
       EasyLoading.showError('Collage Already Exist');

@@ -3,6 +3,7 @@ import 'package:collage_finder/models/admission_model.dart';
 
 import 'firebase/firebase.dart';
 
+final ADVICE_REF = fireStore.collection('advice');
 final UNIVERSITIES_REF = fireStore.collection('universities');
 final APP_ONLINE_REF = fireStore.collection('app-online');
 final UNIVERSITY_CATEGORY_REF = fireStore.collection('university-category');
