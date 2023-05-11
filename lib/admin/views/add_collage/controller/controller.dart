@@ -84,8 +84,8 @@ class AddCollageController extends GetxController {
 
     COLLAGES_REF.doc('PjipJ1Z7wmTS7wFvWFa4').set(
         CollageList(list: collageList).toJson()
-    )    .then((_) => EasyLoading.showSuccess('Collage Added Successfully'))
-        .catchError((error) => EasyLoading.showError('Collage Add failed $error'));
+    )    .then((_) => EasyLoading.showSuccess('College Added Successfully'))
+        .catchError((error) => EasyLoading.showError('College Add failed $error'));
 
   }
 

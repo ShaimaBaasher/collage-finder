@@ -260,6 +260,7 @@ class AddUniversityController extends GetxController {
     });
     addedCollegelist.add(selection.collageId!);
     update();
+
   }
 
   void removeListData(int i) {
