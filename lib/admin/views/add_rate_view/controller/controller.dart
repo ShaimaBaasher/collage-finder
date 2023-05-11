@@ -67,6 +67,7 @@ class AddRateController extends GetxController {
     if (items.isNotEmpty) {
       final collageNameEn = items[i]['itinerary'] as String;
       // printInfo(info: 'collageNameEn>>${collageNameEn.split('/')[1]}');
+      rateList.removeAt(i);
       items.removeAt(i);
       update();
     }

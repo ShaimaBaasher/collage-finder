@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 import '../../../../models/department_model.dart';
+import '../../../../models/filter_model.dart';
 import '../../../../utils/constaints.dart';
 
 class AddDepartmentController extends GetxController {
@@ -16,8 +17,16 @@ class AddDepartmentController extends GetxController {
   List<int> list = [];
 
   List<Map<String, dynamic>> items = [];
+  List<Map<String, dynamic>> genderItems = [];
+
   var fieldCount = 0.obs;
   var remainingCollagesCount = 35.obs;
+
+  final genderList = [
+    FilterModel(filterId: 10, filterName: 'Male And Female', dbId: 1),
+    FilterModel(filterId: 8, filterName: 'Male only', dbId: 3),
+    FilterModel(filterId: 9, filterName: 'Female only', dbId: 2),
+  ];
 
   Future getDepartments() async {
     departmentList.clear();
@@ -66,11 +75,37 @@ class AddDepartmentController extends GetxController {
     update();
   }
 
+  dynamic storeGenderValue(int i, FilterModel v) {
+    bool valueFound = false;
+    for (int j = 0; j < genderItems.length; j++) {
+      if (genderItems[j].containsKey("field_id")) {
+        if (genderItems[j]["field_id"] == i) {
+          valueFound = !valueFound;
+          break;
+        }
+      }
+    }
+
+    /// If value is found
+    if (valueFound) {
+      genderItems.removeWhere((e) => e["field_id"] == i);
+    }
+
+    genderItems.add({
+      "field_id": i,
+      "itinerary": v,
+    });
+
+    update();
+  }
+
   void removeListData(int i) {
     if (items.isNotEmpty) {
       final collageNameEn = items[i]['itinerary'] as String;
       // printInfo(info: 'collageNameEn>>${collageNameEn.split('/')[1]}');
       items.removeAt(i);
+      departmentList.removeAt(i);
+      genderItems.removeAt(i);
       update();
     }
   }
@@ -103,6 +138,7 @@ class AddDepartmentController extends GetxController {
       fieldCount.value--;
       remainingCollagesCount.value++;
       list.removeAt(i);
+      genderItems.removeAt(i);
       removeListData(i);
     }
   }

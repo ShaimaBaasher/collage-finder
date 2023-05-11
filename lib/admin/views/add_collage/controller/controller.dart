@@ -69,6 +69,7 @@ class AddCollageController extends GetxController {
       final collageNameEn = items[i]['itinerary'] as String;
       // printInfo(info: 'collageNameEn>>${collageNameEn.split('/')[1]}');
       items.removeAt(i);
+      collageList.removeAt(i);
       update();
     }
   }

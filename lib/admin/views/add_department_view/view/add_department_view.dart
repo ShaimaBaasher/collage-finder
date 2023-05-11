@@ -1,4 +1,5 @@
 import 'package:collage_finder/admin/views/add_rate_view/controller/controller.dart';
+import 'package:collage_finder/models/filter_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -28,7 +29,7 @@ class AddDepartmentView extends StatelessWidget {
                 children: [
                   SizedBox(height: 2.h,),
                   Text(
-                    'Add Collage',
+                    'Add Department',
                     textAlign: TextAlign.start,
                     style: kLabelPrimaryTextStyle.copyWith(fontSize: 19.sp),),
                   SizedBox(height: 2.h),
@@ -38,7 +39,7 @@ class AddDepartmentView extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.center,
                         child: Text(
-                          "No Collages added !",
+                          "No Departments added !",
                           style: kLabelSecondryTextStyle.copyWith(
                               fontSize: 18.sp),
                         ),
@@ -95,8 +96,8 @@ class AddDepartmentView extends StatelessWidget {
          context: context,
          builder: (context) {
            return AlertDialog(
-             title: const Text("Upload Collage"),
-             content: const Text('Would you like to Upload Rates ? '),
+             title: const Text("Upload Department"),
+             content: const Text('Would you like to Upload Department ? '),
              actions: [
                TextButton(
                  // FlatButton widget is used to make a text to work like a button
@@ -111,7 +112,7 @@ class AddDepartmentView extends StatelessWidget {
                    controller.goToGenerateFormTable();
                    // Navigator.pop(context);
                  }, // function used to perform after pressing the button
-                 child: const Text('Generate'),
+                 child: const Text('Upload'),
                ),
              ],
            );
@@ -123,18 +124,45 @@ class AddDepartmentView extends StatelessWidget {
         backgroundColor: Colors.indigo,
         child: Text((i + 1).toString()),
       ),
-      title: TextFormField(
-        keyboardType: TextInputType.number,
-        key: Key(controller.list[i].toString()), // <- Magic!
-        initialValue: controller.items.length > i ? controller.items[i]["itinerary"]
-            : null,
-        decoration: InputDecoration(
-          border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8))),
-          labelText: "Collage Value ${i + 1}",
-        ),
-        onChanged: (data) => controller.storeValue(i, data),
-        validator: (val) => val!.isEmpty ? "Required" : null,
+      title: Column(
+        children: [
+          TextFormField(
+            keyboardType: TextInputType.number,
+            key: Key(controller.list[i].toString()), // <- Magic!
+            initialValue: controller.items.length > i ? controller.items[i]["itinerary"]
+                : null,
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8))),
+              labelText: "Department Value ${i + 1}",
+            ),
+            onChanged: (data) => controller.storeValue(i, data),
+            validator: (val) => val!.isEmpty ? "Required" : null,
+          ),
+          Autocomplete(
+            key: Key((i+3).toString()),
+            // <- Magic!
+            initialValue: TextEditingValue(
+              text: controller.items.length > i
+                  ? controller.items[i]["itinerary"]
+                  : '',
+            ),
+            displayStringForOption: (FilterModel option) => option.filterName!,
+            onSelected: (FilterModel selection) {
+              controller.storeGenderValue(i, selection);
+            },
+            optionsBuilder: (TextEditingValue textEditingValue) {
+              if (textEditingValue.text == '') {
+                return const Iterable<FilterModel>.empty();
+              }
+              return controller.genderList.where((FilterModel model) {
+                return model.filterName!
+                    .toLowerCase()
+                    .contains(textEditingValue.text.toLowerCase());
+              });
+            },
+          ),
+        ],
       ),
       trailing: InkWell(
         child: const Icon(Icons.delete_outlined, color: Colors.red),

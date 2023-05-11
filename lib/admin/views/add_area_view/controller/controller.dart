@@ -67,6 +67,7 @@ class AddAreaController extends GetxController {
   void removeListData(int i) {
     if (items.isNotEmpty) {
       final collageNameEn = items[i]['itinerary'] as String;
+      areaList.removeAt(i);
       items.removeAt(i);
       update();
     }
