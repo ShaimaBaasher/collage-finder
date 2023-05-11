@@ -73,7 +73,7 @@ class UniversityDetailsView extends StatelessWidget {
                     style: kLabelSecondryTextStyle.copyWith(fontSize: 13),),
                   SizedBox(height: 2.h,),
                   Text(
-                    'Collages',
+                    'Collage',
                     textAlign: TextAlign.start,
                     style: kLabelPrimaryTextStyle,),
                   Obx(() => controller.isCollagesLoading.isTrue

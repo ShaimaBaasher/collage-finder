@@ -15,8 +15,12 @@ class CollageModel {
   int? _collageId;
   String? _collageNameAr;
   bool? _isSaved;
+  dynamic _rate;
 
-  CollageModel({String? collageNameEn, int? collageId, bool? isSaved, String? collageNameAr}) {
+  CollageModel({String? collageNameEn, int? collageId, bool? isSaved, String? collageNameAr, dynamic rate}) {
+    if (rate != null) {
+      this._rate = rate;
+    }
     if (isSaved != null) {
       this._isSaved = isSaved;
     }
@@ -30,6 +34,9 @@ class CollageModel {
       this._collageNameAr = collageNameAr;
     }
   }
+
+  dynamic get rate => _rate;
+  set rate(dynamic rate) => _rate = rate;
 
   bool? get isSaved => _isSaved;
   set isSaved(bool? isSaved) => _isSaved = isSaved;

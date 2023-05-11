@@ -79,7 +79,6 @@ class RateController extends GetxController {
 
   void goToHomeScreen() async {
     await Future.delayed(const Duration(seconds: 3));
-    // StorageService.to.isLoggedIn == true ? Get.off(() => const BottomBarNavigationView()) : Get.off(() => const OnBoarding());
   }
 
   void isItemSelected(int index, FilterModel filterModel) {
@@ -148,18 +147,8 @@ class RateController extends GetxController {
       ));
     }
 
-    // print('admissionList=>${admissionModelListToJson(admissionList)}');
-    // print('collageList=>${universitySectorList[0].filterName}');
-    // for (var admissionModel in admissionList) {
-    //   final sectorModel = universitySectorList
-    //       .firstWhere((element) => element.dbId == admissionModel.sectorId);
-    //   // final categoryModel = specialtyCategoryList.firstWhere((element) => element.dbId == admissionModel.categoryId);
-    //   // final genderModel = genderList.firstWhere((element) => element.dbId == admissionModel.genderId);
-    //   printInfo(info: 'collageNameEn=>${sectorModel?.filterName}');
-    // }
     setUniversitiesAdmissionList();
 
-    print(allData[0]);
   }
 
   Future getAreas() async {
@@ -298,10 +287,9 @@ class RateController extends GetxController {
       }
       final totalModel = totalList.firstWhere((element) => element.totalId == admissionModel.totalId);
       final rateMode = rateList.firstWhere((element) => element.totalId == admissionModel.rateId);
-      final superlative = superlativeList.firstWhere(
-          (element) => element.totalId == admissionModel.superlativeId);
-      final categoryModel = specialtyCategoryList
-          .firstWhere((element) => element.dbId == admissionModel.categoryId);
+      final superlative = superlativeList.firstWhere((element) => element.totalId == admissionModel.superlativeId);
+      final categoryModel = specialtyCategoryList.firstWhere((element) => element.dbId == admissionModel.categoryId);
+
       universityAdmissionList.add(UniversityAdmissionModel(
           universityModel: universityModel,
           categoryModel: categoryModel,

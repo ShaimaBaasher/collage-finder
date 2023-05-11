@@ -19,29 +19,34 @@ class RowTableRow extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-              Text(
-                '${index + 1} - ',
-                style: kLabelPrimaryTextStyle.copyWith(
-                    fontSize: 18.sp, color: Colors.black87),),
-              SizedBox(width: 2.w,),
-              Expanded(
-                child: Text(
-                  '${controller.items[index]["itinerary"]}',
+        child: Container(
+          color: Colors.white,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                Text(
+                  '${index + 1} - ',
                   style: kLabelPrimaryTextStyle.copyWith(
-                      fontSize: 18.sp, color: Colors.black87),
+                      fontSize: 18.sp, color: Colors.black87),),
+                SizedBox(width: 2.w,),
+                Expanded(
+                  child: Text(
+                    '${controller.items[index]["itinerary"]}',
+                    style: kLabelPrimaryTextStyle.copyWith(
+                        fontSize: 18.sp, color: Colors.black87),
+                  ),
                 ),
-              ),
-            ],),
-            const DividerWidget()
-          ],
+              ],),
+              const DividerWidget()
+            ],
+          ),
         ),
       ),
     );
   }
+
+
 }

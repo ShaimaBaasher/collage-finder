@@ -4,7 +4,10 @@ import 'package:collage_finder/models/collage_model.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
+import '../../../models/admission_model.dart';
 import '../../../models/save_uni_model.dart';
+import '../../../models/total_model.dart';
+import '../../../models/university_admission_model.dart';
 import '../../../models/university_model.dart';
 import '../../../utils/constaints.dart';
 import '../../../utils/routes/app_pages.dart';
@@ -18,6 +21,10 @@ class CollageController extends GetxController {
   final collageList = <CollageModel>[];
   final areaList = <AreaModel>[];
   final saveUniversityList = <SavedUniModel>[];
+  final admissionList = <AdmissionModel>[];
+  final universityAdmissionList = <UniversityAdmissionModel>[];
+  final rateList = <TotalModel>[];
+  final rateValueList = <TotalModel>[];
 
   var searchBox = '';
   var savedUniversityIndex = -1;
@@ -85,6 +92,51 @@ class CollageController extends GetxController {
     isUniversityLoading(false);
   }
 
+  Future getRates() async {
+    rateList.clear();
+    QuerySnapshot querySnapshot = await RATE_REF.get();
+    // Get data from docs and convert map to List
+    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+    final collages = allData[0] as Map<String, dynamic>;
+    final list = collages['rates'] as List<dynamic>;
+    for (var element in list) {
+      rateList.add(TotalModel(totalId: element['rate_Id'], total: element['rate']));
+    }
+    print(allData[0]);
+  }
+
+  Future getAdmission() async {
+    admissionList.clear();
+    QuerySnapshot querySnapshot = await ADMISSION_REF.get();
+    // Get data from docs and convert map to List
+    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+    final universities = allData[0] as Map<String, dynamic>;
+    final list = universities['admission-rate'] as List<dynamic>;
+
+    printInfo(info: 'admission-rate>${universities['admission-rate']}');
+
+    for (var element in list) {
+      admissionList.add(AdmissionModel(
+        sectorId: element['sector_Id'],
+        categoryId: element['category_Id'],
+        collageId: element['collage_Id'],
+        departmentId: element['department_Id'],
+        rateId: element['rate_Id'],
+        superlativeId: element['superlative_Id'],
+        totalId: element['total_Id'],
+        universityId: element['university_Id'],
+      ));
+    }
+
+    // if rateId == admissionList.id and admissionList.unId == universityId and collageId == admissionList.collageId
+    if (collageList.isNotEmpty) {
+      for (var collageModel in collageList) {
+        var rateId = admissionList.firstWhereOrNull((element) => element.collageId == collageModel.collageId && element.universityId == universityModel?.universityId)?.rateId;
+        rateId != null ? collageModel.rate = rateList.firstWhereOrNull((element) => element.totalId == rateId)?.total : null;
+      }
+    }
+  }
+
   Future getCollages() async {
     // isUniversityLoading(true);
     final innerCollageList = <CollageModel>[];
@@ -116,6 +168,9 @@ class CollageController extends GetxController {
     }
 
     checkIfCollageIsInLocalStorage();
+
+    await getRates();
+    await getAdmission();
 
     this.universityModel!.internalCollageList = collageList;
   }

@@ -44,9 +44,8 @@ dependencies:
   cloud_firestore: ^4.6.0
   syncfusion_flutter_sliders: ^21.2.3
   firebase_storage: ^11.1.2
-  permission_handler: ^10.2.0
-  image_gallery_saver: ^1.7.1
-  share_plus: ^4.5.3
+  pdf: ^3.10.1
+  printing: ^5.10.3
 
 dev_dependencies:
   flutter_test:
@@ -88,6 +87,11 @@ flutter:
     - family: tajawal
       fonts:
         - asset: fonts/tajawal.ttf
+    - family: Montserrat
+      fonts:
+        - asset: fonts/Helvetica.ttf
+        - asset: fonts/Helvetica-Oblique.ttf
+
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
