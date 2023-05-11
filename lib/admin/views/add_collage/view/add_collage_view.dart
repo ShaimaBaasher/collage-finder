@@ -38,7 +38,7 @@ class AddCollageView extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.center,
                         child: Text(
-                          "No Collages added !",
+                          "No Colleges added !",
                           style: kLabelSecondryTextStyle.copyWith(
                               fontSize: 18.sp),
                         ),
@@ -94,8 +94,8 @@ class AddCollageView extends StatelessWidget {
          context: context,
          builder: (context) {
            return AlertDialog(
-             title: const Text("Upload Collage"),
-             content: const Text('Would you like to Upload Rates ? '),
+             title: const Text("Upload College"),
+             content: const Text('Would you like to Upload College ? '),
              actions: [
                TextButton(
                  // FlatButton widget is used to make a text to work like a button
@@ -110,7 +110,7 @@ class AddCollageView extends StatelessWidget {
                    controller.goToGenerateFormTable();
                    // Navigator.pop(context);
                  }, // function used to perform after pressing the button
-                 child: const Text('Generate'),
+                 child: const Text('Upload'),
                ),
              ],
            );
@@ -130,7 +130,7 @@ class AddCollageView extends StatelessWidget {
         decoration: InputDecoration(
           border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(8))),
-          labelText: "Collage Value ${i + 1}",
+          labelText: "College Value ${i + 1}",
         ),
         onChanged: (data) => controller.storeValue(i, data),
         validator: (val) => val!.isEmpty ? "Required" : null,

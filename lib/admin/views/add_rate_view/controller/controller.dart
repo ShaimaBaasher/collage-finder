@@ -84,7 +84,7 @@ class AddRateController extends GetxController {
     RATE_REF.doc('sKzRIxcYmTeymrptKUzG').set(
         RateList(rateModel: rateList).toJson()
       // 'universities': input
-    )    .then((_) => EasyLoading.showSuccess('Rate Added Successfully'))
+    ).then((_) => EasyLoading.showSuccess('Rate Added Successfully'))
         .catchError((error) => EasyLoading.showError('Rate Add failed $error'));
 
   }

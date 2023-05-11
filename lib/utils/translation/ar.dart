@@ -1,5 +1,5 @@
 const Map<String, String> ar = {
-  "app_name": "Yallabook",
+  "app_name": "College finder",
   "resume": "Resume",
   "rate": "Rate",
   "help": "Help",

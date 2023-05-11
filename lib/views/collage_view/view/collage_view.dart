@@ -48,13 +48,11 @@ class CollageView extends StatelessWidget {
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 8),
                         border: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(width: 0.5, color: Colors.blue),
+                          borderSide: const BorderSide(width: 0.5, color: Colors.blue),
                           //<-- SEE HERE
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        constraints:
-                            const BoxConstraints(maxHeight: 50, minHeight: 50),
+                        constraints: const BoxConstraints(maxHeight: 50, minHeight: 50),
                         filled: true,
                         hintStyle: kTextFieldTextStyle,
                         hintText: "search_by_collage_or_department".tr,

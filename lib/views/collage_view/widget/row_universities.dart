@@ -125,7 +125,7 @@ class RowUniversities extends StatelessWidget {
                   SizedBox(
                     width: 100.w,
                     child: Text(
-                      'Number of Collages ${universityModel.collages?.length}',
+                      'Number of Colleges ${universityModel.collages?.length}',
                       style: kLabelSecondryTextStyle.copyWith(fontSize: 13, color: Colors.black87),
                     ),
                   ),
