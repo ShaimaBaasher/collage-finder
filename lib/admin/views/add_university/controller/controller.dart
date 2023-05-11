@@ -21,6 +21,7 @@ class AddUniversityController extends GetxController {
   List<XFile>? imageFileList = [];
 
   var isAreaLoading = false.obs;
+  var isInsertingLoading = false.obs;
 
   var isImagePulledFromStorage = false;
 
@@ -155,6 +156,7 @@ class AddUniversityController extends GetxController {
   }
 
   void uploadUniversity() async {
+    isInsertingLoading(true);
     // Images
     await uploadImage();
     if (imageFileList!.isNotEmpty) {
@@ -181,6 +183,9 @@ class AddUniversityController extends GetxController {
        UniversityList(universityModel: universityModelLists).toJson()
     )    .then((_) => EasyLoading.showSuccess('University Added Successfully'))
         .catchError((error) => EasyLoading.showError('University Add failed $error'));
+
+    isInsertingLoading(false);
+
   }
 
   Future getCollages() async {

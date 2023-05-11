@@ -121,14 +121,16 @@ class AddAdviceView extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 1.h,),
+              Obx(() =>
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.indigo,),
-                onPressed: () {
+                onPressed: controller.isInsertingLoading.isTrue ? null : () {
                   controller.uploadAdvice();
                 },
                 icon: const Icon(Icons.add),
                 label: const Text("Add Advice"),),
+              ),
             ],
           ),
         ),

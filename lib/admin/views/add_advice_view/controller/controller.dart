@@ -13,6 +13,7 @@ class AddAdviceController extends GetxController {
 
   final adviceList = <AdviceModel>[];
   var isAdvicesLoading = false.obs;
+  var isInsertingLoading = false.obs;
 
   @override
   void onInit() async {
@@ -39,6 +40,7 @@ class AddAdviceController extends GetxController {
   }
 
   void uploadAdvice() async {
+    isInsertingLoading(true);
     // Images
     adviceList.add(AdviceModel(
         id: adviceList[adviceList.length -1].id! + 1,
@@ -50,7 +52,7 @@ class AddAdviceController extends GetxController {
       // 'universities': input
     )        .then((_) => EasyLoading.showSuccess('Advice Added Successfully'))
         .catchError((error) => EasyLoading.showError('Advice Add failed $error'));
-
+    isInsertingLoading(false);
   }
 
 

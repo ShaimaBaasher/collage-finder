@@ -24,11 +24,11 @@ class MoreController extends GetxController {
       name: 'Add Admission',
       icon: 'assets/icons/ic_rectangle_check.svg',),
     MoreModel(
-      id: 4,
+      id: 5,
       name: 'Add Rate',
       icon: 'assets/icons/ic_rectangle_check.svg',),
     MoreModel(
-      id: 5,
+      id: 6,
       name: 'Add Advice',
       icon: 'assets/icons/ic_rectangle_check.svg',),
   ];
@@ -47,9 +47,12 @@ class MoreController extends GetxController {
         Get.toNamed(Routes.departmentView, );
         break;
       case 4:
-        Navigator.of(context, rootNavigator: true).pushNamed(Routes.rateView);
+        Navigator.of(context, rootNavigator: true).pushNamed(Routes.admissionView);
         break;
       case 5:
+        Navigator.of(context, rootNavigator: true).pushNamed(Routes.rateView);
+        break;
+      case 6:
         Navigator.of(context, rootNavigator: true).pushNamed(Routes.adviceView);
         break;
     }
