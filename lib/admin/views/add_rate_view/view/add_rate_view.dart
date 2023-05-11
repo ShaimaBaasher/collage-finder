@@ -109,7 +109,7 @@ class AddRateView extends StatelessWidget {
                  // FlatButton widget is used to make a text to work like a button
                  onPressed: () {
                    controller.goToGenerateFormTable();
-                   // Navigator.pop(context);
+                   Navigator.pop(context);
                  }, // function used to perform after pressing the button
                  child: const Text('Generate'),
                ),

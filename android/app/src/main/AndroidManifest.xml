@@ -2,7 +2,7 @@
     package="com.collage_finder.www">
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
    <application
-        android:label="collage_finder"
+        android:label="College Finder"
         android:name="${applicationName}"
        android:requestLegacyExternalStorage="true"
        android:icon="@mipmap/ic_launcher">

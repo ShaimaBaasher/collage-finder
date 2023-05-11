@@ -13,7 +13,7 @@ class MoreController extends GetxController {
       icon: 'assets/icons/ic_profile.svg',),
     MoreModel(
       id: 2,
-      name: 'Add Collage',
+      name: 'Add College',
       icon: 'assets/icons/ic_favourite.svg',),
     MoreModel(
       id: 3,
@@ -59,7 +59,7 @@ class MoreController extends GetxController {
       case 6:
         Navigator.of(context, rootNavigator: true).pushNamed(Routes.adviceView);
         break;
-      case 6:
+      case 7:
         Navigator.of(context, rootNavigator: true).pushNamed(Routes.areaView);
         break;
     }
