@@ -47,6 +47,7 @@ class AddUniversityController extends GetxController {
   final uploadedImagesLists = <Images>[];
 
   List<int> list = [];
+  List<int> addedCollegelist = [];
   List<Map<String, dynamic>> items = [];
   var fieldCount = 0.obs;
 
@@ -173,7 +174,7 @@ class AddUniversityController extends GetxController {
         about: aboutUniversity.trim(),
         images: uploadedImagesLists,
         areaId: dropdownValue?.areaId,
-        collages: [1, 2, 3]));
+        collages: addedCollegelist));
 
     UNIVERSITIES_REF.doc('GAiapcDjqZzwXBQ24LYi').set(
        UniversityList(universityModel: universityModelLists).toJson()
@@ -225,9 +226,7 @@ class AddUniversityController extends GetxController {
           universityNameEn: element['university_name_en'],
           universityNameAr: element['university_name_ar']));
 
-      printInfo(
-          info:
-              'areaModel>>${universityModelListToJson(universityModelLists!)}');
+      printInfo(info: 'areaModel>>${universityModelListToJson(universityModelLists!)}');
     }
   }
 
@@ -255,20 +254,17 @@ class AddUniversityController extends GetxController {
     if (valueFound) {
       items.removeWhere((e) => e["field_id"] == i);
     }
-
     items.add({
       "field_id": i,
       "itinerary": selection.collageNameEn,
     });
-    printInfo(info: 'itemss>>${items}');
-    collageList.add(selection);
+    addedCollegelist.add(selection.collageId!);
     update();
   }
 
   void removeListData(int i) {
     if (collageList.isNotEmpty) {
       // printInfo(info: 'collageNameEn>>${collageNameEn.split('/')[1]}');
-      collageList.removeAt(i);
       update();
     }
   }

@@ -71,12 +71,10 @@ class AddUniversityView extends StatelessWidget {
                       fit: StackFit.expand,
                       children: [
                         controller.isImagePulledFromStorage
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(50),
+                            ? CircleAvatar(
+                                 radius: 30,
                                 child: Image.file(
                                   io.File(controller.imagePath),
-                                  width: 70,
-                                  height: 70,
                                   fit: BoxFit.cover,
                                 ))
                             : StorageService.to.universityPhotoUrl == null ||
