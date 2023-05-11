@@ -74,7 +74,7 @@ class AddAreaController extends GetxController {
   }
 
   void goToGenerateFormTable() {
-    var rateId = areaList[areaList.length - 1].areaId!;
+    var rateId = areaList.isNotEmpty ? areaList[areaList.length - 1].areaId! : 1;
     for (var rateMode in items) {
       rateId++;
       areaList.add(

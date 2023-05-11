@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
@@ -13,6 +14,7 @@ class AddDepartmentController extends GetxController {
   var isSwitched = false.obs;
 
   final departmentList = <DepartmentModel>[];
+  final selectedGenderList = <FilterModel>[];
 
   List<int> list = [];
 
@@ -37,6 +39,7 @@ class AddDepartmentController extends GetxController {
     final list = collages['departments'] as List<dynamic>;
     for (var element in list) {
       departmentList.add(DepartmentModel(
+          genderId: element['gender_Id'],
           departmentId: element['department_Id'],
           departmentNameEn: element['department_name_en'],
           departmentNameAr: element['department_name_ar']));
@@ -45,7 +48,6 @@ class AddDepartmentController extends GetxController {
 
   @override
   void onInit() async {
-    await getDepartments();
     super.onInit();
   }
 
@@ -91,33 +93,44 @@ class AddDepartmentController extends GetxController {
 
     genderItems.add({
       "field_id": i,
-      "itinerary": v,
+      "itinerary": v.dbId,
     });
-
+    selectedGenderList.add(v);
     update();
   }
 
   void removeListData(int i) {
     if (items.isNotEmpty) {
-      final collageNameEn = items[i]['itinerary'] as String;
       items.removeAt(i);
-      departmentList.removeAt(i);
       genderItems.removeAt(i);
+      selectedGenderList.removeAt(i);
+
       update();
     }
   }
 
-  void goToGenerateFormTable() {
-    var rateId = departmentList[departmentList.length - 1].departmentId!;
-    for (var rateMode in items) {
-      rateId++;
-      departmentList.add(DepartmentModel(departmentId: rateId, departmentNameEn: rateMode['itinerary'].trim()));
-    }
+  void goToGenerateFormTable(BuildContext context) async {
+    await getDepartments();
 
-    DEPARTMENT_REF.doc('xe1bfTthtjDRPWFsACDr').set(
-        DepartmentList(list: departmentList).toJson()
-    )    .then((_) => EasyLoading.showSuccess('Department Added Successfully'))
-        .catchError((error) => EasyLoading.showError('Department Add failed $error'));
+    if (selectedGenderList.length == items.length) {
+      var rateId = departmentList.isNotEmpty ? departmentList[departmentList.length - 1].departmentId! : 1;
+      // for (var rateMode in items) {
+      // }
+
+      for (int i = 0; i < selectedGenderList.length; i++) {
+        rateId++;
+        departmentList.add(DepartmentModel(departmentId: rateId, genderId: selectedGenderList[i].dbId, departmentNameEn: items[i]['itinerary'].trim()));
+        printInfo(info: '${departmentList[i].genderId} = ${selectedGenderList[i].dbId}');
+      }
+
+      DEPARTMENT_REF.doc('xe1bfTthtjDRPWFsACDr').set(
+          DepartmentList(list: departmentList).toJson()
+      )    .then((_) => EasyLoading.showSuccess('Department Added Successfully'))
+          .catchError((error) => EasyLoading.showError('Department Add failed $error'));
+      Navigator.pop(context);
+    } else {
+      EasyLoading.showError('Fields missing');
+    }
   }
 
   void addTextFormField() {
@@ -134,7 +147,6 @@ class AddDepartmentController extends GetxController {
       fieldCount.value--;
       remainingCollagesCount.value++;
       list.removeAt(i);
-      genderItems.removeAt(i);
       removeListData(i);
     }
   }

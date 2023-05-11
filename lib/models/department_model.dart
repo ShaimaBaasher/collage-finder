@@ -47,12 +47,16 @@ class DepartmentList{
 class DepartmentModel {
   String? _departmentNameAr;
   int? _departmentId;
+  int? _genderId;
   String? _departmentNameEn;
 
   DepartmentModel(
-      {String? departmentNameAr, int? departmentId, String? departmentNameEn}) {
+      {String? departmentNameAr, int? departmentId, int? genderId, String? departmentNameEn}) {
     if (departmentNameAr != null) {
       this._departmentNameAr = departmentNameAr;
+    }
+    if (genderId != null) {
+      this._genderId = genderId;
     }
     if (departmentId != null) {
       this._departmentId = departmentId;
@@ -67,11 +71,16 @@ class DepartmentModel {
       _departmentNameAr = departmentNameAr;
   int? get departmentId => _departmentId;
   set departmentId(int? departmentId) => _departmentId = departmentId;
+
+  int? get genderId => _genderId;
+  set genderId(int? genderId) => _genderId = genderId;
+
   String? get departmentNameEn => _departmentNameEn;
   set departmentNameEn(String? departmentNameEn) =>
       _departmentNameEn = departmentNameEn;
 
   DepartmentModel.fromJson(Map<String, dynamic> json) {
+    _genderId = json['gender_Id'];
     _departmentNameAr = json['department_name_ar'];
     _departmentId = json['department_Id'];
     _departmentNameEn = json['department_name_en'];
@@ -79,6 +88,7 @@ class DepartmentModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['gender_Id'] = this._genderId;
     data['department_name_ar'] = this._departmentNameAr;
     data['department_Id'] = this._departmentId;
     data['department_name_en'] = this._departmentNameEn;

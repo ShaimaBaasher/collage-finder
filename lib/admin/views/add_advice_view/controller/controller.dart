@@ -43,7 +43,7 @@ class AddAdviceController extends GetxController {
     isInsertingLoading(true);
     // Images
     adviceList.add(AdviceModel(
-        id: adviceList[adviceList.length -1].id! + 1,
+        id: adviceList.isNotEmpty ? adviceList[adviceList.length -1].id! + 1 : 1,
         adviceTitle: question,
         adviceContent: answer));
 

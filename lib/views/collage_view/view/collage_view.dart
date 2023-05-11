@@ -30,9 +30,7 @@ class CollageView extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(
-                height: 2.h,
-              ),
+              SizedBox(height: 2.h,),
               Form(
                 key: form,
                 child: SizedBox(

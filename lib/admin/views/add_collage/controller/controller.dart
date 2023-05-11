@@ -75,7 +75,7 @@ class AddCollageController extends GetxController {
   }
 
   void goToGenerateFormTable() {
-    var rateId = collageList[collageList.length - 1].collageId!;
+    var rateId = collageList.isNotEmpty ? collageList[collageList.length - 1].collageId! : 1;
     for (var rateMode in items) {
       rateId++;
       collageList.add(CollageModel(collageId: rateId, collageNameEn: rateMode['itinerary'].trim()));
