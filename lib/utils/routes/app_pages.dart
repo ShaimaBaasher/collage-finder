@@ -3,7 +3,6 @@ import 'package:collage_finder/admin/views/add_addmission_view/view/add_admissio
 import 'package:collage_finder/admin/views/add_advice_view/binding/binding.dart';
 import 'package:collage_finder/admin/views/add_advice_view/view/add_advice_view.dart';
 import 'package:collage_finder/admin/views/add_collage/view/add_collage_view.dart';
-import 'package:collage_finder/admin/views/add_deartment_view/view/add_collage_view.dart';
 import 'package:collage_finder/admin/views/add_rate_view/view/add_rate_view.dart';
 import 'package:collage_finder/views/form_table_view/binding/binding.dart';
 import 'package:collage_finder/views/form_table_view/views/form_table_view.dart';
@@ -11,7 +10,8 @@ import 'package:get/get.dart';
 
 import '../../admin/views/add_area_view/binding/binding.dart';
 import '../../admin/views/add_collage/binding/binding.dart';
-import '../../admin/views/add_deartment_view/binding/binding.dart';
+import '../../admin/views/add_department_view/binding/binding.dart';
+import '../../admin/views/add_department_view/view/add_department_view.dart';
 import '../../admin/views/add_rate_view/binding/binding.dart';
 import '../../admin/views/add_university/binding/binding.dart';
 import '../../admin/views/add_university/view/add_univresity_view.dart';

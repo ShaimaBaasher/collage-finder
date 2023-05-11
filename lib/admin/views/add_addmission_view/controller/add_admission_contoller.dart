@@ -176,8 +176,8 @@ class AddAdmissionController extends GetxController {
         universityId: element['university_Id'],
       ));
     }
-
   }
+
   void uploadAdmission() async {
     isInsertingLoading(true);
     // Images
