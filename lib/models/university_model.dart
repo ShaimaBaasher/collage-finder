@@ -62,7 +62,6 @@ class UniversityModel {
   String? _universityNameEn;
   String? _about;
   int? _areaId;
-  int? _genderId;
   AreaModel? _areaModel;
   List<CollageModel>? _internalCollageList;
   List<int>? _collages;
@@ -74,7 +73,6 @@ class UniversityModel {
     int? universityId,
     List<CollageModel>? internalCollageList,
     List<int>? collages,
-    int? genderId,
     String? universityNameEn,
     String? about,
     AreaModel? areaModel,
@@ -86,9 +84,6 @@ class UniversityModel {
     }
     if (areaModel != null) {
       this._areaModel = areaModel;
-    }
-    if (genderId != null) {
-      this._genderId = genderId;
     }
     if (about != null) {
       this._about = about;
@@ -159,10 +154,6 @@ class UniversityModel {
   set universityNameEn(String? universityNameEn) =>
       _universityNameEn = universityNameEn;
 
-  int? get genderId => _genderId;
-
-  set genderId(int? genderId) => _genderId = genderId;
-
   UniversityModel.fromJson(Map<String, dynamic> json) {
     if (json['images'] != null) {
       _images = <Images>[];
@@ -170,7 +161,6 @@ class UniversityModel {
         _images!.add(new Images.fromJson(v));
       });
     }
-    _genderId = json['gender_Id'];
     _collages = json['collages'].cast<int>();
     _img = json['img'];
     _about = json['about'];
@@ -185,7 +175,6 @@ class UniversityModel {
     if (this._images != null) {
       data['images'] = this._images!.map((v) => v.toJson()).toList();
     }
-    data['gender_Id'] = this._genderId;
     data['collages'] = this._collages;
     data['img'] = this._img;
     data['about'] = this._about;

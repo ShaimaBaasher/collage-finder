@@ -189,7 +189,6 @@ class RateController extends GetxController {
       universityModelLists.add(UniversityModel(
           img: element['img'],
           universityId: element['university_Id'],
-          genderId: element['gender_Id'],
           areaId: element['area_id'],
           areaModel: areaModel,
           universityNameEn: element['university_name_en'],
@@ -223,6 +222,7 @@ class RateController extends GetxController {
     final list = collages['departments'] as List<dynamic>;
     for (var element in list) {
       departmentList.add(DepartmentModel(
+          genderId: element['gender_Id'],
           departmentId: element['department_Id'],
           departmentNameEn: element['department_name_en'],
           departmentNameAr: element['department_name_ar']));
@@ -318,7 +318,7 @@ class RateController extends GetxController {
           if (searchBox.toLowerCase().contains(item.universityModel!.universityNameEn!.toLowerCase()) || searchBox.toLowerCase().contains(item.collageModel!.collageNameEn!.toLowerCase()) &&
               item.rateModel!.total >= priceSliderStart &&
               item.rateModel!.total <= priceSliderEnd &&
-              selectedGenderItem == item.universityModel!.genderId &&
+              selectedGenderItem == item.departmentModel!.genderId &&
               selectedSpecialtyCategoryItem == item.categoryModel!.dbId && dropdownValue!.areaId == item.universityModel!.areaId) {
             tripList.add(item);
           }
@@ -327,7 +327,7 @@ class RateController extends GetxController {
         for (var item in universityAdmissionList) {
           if (item.rateModel!.total >= priceSliderStart &&
                   item.rateModel!.total <= priceSliderEnd &&
-                  selectedGenderItem == item.universityModel!.genderId &&
+                  selectedGenderItem == item.departmentModel!.genderId &&
                   selectedSpecialtyCategoryItem == item.categoryModel!.dbId && dropdownValue!.areaId == item.universityModel!.areaId) {
             tripList.add(item);
           }

@@ -73,12 +73,12 @@ class AddAreaController extends GetxController {
     }
   }
 
-  void goToGenerateFormTable() {
+  void goToGenerateFormTable() async {
+    await getAreas();
     var rateId = areaList.isNotEmpty ? areaList[areaList.length - 1].areaId! : 1;
     for (var rateMode in items) {
       rateId++;
-      areaList.add(
-          AreaModel(areaId: rateId, areaName: rateMode['itinerary'].trim()));
+      areaList.add(AreaModel(areaId: rateId, areaName: rateMode['itinerary'].trim()));
     }
 
     AREA_REF

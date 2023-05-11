@@ -96,7 +96,7 @@ class RateView extends StatelessWidget {
                     right: 20,
                     child: Form(
                       key: form,
-                      child: Container(
+                      child: SizedBox(
                         width: size.width * 0.9,
                         height: size.height * 0.4,
                         child: TextFormField(
@@ -173,54 +173,7 @@ class RateView extends StatelessWidget {
                       );
                     }),
                   ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  // Row(
-                  //   children: [
-                  //     Wrap(
-                  //       children: [
-                  //         SizedBox(
-                  //             height: 7.h,
-                  //             child: Card(
-                  //               child: ListView.builder(
-                  //                 shrinkWrap: true,
-                  //                 physics: const NeverScrollableScrollPhysics(),
-                  //                 scrollDirection: Axis.horizontal,
-                  //                 itemCount: controller.durationList.length,
-                  //                 itemBuilder: (ctx, index) {
-                  //                   return RowFilter(
-                  //                       index: index,
-                  //                       filterModel:
-                  //                           controller.durationList[index], isGenderOnly: 3,);
-                  //                 },
-                  //               ),
-                  //             )),
-                  //       ],
-                  //     ),
-                  //     Wrap(
-                  //       children: [
-                  //         SizedBox(
-                  //             height: 7.h,
-                  //             child: Card(
-                  //               child: ListView.builder(
-                  //                 shrinkWrap: true,
-                  //                 physics: const NeverScrollableScrollPhysics(),
-                  //                 scrollDirection: Axis.horizontal,
-                  //                 itemCount:
-                  //                     controller.universitySectorList.length,
-                  //                 itemBuilder: (ctx, index) {
-                  //                   return RowFilter(
-                  //                       index: index,
-                  //                       filterModel: controller
-                  //                           .universitySectorList[index], isGenderOnly: 3);
-                  //                 },
-                  //               ),
-                  //             )),
-                  //       ],
-                  //     ),
-                  //   ],
-                  // ),
+                  SizedBox(height: 2.h,),
                   Row(
                     children: [
                       Wrap(
@@ -244,26 +197,6 @@ class RateView extends StatelessWidget {
                               )),
                         ],
                       ),
-                      // Wrap(
-                      //   children: [
-                      //     SizedBox(
-                      //         height: 7.h,
-                      //         child: Card(
-                      //           child: ListView.builder(
-                      //             shrinkWrap: true,
-                      //             physics: const NeverScrollableScrollPhysics(),
-                      //             scrollDirection: Axis.horizontal,
-                      //             itemCount: controller.dateList.length,
-                      //             itemBuilder: (ctx, index) {
-                      //               return RowFilter(
-                      //                   index: index,
-                      //                   filterModel:
-                      //                       controller.dateList[index], isGenderOnly: 3);
-                      //             },
-                      //           ),
-                      //         )),
-                      //   ],
-                      // ),
                     ],
                   ),
                   Wrap(
@@ -287,8 +220,7 @@ class RateView extends StatelessWidget {
                           )),
                     ],
                   ),
-                  Obx(
-                    () => controller.isUniversityLoaded.isTrue
+                  Obx(() => controller.isUniversityLoaded.isTrue
                         ? const LoadingWidget()
                         : GetBuilder<RateController>(builder: (_) {
                             return ListView.builder(

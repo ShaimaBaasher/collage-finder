@@ -157,6 +157,7 @@ class AddUniversityController extends GetxController {
 
   void uploadUniversity() async {
     isInsertingLoading(true);
+    await getUniversities();
     // Images
     await uploadImage();
     if (imageFileList!.isNotEmpty) {
@@ -166,16 +167,11 @@ class AddUniversityController extends GetxController {
     }
 
     universityModelLists.add(UniversityModel(
-        universityId: universityModelLists.isNotEmpty
-            ? universityModelLists[universityModelLists.length - 1]
-                    .universityId! +
-                1
-            : 1,
+        universityId: universityModelLists.isNotEmpty ? universityModelLists[universityModelLists.length - 1].universityId! + 1 : 1,
         img: imageUrl,
         universityNameEn: universityName.trim(),
         about: aboutUniversity.trim(),
         images: uploadedImagesLists,
-        genderId: gender?.dbId,
         areaId: dropdownValue?.areaId,
         collages: [1, 2, 3]));
 
@@ -223,7 +219,6 @@ class AddUniversityController extends GetxController {
       universityModelLists.add(UniversityModel(
           img: element['img'],
           universityId: element['university_Id'],
-          genderId: element['gender_Id'],
           areaId: element['area_id'],
           about: element['about'],
           areaModel: areaModel,

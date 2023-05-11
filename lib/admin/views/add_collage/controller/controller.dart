@@ -74,7 +74,8 @@ class AddCollageController extends GetxController {
     }
   }
 
-  void goToGenerateFormTable() {
+  void goToGenerateFormTable() async {
+    await getCollages();
     var rateId = collageList.isNotEmpty ? collageList[collageList.length - 1].collageId! : 1;
     for (var rateMode in items) {
       rateId++;

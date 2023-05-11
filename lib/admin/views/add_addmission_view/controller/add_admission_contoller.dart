@@ -12,7 +12,6 @@ import '../../../../models/university_model.dart';
 import '../../../../utils/constaints.dart';
 
 class AddAdmissionController extends GetxController {
-
   final universityModelLists = <UniversityModel>[];
   final areaList = <AreaModel>[];
   final departmentList = <DepartmentModel>[];
@@ -54,8 +53,10 @@ class AddAdmissionController extends GetxController {
     final collages = allData[0] as Map<String, dynamic>;
     final list = collages['rates'] as List<dynamic>;
     for (var element in list) {
-      rateList.add(RateModel(rateId: element['rate_Id'], rate: element['rate']));
-      rateStringList.add(RateModel(rateId: element['rate_Id'], rate: element['rate'].toString()));
+      rateList
+          .add(RateModel(rateId: element['rate_Id'], rate: element['rate']));
+      rateStringList.add(RateModel(
+          rateId: element['rate_Id'], rate: element['rate'].toString()));
     }
   }
 
@@ -111,7 +112,6 @@ class AddAdmissionController extends GetxController {
       universityModelLists.add(UniversityModel(
           img: element['img'],
           universityId: element['university_Id'],
-          genderId: element['gender_Id'],
           areaId: element['area_id'],
           about: element['about'],
           areaModel: areaModel,
@@ -120,7 +120,7 @@ class AddAdmissionController extends GetxController {
 
       printInfo(
           info:
-          'areaModel>>${universityModelListToJson(universityModelLists!)}');
+              'areaModel>>${universityModelListToJson(universityModelLists!)}');
     }
   }
 
@@ -181,6 +181,7 @@ class AddAdmissionController extends GetxController {
   void uploadAdmission() async {
     isInsertingLoading(true);
     // Images
+    await getAdmission();
 
     admissionList.add(AdmissionModel(
         totalId: 1,
@@ -192,12 +193,14 @@ class AddAdmissionController extends GetxController {
         departmentId: departmentModel?.departmentId,
         categoryId: categoryModel?.categoryId));
 
-    ADMISSION_REF.doc('pK0we3MKnVIe6dgVJ0sT').set(
-        AdmissionList(list: admissionList).toJson()
-      // 'universities': input
-    )        .then((_) => EasyLoading.showSuccess('Admission Added Successfully'))
-        .catchError((error) => EasyLoading.showError('Admission Add failed $error'));
+    ADMISSION_REF
+        .doc('pK0we3MKnVIe6dgVJ0sT')
+        .set(AdmissionList(list: admissionList).toJson()
+            // 'universities': input
+            )
+        .then((_) => EasyLoading.showSuccess('Admission Added Successfully'))
+        .catchError(
+            (error) => EasyLoading.showError('Admission Add failed $error'));
     isInsertingLoading(false);
   }
-
 }

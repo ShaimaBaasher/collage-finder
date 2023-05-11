@@ -155,9 +155,7 @@ class AddUniversityView extends StatelessWidget {
               SizedBox(
                 height: 1.h,
               ),
-              SizedBox(
-                height: 1.h,
-              ),
+              SizedBox(height: 1.h,),
               Form(
                 key: form,
                 child: Column(
@@ -284,75 +282,7 @@ class AddUniversityView extends StatelessWidget {
                         );
                       }),
               ),
-              SizedBox(
-                height: 1.h,
-              ),
-              GetBuilder<AddUniversityController>(builder: (_) {
-                return Row(
-                  children: [
-                    Expanded(
-                      child: ListTile(
-                        horizontalTitleGap: 2,
-                        title: Text(
-                          'Male',
-                          style: kLabelPrimaryNormalTextStyle,
-                        ),
-                        leading: Radio<Gender>(
-                          activeColor: kPurpleColor,
-                          value: Gender.male,
-                          groupValue: controller.genderOption,
-                          onChanged: (Gender? value) {
-                            controller.genderOption = value;
-                            controller
-                                .setSelectedGender(controller.genderOption!);
-                          },
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: ListTile(
-                        horizontalTitleGap: 2,
-                        title: Text(
-                          'Female',
-                          style: kLabelPrimaryNormalTextStyle,
-                        ),
-                        leading: Radio<Gender>(
-                          activeColor: kPurpleColor,
-                          value: Gender.female,
-                          groupValue: controller.genderOption,
-                          onChanged: (Gender? value) {
-                            controller.genderOption = value;
-                            controller
-                                .setSelectedGender(controller.genderOption!);
-                          },
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: ListTile(
-                        horizontalTitleGap: 2,
-                        title: Text(
-                          'All',
-                          style: kLabelPrimaryNormalTextStyle,
-                        ),
-                        leading: Radio<Gender>(
-                          activeColor: kPurpleColor,
-                          value: Gender.all,
-                          groupValue: controller.genderOption,
-                          onChanged: (Gender? value) {
-                            controller.genderOption = value;
-                            controller
-                                .setSelectedGender(controller.genderOption!);
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              }),
-              SizedBox(
-                height: 1.h,
-              ),
+              SizedBox(height: 1.h,),
               Obx(
                 () => controller.fieldCount.value == 0
                     ? Padding(

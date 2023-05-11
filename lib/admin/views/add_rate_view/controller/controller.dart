@@ -73,7 +73,8 @@ class AddRateController extends GetxController {
     }
   }
 
-  void goToGenerateFormTable() {
+  void goToGenerateFormTable() async {
+    await getRates();
     var rateId = rateList[rateList.length - 1].rateId!;
     for (var rateMode in items) {
       rateId++;

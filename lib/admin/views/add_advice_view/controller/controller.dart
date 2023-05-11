@@ -42,6 +42,8 @@ class AddAdviceController extends GetxController {
   void uploadAdvice() async {
     isInsertingLoading(true);
     // Images
+    await getAdvices();
+
     adviceList.add(AdviceModel(
         id: adviceList.isNotEmpty ? adviceList[adviceList.length -1].id! + 1 : 1,
         adviceTitle: question,
