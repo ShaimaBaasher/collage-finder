@@ -41,8 +41,6 @@ class AddDepartmentController extends GetxController {
           departmentNameEn: element['department_name_en'],
           departmentNameAr: element['department_name_ar']));
     }
-
-    print(departmentModelListToJson(departmentList));
   }
 
   @override
@@ -102,7 +100,6 @@ class AddDepartmentController extends GetxController {
   void removeListData(int i) {
     if (items.isNotEmpty) {
       final collageNameEn = items[i]['itinerary'] as String;
-      // printInfo(info: 'collageNameEn>>${collageNameEn.split('/')[1]}');
       items.removeAt(i);
       departmentList.removeAt(i);
       genderItems.removeAt(i);
@@ -121,7 +118,6 @@ class AddDepartmentController extends GetxController {
         DepartmentList(list: departmentList).toJson()
     )    .then((_) => EasyLoading.showSuccess('Department Added Successfully'))
         .catchError((error) => EasyLoading.showError('Department Add failed $error'));
-
   }
 
   void addTextFormField() {

@@ -123,7 +123,7 @@ class AddCollageView extends StatelessWidget {
         child: Text((i + 1).toString()),
       ),
       title: TextFormField(
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.name,
         key: Key(controller.list[i].toString()), // <- Magic!
         initialValue: controller.items.length > i ? controller.items[i]["itinerary"]
             : null,

@@ -127,7 +127,7 @@ class AddDepartmentView extends StatelessWidget {
       title: Column(
         children: [
           TextFormField(
-            keyboardType: TextInputType.number,
+            keyboardType: TextInputType.name,
             key: Key(controller.list[i].toString()), // <- Magic!
             initialValue: controller.items.length > i ? controller.items[i]["itinerary"]
                 : null,
