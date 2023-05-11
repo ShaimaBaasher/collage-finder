@@ -35,7 +35,7 @@ class AdmissionList {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
     if (_list != null) {
-      data['areas'] = _list!.map((v) => v.toJson()).toList();
+      data['admission-rate'] = _list!.map((v) => v.toJson()).toList();
     }
     return data;
   }

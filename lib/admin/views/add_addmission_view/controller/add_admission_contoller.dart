@@ -98,6 +98,8 @@ class AddAdmissionController extends GetxController {
     final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
     final universities = allData[0] as Map<String, dynamic>;
     final list = universities['universities'] as List<dynamic>;
+    printInfo(info: 'areaModel>>${universities['universities']}');
+
     for (var element in list) {
       for (var areaElement in areaList) {
         if (element['area_id'] == areaElement.areaId) {
@@ -179,7 +181,6 @@ class AddAdmissionController extends GetxController {
   void uploadAdmission() async {
     isInsertingLoading(true);
     // Images
-    int? _departmentId;
 
     admissionList.add(AdmissionModel(
         totalId: 1,

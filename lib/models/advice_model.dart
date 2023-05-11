@@ -27,9 +27,9 @@ class AdviceList{
   set list(List<AdviceModel>? list) => _list = list;
 
   AdviceList.fromJson(Map<String, dynamic> json) {
-    if (json['areas'] != null) {
+    if (json['advices'] != null) {
       _list = <AdviceModel>[];
-      json['areas'].forEach((v) {
+      json['advices'].forEach((v) {
         _list!.add(AdviceModel.fromJson(v));
       });
     }

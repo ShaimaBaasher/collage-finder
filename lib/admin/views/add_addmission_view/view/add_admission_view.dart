@@ -90,7 +90,7 @@ class AddAdmissionView extends StatelessWidget {
                     displayStringForOption: (DepartmentModel option) => option.departmentNameEn!,
                     onSelected: (DepartmentModel selection) {
                       controller.departmentModel = selection;
-                      debugPrint('You just selected $selection');
+                      debugPrint('You just selected ${selection.departmentId}');
                     },
                   ),
                   SizedBox(height: 2.h,),
