@@ -112,7 +112,6 @@ class AddUniversityController extends GetxController {
       imagePath = imageTemp.path;
       isImagePulledFromStorage = true;
       update();
-      // setState(() => this.image = imageTemp);
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
@@ -220,6 +219,7 @@ class AddUniversityController extends GetxController {
       universityModelLists.add(UniversityModel(
           img: element['img'],
           universityId: element['university_Id'],
+          collages: element['collages'],
           areaId: element['area_id'],
           about: element['about'],
           areaModel: areaModel,
@@ -263,8 +263,8 @@ class AddUniversityController extends GetxController {
   }
 
   void removeListData(int i) {
-    if (collageList.isNotEmpty) {
-      // printInfo(info: 'collageNameEn>>${collageNameEn.split('/')[1]}');
+    if (addedCollegelist.isNotEmpty) {
+      addedCollegelist.removeAt(i);
       update();
     }
   }

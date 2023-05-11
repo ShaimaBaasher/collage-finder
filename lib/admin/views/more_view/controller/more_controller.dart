@@ -20,6 +20,10 @@ class MoreController extends GetxController {
       name: 'Add Department',
       icon: 'assets/icons/ic_rectangle_check.svg',),
     MoreModel(
+      id: 7,
+      name: 'Add Area',
+      icon: 'assets/icons/ic_rectangle_check.svg',),
+    MoreModel(
       id: 4,
       name: 'Add Admission',
       icon: 'assets/icons/ic_rectangle_check.svg',),
@@ -54,6 +58,9 @@ class MoreController extends GetxController {
         break;
       case 6:
         Navigator.of(context, rootNavigator: true).pushNamed(Routes.adviceView);
+        break;
+      case 6:
+        Navigator.of(context, rootNavigator: true).pushNamed(Routes.areaView);
         break;
     }
   }

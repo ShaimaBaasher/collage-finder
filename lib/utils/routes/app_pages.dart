@@ -2,6 +2,7 @@ import 'package:collage_finder/admin/views/add_addmission_view/binding/binding.d
 import 'package:collage_finder/admin/views/add_addmission_view/view/add_admission_view.dart';
 import 'package:collage_finder/admin/views/add_advice_view/binding/binding.dart';
 import 'package:collage_finder/admin/views/add_advice_view/view/add_advice_view.dart';
+import 'package:collage_finder/admin/views/add_area_view/view/add_area_view.dart';
 import 'package:collage_finder/admin/views/add_collage/view/add_collage_view.dart';
 import 'package:collage_finder/admin/views/add_rate_view/view/add_rate_view.dart';
 import 'package:collage_finder/views/form_table_view/binding/binding.dart';
@@ -87,6 +88,12 @@ class AppPages {
       name: _Paths.admissionView,
       page: () =>  AddAdmissionView(),
       binding: AddAdmissionBinding(),
+      transition: _transition,
+      transitionDuration: _transitionDuration,),
+    GetPage(
+      name: _Paths.areaView,
+      page: () =>  AddAreaView(),
+      binding: AddAreaBinding(),
       transition: _transition,
       transitionDuration: _transitionDuration,),
   ];

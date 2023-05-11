@@ -12,6 +12,7 @@ abstract class Routes {
   static const rateView = _Paths.rateView;
   static const universityView = _Paths.universityView;
   static const adviceView = _Paths.adviceView;
+  static const areaView = _Paths.areaView;
 }
 
 abstract class _Paths {
@@ -24,4 +25,5 @@ abstract class _Paths {
   static const rateView = '/rate-view';
   static const universityView = '/university-view';
   static const adviceView = '/advice-view';
+  static const areaView = '/area-view';
 }

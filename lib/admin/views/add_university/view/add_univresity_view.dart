@@ -1,7 +1,6 @@
 import 'package:collage_finder/admin/views/add_university/controller/controller.dart';
 import 'package:collage_finder/models/collage_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'dart:io' as io;
 
 import 'package:get/get.dart';
@@ -34,10 +33,8 @@ class AddUniversityView extends StatelessWidget {
         actions: [
           Obx(() => IconButton(
               onPressed: controller.isInsertingLoading.isTrue
-                  ? null
-                  : () {
-                      if (!_formKey.currentState!.validate() &&
-                          form.currentState!.validate()) {
+                  ? null : () {
+                      if (!_formKey.currentState!.validate()) {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text("Fields missing")));
                       } else {
@@ -71,12 +68,17 @@ class AddUniversityView extends StatelessWidget {
                       fit: StackFit.expand,
                       children: [
                         controller.isImagePulledFromStorage
-                            ? CircleAvatar(
-                                 radius: 30,
-                                child: Image.file(
-                                  io.File(controller.imagePath),
-                                  fit: BoxFit.cover,
-                                ))
+                            ? ClipRRect(
+                              child: CircleAvatar(
+                                   radius: 30,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: Image.file(
+                                      io.File(controller.imagePath),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )),
+                            )
                             : StorageService.to.universityPhotoUrl == null ||
                                     StorageService
                                         .to.universityPhotoUrl!.isEmpty
@@ -353,6 +355,7 @@ class AddUniversityView extends StatelessWidget {
                 .contains(textEditingValue.text.toLowerCase());
           });
         },
+
       ),
       trailing: InkWell(
         child: const Icon(Icons.delete_outlined, color: Colors.red),
