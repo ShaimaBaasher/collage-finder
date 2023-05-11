@@ -9,12 +9,12 @@ class AdviceController extends GetxController {
   var isAdvicesLoading = false.obs;
 
   @override
-  void onInit() {
-    getAdvices();
+  void onInit() async {
+    await getAdvices();
     super.onInit();
   }
 
-  void getAdvices() async {
+  Future getAdvices() async {
     isAdvicesLoading(true);
     adviceList.clear();
     QuerySnapshot querySnapshot = await ADVICE_REF.get();

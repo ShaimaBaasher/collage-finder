@@ -10,6 +10,40 @@ List<CollageModel>? collagesModelListFromJson(String str) =>
 String collagesModelListToJson(List<CollageModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+class CollageList{
+  List<CollageModel>? _list;
+
+  CollageList({
+    List<CollageModel>? list,
+  }) {
+    if (list != null) {
+      _list = list;
+    }
+  }
+
+  List<CollageModel>? get list => _list;
+
+  set list(List<CollageModel>? list) => _list = list;
+
+  CollageList.fromJson(Map<String, dynamic> json) {
+    if (json['collages'] != null) {
+      _list = <CollageModel>[];
+      json['collages'].forEach((v) {
+        _list!.add(CollageModel.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (_list != null) {
+      data['collages'] = _list!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+
+}
+
 class CollageModel {
   String? _collageNameEn;
   int? _collageId;

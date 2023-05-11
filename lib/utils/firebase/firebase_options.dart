@@ -55,15 +55,15 @@ class DefaultFirebaseOptions {
     messagingSenderId: '213271782765',
     projectId: 'collage-finder-82d10',
     // databaseURL: 'https://medan3-786a6-default-rtdb.firebaseio.com',
-    storageBucket: 'yallabook-22f14.appspot.com',
+    storageBucket: 'collage-finder-82d10.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDmVNUKNtGaLht86qKTzY2ZvYMeXIsjiGU',
-    appId: '1:310559897856:android:1a45003303a0d7a3819be5',
-    messagingSenderId: '310559897856',
-    projectId: 'yallabook-22f14',
-    storageBucket: 'yallabook-22f14.appspot.com',
+    appId: '1:213271782765:android:8a52a85c7a13e5616c6664',
+    messagingSenderId: '213271782765',
+    projectId: 'collage-finder-82d10',
+    storageBucket: 'collage-finder-82d10.appspot.com',
     // databaseURL: 'https://medan3-786a6-default-rtdb.firebaseio.com',
     androidClientId: '310559897856-0g55ulpo4okj2hj8l7sip6ihfemtqbb4.apps.googleusercontent.com',
     iosClientId: '310559897856-bnrq08jd4fi7s672mmmabvgijh29134m.apps.googleusercontent.com',

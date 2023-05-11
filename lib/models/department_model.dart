@@ -10,6 +10,40 @@ List<DepartmentModel>? departmentModelListFromJson(String str) =>
 String departmentModelListToJson(List<DepartmentModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+class DepartmentList{
+  List<DepartmentModel>? _list;
+
+  DepartmentList({
+    List<DepartmentModel>? list,
+  }) {
+    if (list != null) {
+      _list = list;
+    }
+  }
+
+  List<DepartmentModel>? get list => _list;
+
+  set list(List<DepartmentModel>? list) => _list = list;
+
+  DepartmentList.fromJson(Map<String, dynamic> json) {
+    if (json['departments'] != null) {
+      _list = <DepartmentModel>[];
+      json['departments'].forEach((v) {
+        _list!.add(DepartmentModel.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (_list != null) {
+      data['departments'] = _list!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+
+}
+
 class DepartmentModel {
   String? _departmentNameAr;
   int? _departmentId;

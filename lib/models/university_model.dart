@@ -8,6 +8,9 @@ import 'package:collage_finder/models/filter_model.dart';
 String universityModelToJson(UniversityModel data) =>
     json.encode(data.toJson());
 
+String universityListToJson(UniversityList data) =>
+    json.encode(data.toJson());
+
 UniversityModel universityModelFromJson(String str) =>
     UniversityModel.fromJson(json.decode(str));
 
@@ -17,6 +20,40 @@ List<UniversityModel>? universityModelListFromJson(String str) =>
 
 String universityModelListToJson(List<UniversityModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class UniversityList {
+  List<UniversityModel>? _universityModel;
+
+  UniversityList({
+    List<UniversityModel>? universityModel,
+  }) {
+    if (universityModel != null) {
+      _universityModel = universityModel;
+    }
+  }
+
+  List<UniversityModel>? get universityModel => _universityModel;
+
+  set universityModel(List<UniversityModel>? universityModel) => _universityModel = universityModel;
+
+  UniversityList.fromJson(Map<String, dynamic> json) {
+    if (json['universities'] != null) {
+      _universityModel = <UniversityModel>[];
+      json['universities'].forEach((v) {
+        _universityModel!.add(UniversityModel.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (_universityModel != null) {
+      data['universities'] = this._universityModel!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+
+}
 
 class UniversityModel {
   String? _img;
@@ -85,7 +122,8 @@ class UniversityModel {
 
   List<CollageModel>? get internalCollageList => _internalCollageList;
 
-  set internalCollageList(List<CollageModel>? internalCollageList) => _internalCollageList = internalCollageList;
+  set internalCollageList(List<CollageModel>? internalCollageList) =>
+      _internalCollageList = internalCollageList;
 
   List<Images>? get images => _images;
 
@@ -122,6 +160,7 @@ class UniversityModel {
       _universityNameEn = universityNameEn;
 
   int? get genderId => _genderId;
+
   set genderId(int? genderId) => _genderId = genderId;
 
   UniversityModel.fromJson(Map<String, dynamic> json) {

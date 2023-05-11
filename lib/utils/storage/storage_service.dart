@@ -21,6 +21,10 @@ class StorageService extends GetxService implements BaseService {
     await _box.erase();
   }
 
+  String? get universityPhotoUrl => _box.read(_Keys.universityImage);
+
+  void setUniversityImage(String? photoUrl) => _box.write(_Keys.universityImage, photoUrl);
+
   String? get language => _box.read(_Keys.language) ?? 'en';
 
   void setLanguage(String? language) => _box.write(_Keys.language, language);
@@ -58,4 +62,5 @@ abstract class _Keys {
   static const String  language = 'language';
   static const String  homeIndex = 'homeIndex';
   static const String  universityModelList = 'universityModelList';
+  static const String  universityImage = 'universityImage';
 }

@@ -1,5 +1,49 @@
 import 'dart:convert';
 
+String adviceModelToJson(AdviceModel data) => json.encode(data.toJson());
+
+AdviceModel adviceModelFromJson(String str) => AdviceModel.fromJson(json.decode(str));
+
+List<AdviceModel>? adviceModelListFromJson(String str) =>
+    List<AdviceModel>.from(json.decode(str).map((x) => AdviceModel.fromJson(x)));
+
+String adviceModelListToJson(List<AdviceModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+
+class AdviceList{
+  List<AdviceModel>? _list;
+
+  AdviceList({
+    List<AdviceModel>? list,
+  }) {
+    if (list != null) {
+      _list = list;
+    }
+  }
+
+  List<AdviceModel>? get list => _list;
+
+  set list(List<AdviceModel>? list) => _list = list;
+
+  AdviceList.fromJson(Map<String, dynamic> json) {
+    if (json['areas'] != null) {
+      _list = <AdviceModel>[];
+      json['areas'].forEach((v) {
+        _list!.add(AdviceModel.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (_list != null) {
+      data['areas'] = _list!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+
+}
 
 class AdviceModel {
   String? _adviceContent;

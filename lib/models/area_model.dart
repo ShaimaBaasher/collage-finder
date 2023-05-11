@@ -10,6 +10,40 @@ List<AreaModel>? areaModelListFromJson(String str) =>
 String areaModelListToJson(List<AreaModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+class AreaList{
+  List<AreaModel>? _list;
+
+  AreaList({
+    List<AreaModel>? list,
+  }) {
+    if (list != null) {
+      _list = list;
+    }
+  }
+
+  List<AreaModel>? get list => _list;
+
+  set list(List<AreaModel>? list) => _list = list;
+
+  AreaList.fromJson(Map<String, dynamic> json) {
+    if (json['areas'] != null) {
+      _list = <AreaModel>[];
+      json['areas'].forEach((v) {
+        _list!.add(AreaModel.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (_list != null) {
+      data['areas'] = _list!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+
+}
+
 class AreaModel {
   int? _areaId;
   String? _areaName;

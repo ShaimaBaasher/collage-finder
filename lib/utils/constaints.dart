@@ -16,4 +16,5 @@ final RATE_REF = fireStore.collection('rates');
 final SUPERLATIVE_REF = fireStore.collection('superlative');
 final ADMISSION_REF = fireStore.collection('universities-admission-rate');
 final AREA_REF = fireStore.collection('area');
-final STORAGE_REF = fireStorage.ref().child('yallabook-user-profile-images');
+final CATEGORY_REF = fireStore.collection('university-category');
+final STORAGE_REF = fireStorage.ref().child('collage-finder-university-images');

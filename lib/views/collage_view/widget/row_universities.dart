@@ -64,50 +64,44 @@ class RowUniversities extends StatelessWidget {
                     : ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: universityModel.images?.length,
-                  itemBuilder: (ctx, i) => GestureDetector(
-                    onTap: () {
-                      // controller.changeDisplayMainImage(
-                      //     '$GET_TRIP_BY_ID${homeController.tripModel?.id}/detail/image/${i + 1}');
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 2.5, vertical: 5),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(5),
-                        child: Image.network(
-                          '${universityModel.images?[i].imageUrl}',
-                          height: 5.h,
-                          width: 19.w,
-                          fit: BoxFit.cover,
-                          loadingBuilder: (BuildContext context,
-                              Widget child,
-                              ImageChunkEvent? loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Center(
-                                  child: CircularProgressIndicator(
-                                    value:
-                                    loadingProgress.expectedTotalBytes !=
-                                        null
-                                        ? loadingProgress
-                                        .cumulativeBytesLoaded /
-                                        loadingProgress
-                                            .expectedTotalBytes!
-                                        : null,
-                                  )),
-                            );
-                          },
-                          errorBuilder: (BuildContext context,
-                              Object exception, StackTrace? stackTrace) {
-                            return SvgPicture.asset(
-                              'assets/icons/logo.svg',
-                              height: 5.h,
-                              width: 19.w,
-                              fit: BoxFit.fitWidth,
-                            );
-                          },
-                        ),
+                  itemBuilder: (ctx, i) => Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 2.5, vertical: 5),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: Image.network(
+                        '${universityModel.images?[i].imageUrl}',
+                        height: 5.h,
+                        width: 19.w,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (BuildContext context,
+                            Widget child,
+                            ImageChunkEvent? loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Center(
+                                child: CircularProgressIndicator(
+                                  value:
+                                  loadingProgress.expectedTotalBytes !=
+                                      null
+                                      ? loadingProgress
+                                      .cumulativeBytesLoaded /
+                                      loadingProgress
+                                          .expectedTotalBytes!
+                                      : null,
+                                )),
+                          );
+                        },
+                        errorBuilder: (BuildContext context,
+                            Object exception, StackTrace? stackTrace) {
+                          return SvgPicture.asset(
+                            'assets/icons/logo.svg',
+                            height: 5.h,
+                            width: 19.w,
+                            fit: BoxFit.fitWidth,
+                          );
+                        },
                       ),
                     ),
                   ),
