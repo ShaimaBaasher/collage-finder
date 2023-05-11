@@ -186,7 +186,6 @@ class RateController extends GetxController {
         }
       }
 
-
       universityModelLists.add(UniversityModel(
           img: element['img'],
           universityId: element['university_Id'],
@@ -279,7 +278,7 @@ class RateController extends GetxController {
     // department_Id
     universityAdmissionList.clear();
     for (var admissionModel in admissionList) {
-      final universityModel = universityModelLists.firstWhere((element) => element.universityId == admissionModel.universityId);
+      final universityModel = universityModelLists.firstWhereOrNull((element) => element.universityId == admissionModel.universityId);
       final collageModel = collageList.firstWhereOrNull(
           (element) => element.collageId == admissionModel.collageId);
       if (departmentList.isNotEmpty) {

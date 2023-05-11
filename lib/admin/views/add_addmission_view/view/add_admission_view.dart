@@ -51,7 +51,7 @@ class AddAdmissionView extends StatelessWidget {
                     },
                     displayStringForOption: (UniversityModel option) => option.universityNameEn!,
                     onSelected: (UniversityModel selection) {
-                      debugPrint('You just selected $selection');
+                      controller.universityModel = selection;
                     },
                   ),
                   SizedBox(height: 2.h,),
@@ -70,7 +70,7 @@ class AddAdmissionView extends StatelessWidget {
                     },
                     displayStringForOption: (CollageModel option) => option.collageNameEn!,
                     onSelected: (CollageModel selection) {
-                      debugPrint('You just selected $selection');
+                      controller.collageModel = selection;
                     },
                   ),
                   SizedBox(height: 2.h,),
@@ -89,6 +89,7 @@ class AddAdmissionView extends StatelessWidget {
                     },
                     displayStringForOption: (DepartmentModel option) => option.departmentNameEn!,
                     onSelected: (DepartmentModel selection) {
+                      controller.departmentModel = selection;
                       debugPrint('You just selected $selection');
                     },
                   ),
@@ -108,6 +109,7 @@ class AddAdmissionView extends StatelessWidget {
                     },
                     displayStringForOption: (CategoryModel option) => option.categoryNameEn!,
                     onSelected: (CategoryModel selection) {
+                      controller.categoryModel = selection;
                       debugPrint('You just selected $selection');
                     },
                   ),
@@ -127,8 +129,20 @@ class AddAdmissionView extends StatelessWidget {
                     },
                     displayStringForOption: (RateModel option) => option.rate!,
                     onSelected: (RateModel selection) {
+                      controller.rateModel = selection;
+
                       debugPrint('You just selected $selection');
                     },
+                  ),
+                  Obx(() =>
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.indigo,),
+                        onPressed: controller.isInsertingLoading.isTrue ? null : () {
+                          controller.uploadAdmission();
+                        },
+                        icon: const Icon(Icons.add),
+                        label: const Text("Add Admission Rate"),),
                   ),
 
                 ],

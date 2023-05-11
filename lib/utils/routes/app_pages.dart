@@ -1,3 +1,5 @@
+import 'package:collage_finder/admin/views/add_addmission_view/binding/binding.dart';
+import 'package:collage_finder/admin/views/add_addmission_view/view/add_admission_view.dart';
 import 'package:collage_finder/admin/views/add_advice_view/binding/binding.dart';
 import 'package:collage_finder/admin/views/add_advice_view/view/add_advice_view.dart';
 import 'package:collage_finder/admin/views/add_collage/view/add_collage_view.dart';
@@ -79,6 +81,12 @@ class AppPages {
       name: _Paths.adviceView,
       page: () =>  AddAdviceView(),
       binding: AddAdviceBinding(),
+      transition: _transition,
+      transitionDuration: _transitionDuration,),
+    GetPage(
+      name: _Paths.admissionView,
+      page: () =>  AddAdmissionView(),
+      binding: AddAdmissionBinding(),
       transition: _transition,
       transitionDuration: _transitionDuration,),
   ];

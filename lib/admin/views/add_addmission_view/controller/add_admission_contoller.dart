@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collage_finder/models/category_model.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
+import '../../../../models/admission_model.dart';
 import '../../../../models/area_model.dart';
 import '../../../../models/collage_model.dart';
 import '../../../../models/department_model.dart';
@@ -18,12 +20,21 @@ class AddAdmissionController extends GetxController {
   final rateList = <RateModel>[];
   final rateStringList = <RateModel>[];
   final categoryList = <CategoryModel>[];
+  final admissionList = <AdmissionModel>[];
 
   var isLoading = false.obs;
+  var isInsertingLoading = false.obs;
+
+  CategoryModel? categoryModel;
+  UniversityModel? universityModel;
+  CollageModel? collageModel;
+  DepartmentModel? departmentModel;
+  RateModel? rateModel;
 
   @override
   void onInit() async {
     isLoading(true);
+    await getAdmission();
     await getAreas();
     await getUniversities();
     await getDepartments();
@@ -142,4 +153,50 @@ class AddAdmissionController extends GetxController {
           collageNameAr: element['collage_name_ar']));
     }
   }
+
+  Future getAdmission() async {
+    admissionList.clear();
+    QuerySnapshot querySnapshot = await ADMISSION_REF.get();
+    // Get data from docs and convert map to List
+    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+    final universities = allData[0] as Map<String, dynamic>;
+    final list = universities['admission-rate'] as List<dynamic>;
+    printInfo(info: 'admission-rate>${universities['admission-rate']}');
+    for (var element in list) {
+      admissionList.add(AdmissionModel(
+        sectorId: element['sector_Id'],
+        categoryId: element['category_Id'],
+        collageId: element['collage_Id'],
+        departmentId: element['department_Id'],
+        rateId: element['rate_Id'],
+        superlativeId: element['superlative_Id'],
+        totalId: element['total_Id'],
+        universityId: element['university_Id'],
+      ));
+    }
+
+  }
+  void uploadAdmission() async {
+    isInsertingLoading(true);
+    // Images
+    int? _departmentId;
+
+    admissionList.add(AdmissionModel(
+        totalId: 1,
+        sectorId: 1,
+        superlativeId: 1,
+        universityId: universityModel?.universityId,
+        collageId: collageModel?.collageId,
+        rateId: rateModel?.rateId,
+        departmentId: departmentModel?.departmentId,
+        categoryId: categoryModel?.categoryId));
+
+    ADMISSION_REF.doc('pK0we3MKnVIe6dgVJ0sT').set(
+        AdmissionList(list: admissionList).toJson()
+      // 'universities': input
+    )        .then((_) => EasyLoading.showSuccess('Admission Added Successfully'))
+        .catchError((error) => EasyLoading.showError('Admission Add failed $error'));
+    isInsertingLoading(false);
+  }
+
 }

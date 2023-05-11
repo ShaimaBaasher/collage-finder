@@ -10,6 +10,38 @@ List<AdmissionModel>? admissionModelListFromJson(String str) =>
 String admissionModelListToJson(List<AdmissionModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+class AdmissionList {
+  List<AdmissionModel>? _list;
+
+  AdmissionList({List<AdmissionModel>? list,}) {
+    if (list != null) {
+      _list = list;
+    }
+  }
+
+  List<AdmissionModel>? get list => _list;
+
+  set list(List<AdmissionModel>? list) => _list = list;
+
+  AdmissionList.fromJson(Map<String, dynamic> json) {
+    if (json['admission-rate'] != null) {
+      _list = <AdmissionModel>[];
+      json['admission-rate'].forEach((v) {
+        _list!.add(AdmissionModel.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (_list != null) {
+      data['areas'] = _list!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+
+}
+
 class AdmissionModel {
   int? _totalId;
   int? _universityId;
