@@ -38,7 +38,7 @@ class AdviceList{
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
     if (_list != null) {
-      data['areas'] = _list!.map((v) => v.toJson()).toList();
+      data['advices'] = _list!.map((v) => v.toJson()).toList();
     }
     return data;
   }

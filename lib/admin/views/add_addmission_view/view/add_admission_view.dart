@@ -119,6 +119,7 @@ class AddAdmissionView extends StatelessWidget {
                     textAlign: TextAlign.start,
                     style: kLabelPrimaryNormalTextStyle.copyWith(fontSize: 18.sp),),
                   Autocomplete<RateModel>(
+
                     optionsBuilder: (TextEditingValue textEditingValue) {
                       if (textEditingValue.text == '') {
                         return const Iterable<RateModel>.empty();
