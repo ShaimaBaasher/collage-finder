@@ -179,28 +179,34 @@ class AddAdmissionController extends GetxController {
   }
 
   void uploadAdmission() async {
-    isInsertingLoading(true);
-    // Images
-    await getAdmission();
+    if (universityModel != null && collageModel != null &&
+        rateModel != null && departmentModel != null && categoryModel != null) {
+      isInsertingLoading(true);
+      // Images
+      await getAdmission();
 
-    admissionList.add(AdmissionModel(
-        totalId: 1,
-        sectorId: 1,
-        superlativeId: 1,
-        universityId: universityModel?.universityId,
-        collageId: collageModel?.collageId,
-        rateId: rateModel?.rateId,
-        departmentId: departmentModel?.departmentId,
-        categoryId: categoryModel?.categoryId));
+      admissionList.add(AdmissionModel(
+          totalId: 1,
+          sectorId: 1,
+          superlativeId: 1,
+          universityId: universityModel?.universityId,
+          collageId: collageModel?.collageId,
+          rateId: rateModel?.rateId,
+          departmentId: departmentModel?.departmentId,
+          categoryId: categoryModel?.categoryId));
 
-    ADMISSION_REF
-        .doc('pK0we3MKnVIe6dgVJ0sT')
-        .set(AdmissionList(list: admissionList).toJson()
-            // 'universities': input
-            )
-        .then((_) => EasyLoading.showSuccess('Admission Added Successfully'))
-        .catchError(
-            (error) => EasyLoading.showError('Admission Add failed $error'));
-    isInsertingLoading(false);
+      ADMISSION_REF
+          .doc('pK0we3MKnVIe6dgVJ0sT')
+          .set(AdmissionList(list: admissionList).toJson()
+        // 'universities': input
+      )
+          .then((_) => EasyLoading.showSuccess('Admission Added Successfully'))
+          .catchError(
+              (error) => EasyLoading.showError('Admission Add failed $error'));
+      isInsertingLoading(false);
+
+    } else {
+      EasyLoading.showError('Value is empty');
+    }
   }
 }

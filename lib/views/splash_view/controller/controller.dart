@@ -16,8 +16,8 @@ class SplashController extends GetxController {
   void goToHomeScreen() async {
     await Future.delayed(const Duration(seconds: 2));
     StorageService.to.reset();
-    // Get.off(() => const AdminBottomBarNavigationView());
-    Get.off(() => const BottomBarNavigationView()); // <== Change here
+    Get.off(() => const AdminBottomBarNavigationView());
+    // Get.off(() => const BottomBarNavigationView()); // <== Change here
   }
 
 }

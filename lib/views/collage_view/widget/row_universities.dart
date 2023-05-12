@@ -47,12 +47,12 @@ class RowUniversities extends StatelessWidget {
                 );
               }, errorBuilder: (BuildContext context, Object exception,
                       StackTrace? stackTrace) {
-                return Image.asset(
-                  'assets/images/logo.png',
-                  width: 71.w,
-                  height: 17.h,
+                return SvgPicture.asset(
+                  'assets/icons/logo.svg',
+                  width: 25.w,
+                  height: 15.h,
                   fit: BoxFit.fitWidth,
-                );
+                );;
               }),
             ),
             SizedBox(height: 1.h,),
