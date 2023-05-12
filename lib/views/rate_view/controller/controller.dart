@@ -194,7 +194,7 @@ class RateController extends GetxController {
           universityNameEn: element['university_name_en'],
           universityNameAr: element['university_name_ar']));
 
-      printInfo(info: 'areaModel>>${universityModelListToJson(universityModelLists!)}');
+      printInfo(info: 'universityModelLists>>${universityModelListToJson(universityModelLists!)}');
     }
   }
 
@@ -239,8 +239,7 @@ class RateController extends GetxController {
     final collages = allData[0] as Map<String, dynamic>;
     final list = collages['totals'] as List<dynamic>;
     for (var element in list) {
-      totalList.add(
-          TotalModel(totalId: element['total_Id'], total: element['total']));
+      totalList.add(TotalModel(totalId: element['total_Id'], total: element['total']));
     }
   }
 
@@ -252,8 +251,7 @@ class RateController extends GetxController {
     final collages = allData[0] as Map<String, dynamic>;
     final list = collages['rates'] as List<dynamic>;
     for (var element in list) {
-      rateList
-          .add(TotalModel(totalId: element['rate_Id'], total: element['rate']));
+      rateList.add(TotalModel(totalId: element['rate_Id'], total: element['rate']));
     }
     print(allData[0]);
   }
@@ -277,9 +275,25 @@ class RateController extends GetxController {
 
     // department_Id
     universityAdmissionList.clear();
+    var universityModel;
+
+    for(var i = 0 ; i < admissionList.length ; i++) {
+      for(var j = 0 ; j < universityModelLists.length ; j++) {
+        if (admissionList[i].universityId == universityModelLists[j].universityId) {
+          universityModel = universityModelLists[j];
+          break;
+        }
+      }
+    }
 
     for (var admissionModel in admissionList) {
-      final universityModel = universityModelLists.firstWhereOrNull((element) => element.universityId == admissionModel.universityId);
+
+
+      // final universityModel = universityModelLists.singleWhere((element) {
+      //   printInfo(info: 'admissionModel.universityId>>${element.universityId} = ${admissionModel.universityId}');
+      //   return element.universityId == admissionModel.universityId;
+      // });
+
       final collageModel = collageList.firstWhereOrNull(
           (element) => element.collageId == admissionModel.collageId);
       if (departmentList.isNotEmpty) {
