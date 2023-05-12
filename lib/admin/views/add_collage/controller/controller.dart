@@ -82,19 +82,20 @@ class AddCollageController extends GetxController {
       collageList.add(CollageModel(collageId: rateId, collageNameEn: rateMode['itinerary'].trim()));
     }
 
+    EasyLoading.show(status: 'Loading Please wait');
+
     COLLAGES_REF.doc('PjipJ1Z7wmTS7wFvWFa4').set(
         CollageList(list: collageList).toJson()
     )    .then((_) => EasyLoading.showSuccess('College Added Successfully'))
         .catchError((error) => EasyLoading.showError('College Add failed $error'));
 
+    clearFields();
   }
 
   void addTextFormField() {
-    if (fieldCount.value <= 35) {
       fieldCount.value++;
       remainingCollagesCount.value--;
       list.add(fieldCount.value);
-    }
     update();
   }
 
@@ -106,4 +107,12 @@ class AddCollageController extends GetxController {
       removeListData(i);
     }
   }
+
+  void clearFields() {
+    fieldCount(0);
+    items.clear();
+    list.clear();
+    update();
+  }
+
 }

@@ -54,6 +54,7 @@ class AddAdviceController extends GetxController {
       // 'universities': input
     )        .then((_) => EasyLoading.showSuccess('Advice Added Successfully'))
         .catchError((error) => EasyLoading.showError('Advice Add failed $error'));
+
     isInsertingLoading(false);
   }
 

@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:collage_finder/models/collage_model.dart';
 import 'package:collage_finder/models/department_model.dart';
 import 'package:collage_finder/models/total_model.dart';
 
 import 'filter_model.dart';
 import 'university_model.dart';
+
+// String universityAdmissionModelListToJson(List<UniversityAdmissionModel> data) =>
+//     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class UniversityAdmissionModel {
   UniversityModel? _universityModel;

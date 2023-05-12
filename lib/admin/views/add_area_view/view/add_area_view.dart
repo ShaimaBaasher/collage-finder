@@ -110,7 +110,7 @@ class AddAreaView extends StatelessWidget {
                    controller.goToGenerateFormTable();
                    Navigator.pop(context);
                  }, // function used to perform after pressing the button
-                 child: const Text('Generate'),
+                 child: const Text('Upload'),
                ),
              ],
            );

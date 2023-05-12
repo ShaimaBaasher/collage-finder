@@ -277,6 +277,7 @@ class RateController extends GetxController {
 
     // department_Id
     universityAdmissionList.clear();
+
     for (var admissionModel in admissionList) {
       final universityModel = universityModelLists.firstWhereOrNull((element) => element.universityId == admissionModel.universityId);
       final collageModel = collageList.firstWhereOrNull(
@@ -285,9 +286,10 @@ class RateController extends GetxController {
           departmentModel = departmentList.firstWhereOrNull((element) => element.departmentId == admissionModel.departmentId);
       }
       final totalModel = totalList.firstWhere((element) => element.totalId == admissionModel.totalId);
-      final rateMode = rateList.firstWhere((element) => element.totalId == admissionModel.rateId);
+      final rateMode = rateList.firstWhereOrNull((element) => element.totalId == admissionModel.rateId);
       final superlative = superlativeList.firstWhere((element) => element.totalId == admissionModel.superlativeId);
       final categoryModel = specialtyCategoryList.firstWhere((element) => element.dbId == admissionModel.categoryId);
+
 
       universityAdmissionList.add(UniversityAdmissionModel(
           universityModel: universityModel,

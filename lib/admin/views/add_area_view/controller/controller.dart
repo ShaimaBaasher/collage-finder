@@ -81,19 +81,21 @@ class AddAreaController extends GetxController {
       areaList.add(AreaModel(areaId: rateId, areaName: rateMode['itinerary'].trim()));
     }
 
+    EasyLoading.show(status: 'Loading please wait');
+
     AREA_REF
         .doc('aKnXir441oVW6bQGpIbu')
         .set(AreaList(list: areaList).toJson())
      .then((_) => EasyLoading.showSuccess('Area Added Successfully'))
         .catchError((error) => EasyLoading.showError('Area Add failed $error'));
+
+    clearFields();
   }
 
   void addTextFormField() {
-    if (fieldCount.value <= 35) {
       fieldCount.value++;
       remainingCollagesCount.value--;
       list.add(fieldCount.value);
-    }
     update();
   }
 
@@ -105,4 +107,12 @@ class AddAreaController extends GetxController {
       removeListData(i);
     }
   }
+
+  void clearFields() {
+    fieldCount(0);
+    items.clear();
+    list.clear();
+    update();
+  }
+
 }

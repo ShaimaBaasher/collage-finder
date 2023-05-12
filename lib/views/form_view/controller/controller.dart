@@ -14,7 +14,7 @@ class FormController extends GetxController {
 
   List<Map<String, dynamic>> items = [];
   var fieldCount = 0.obs;
-  var remainingCollagesCount = 35.obs;
+  var remainingCollagesCount = 50.obs;
 
   @override
   void onInit() {
@@ -73,7 +73,7 @@ class FormController extends GetxController {
   }
 
   void addTextFormField() {
-    if (fieldCount.value <= 35) {
+    if (fieldCount.value < 50) {
       fieldCount.value++;
       remainingCollagesCount.value--;
       list.add(fieldCount.value);

@@ -75,7 +75,7 @@ class AddRateController extends GetxController {
 
   void goToGenerateFormTable() async {
     await getRates();
-    var rateId = rateList[rateList.length - 1].rateId!;
+    var rateId = rateList.isNotEmpty ? rateList[rateList.length - 1].rateId! : 1;
     for (var rateMode in items) {
       rateId++;
       rateList.add(RateModel(rateId: rateId, rate: double.tryParse(rateMode['itinerary'].trim())));
@@ -87,14 +87,13 @@ class AddRateController extends GetxController {
     ).then((_) => EasyLoading.showSuccess('Rate Added Successfully'))
         .catchError((error) => EasyLoading.showError('Rate Add failed $error'));
 
+    clearFields();
   }
 
   void addTextFormField() {
-    if (fieldCount.value <= 35) {
       fieldCount.value++;
       remainingCollagesCount.value--;
       list.add(fieldCount.value);
-    }
     update();
   }
 
@@ -105,5 +104,12 @@ class AddRateController extends GetxController {
       list.removeAt(i);
       removeListData(i);
     }
+  }
+
+  void clearFields() {
+    fieldCount(0);
+    items.clear();
+    list.clear();
+    update();
   }
 }

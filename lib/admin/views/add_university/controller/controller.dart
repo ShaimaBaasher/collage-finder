@@ -16,7 +16,6 @@ import 'dart:io' as io;
 import '../view/add_univresity_view.dart';
 
 class AddUniversityController extends GetxController {
-
   final ImagePicker imagePicker = ImagePicker();
   List<XFile>? imageFileList = [];
 
@@ -40,7 +39,8 @@ class AddUniversityController extends GetxController {
   Gender? genderRadioButton;
 
   AreaModel? dropdownValue;
-  FilterModel genderValue = FilterModel(filterId: 10, filterName: 'All', dbId: 1);
+  FilterModel genderValue =
+      FilterModel(filterId: 10, filterName: 'All', dbId: 1);
   final areaList = <AreaModel>[];
   final universityModelLists = <UniversityModel>[];
   final addedUniversityModelLists = Map<String, dynamic>;
@@ -157,6 +157,7 @@ class AddUniversityController extends GetxController {
 
   void uploadUniversity() async {
     isInsertingLoading(true);
+
     await getUniversities();
     // Images
     await uploadImage();
@@ -167,7 +168,8 @@ class AddUniversityController extends GetxController {
     }
 
     universityModelLists.add(UniversityModel(
-        universityId: universityModelLists.isNotEmpty ? universityModelLists[universityModelLists.length - 1].universityId! + 1 : 1,
+        universityId: universityModelLists.isNotEmpty
+            ? universityModelLists[universityModelLists.length - 1].universityId! + 1 : 1,
         img: imageUrl,
         universityNameEn: universityName.trim(),
         about: aboutUniversity.trim(),
@@ -175,13 +177,16 @@ class AddUniversityController extends GetxController {
         areaId: dropdownValue?.areaId,
         collages: addedCollegelist));
 
-    UNIVERSITIES_REF.doc('GAiapcDjqZzwXBQ24LYi').set(
-       UniversityList(universityModel: universityModelLists).toJson()
-    )    .then((_) => EasyLoading.showSuccess('University Added Successfully'))
-        .catchError((error) => EasyLoading.showError('University Add failed $error'));
 
+    UNIVERSITIES_REF
+        .doc('GAiapcDjqZzwXBQ24LYi')
+        .set(UniversityList(universityModel: universityModelLists).toJson())
+        .then((_) => EasyLoading.showSuccess('University Added Successfully'))
+        .catchError(
+            (error) => EasyLoading.showError('University Add failed $error'));
+
+    clearFields();
     isInsertingLoading(false);
-
   }
 
   Future getCollages() async {
@@ -208,7 +213,22 @@ class AddUniversityController extends GetxController {
     final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
     final universities = allData[0] as Map<String, dynamic>;
     final list = universities['universities'] as List<dynamic>;
+
     for (var element in list) {
+      final imgList = <Images>[];
+      final cList = <int>[];
+
+      final list = element['images'] as List<dynamic>;
+      final colist = element['collages'] as List<dynamic>;
+
+      for (var imgElement in list) {
+        imgList.add(Images(imageUrl: imgElement["imageUrl"]));
+      }
+
+      for (var cElement in colist) {
+        cList.add(cElement);
+      }
+
       for (var areaElement in areaList) {
         if (element['area_id'] == areaElement.areaId) {
           areaModel = AreaModel(
@@ -218,16 +238,17 @@ class AddUniversityController extends GetxController {
 
       universityModelLists.add(UniversityModel(
           img: element['img'],
-          universityId: element['university_Id'],
-          collages: element['collages'],
-          areaId: element['area_id'],
+          images: imgList,
+          collages: cList,
           about: element['about'],
           areaModel: areaModel,
+          universityId: element['university_Id'],
+          areaId: element['area_id'],
           universityNameEn: element['university_name_en'],
           universityNameAr: element['university_name_ar']));
-
-      printInfo(info: 'areaModel>>${universityModelListToJson(universityModelLists!)}');
     }
+
+    printInfo(info: 'areaModel>>${universityModelListToJson(universityModelLists!)}');
   }
 
   void addTextFormField() {
@@ -237,7 +258,6 @@ class AddUniversityController extends GetxController {
     }
     update();
   }
-
 
   void storeValue(int i, CollageModel selection) {
     bool valueFound = false;
@@ -260,7 +280,6 @@ class AddUniversityController extends GetxController {
     });
     addedCollegelist.add(selection.collageId!);
     update();
-
   }
 
   void removeListData(int i) {
@@ -276,5 +295,13 @@ class AddUniversityController extends GetxController {
       list.removeAt(i);
       removeListData(i);
     }
+  }
+
+  void clearFields() {
+    fieldCount(0);
+    addedCollegelist.clear();
+    items.clear();
+    list.clear();
+    update();
   }
 }

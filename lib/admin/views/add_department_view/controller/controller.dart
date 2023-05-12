@@ -114,8 +114,6 @@ class AddDepartmentController extends GetxController {
 
     if (selectedGenderList.length == items.length) {
       var rateId = departmentList.isNotEmpty ? departmentList[departmentList.length - 1].departmentId! : 1;
-      // for (var rateMode in items) {
-      // }
 
       for (int i = 0; i < selectedGenderList.length; i++) {
         rateId++;
@@ -127,18 +125,16 @@ class AddDepartmentController extends GetxController {
           DepartmentList(list: departmentList).toJson()
       )    .then((_) => EasyLoading.showSuccess('Department Added Successfully'))
           .catchError((error) => EasyLoading.showError('Department Add failed $error'));
-      Navigator.pop(context);
     } else {
       EasyLoading.showError('Fields missing');
     }
+    clearFields();
   }
 
   void addTextFormField() {
-    if (fieldCount.value <= 35) {
       fieldCount.value++;
       remainingCollagesCount.value--;
       list.add(fieldCount.value);
-    }
     update();
   }
 
@@ -149,5 +145,14 @@ class AddDepartmentController extends GetxController {
       list.removeAt(i);
       removeListData(i);
     }
+  }
+
+  void clearFields() {
+    fieldCount(0);
+    genderItems.clear();
+    selectedGenderList.clear();
+    items.clear();
+    list.clear();
+    update();
   }
 }

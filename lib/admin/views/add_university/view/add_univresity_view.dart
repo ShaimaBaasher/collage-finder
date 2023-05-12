@@ -34,7 +34,7 @@ class AddUniversityView extends StatelessWidget {
           Obx(() => IconButton(
               onPressed: controller.isInsertingLoading.isTrue
                   ? null : () {
-                      if (!_formKey.currentState!.validate()) {
+                      if (controller.universityName.isEmpty && controller.aboutUniversity.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text("Fields missing")));
                       } else {
@@ -290,7 +290,7 @@ class AddUniversityView extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.center,
                           child: Text(
-                            "No Collages added !",
+                            "No Colleges added !",
                             style: kLabelSecondryTextStyle.copyWith(
                                 fontSize: 18.sp),
                           ),
@@ -310,15 +310,16 @@ class AddUniversityView extends StatelessWidget {
                         ],
                       ),
               ),
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.indigo,
+              Obx(() => ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.indigo,
+                  ),
+                  onPressed: controller.isInsertingLoading.isTrue ? null : () {
+                    controller.addTextFormField();
+                  },
+                  icon: Icon(Icons.add),
+                  label: const Text("Add College"),
                 ),
-                onPressed: () {
-                  controller.addTextFormField();
-                },
-                icon: Icon(Icons.add),
-                label: const Text("Add Collage"),
               ),
             ],
           ),
