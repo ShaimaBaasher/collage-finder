@@ -19,5 +19,5 @@ class SplashController extends GetxController {
     // Get.off(() => const AdminBottomBarNavigationView());
     Get.off(() => const BottomBarNavigationView()); // <== Change here
   }
-
+  // /applied Science
 }

@@ -2,7 +2,6 @@ import 'package:collage_finder/views/collage_view/controller/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../models/collage_model.dart';
 import '../../../utils/routes/app_pages.dart';
 import '../../form_table_view/contoller/controller.dart';
 import '../../rate_view/controller/controller.dart';
@@ -42,22 +41,20 @@ class FormController extends GetxController {
     update();
   }
 
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   void removeListData(int i) {
     if (items.isNotEmpty) {
       final rateController = Get.find<RateController>();
       final collageController = Get.find<CollageController>();
       final collageNameEn = items[i]['itinerary'] as String;
-      // printInfo(info: 'collageNameEn>>${collageNameEn.split('/')[1]}');
+      final collageName = collageNameEn.split('/').length > 1 ? collageNameEn.split('/')[1][2] : collageNameEn.split('/')[1];
+      printInfo(info: 'collageNameEn>>${collageNameEn}');
       rateController.filterList.firstWhereOrNull((element) => '${element.universityModel?.universityNameEn}/${element.collageModel?.collageNameEn}' == items[i]['itinerary'])?.isSaved = false;
-      if (collageNameEn.contains('/')) {
-        collageController.universityModel!.internalCollageList!.firstWhereOrNull((element) => '${element.collageNameEn}' == collageNameEn.split('/')[1])?.isSaved = false;
-      }
+        if (collageController.universityModel != null) {
+          if (collageController.universityModel!.internalCollageList!.isNotEmpty) {
+            collageController.universityModel!.internalCollageList!.firstWhereOrNull((element) => '${element.collageNameEn}' == collageName)?.isSaved = false;
+          }
+        }
+
       collageController.removeFromSavedListCollageController(collageNameEn);
       collageController.updateCollageController();
       rateController.updateRateController();

@@ -321,6 +321,11 @@ class CollageController extends GetxController {
     }
   }
 
+  @override
+  void dispose() {
+    universityModel!.internalCollageList?.clear();
+    super.dispose();
+  }
   void updateCollageController() {
     savedUniversityIndex = -1;
     update();

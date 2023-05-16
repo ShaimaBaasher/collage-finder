@@ -194,7 +194,6 @@ class RateController extends GetxController {
           universityNameEn: element['university_name_en'],
           universityNameAr: element['university_name_ar']));
 
-      printInfo(info: 'universityModelLists>>${universityModelListToJson(universityModelLists!)}');
     }
   }
 
@@ -227,8 +226,6 @@ class RateController extends GetxController {
           departmentNameEn: element['department_name_en'],
           departmentNameAr: element['department_name_ar']));
     }
-
-    print(departmentModelListToJson(departmentList));
   }
 
   Future getTotals() async {
@@ -253,7 +250,6 @@ class RateController extends GetxController {
     for (var element in list) {
       rateList.add(TotalModel(totalId: element['rate_Id'], total: element['rate']));
     }
-    print(allData[0]);
   }
 
   Future getSuperlative() async {
@@ -267,7 +263,6 @@ class RateController extends GetxController {
       superlativeList.add(TotalModel(
           totalId: element['superlative_Id'], total: element['superlative']));
     }
-    print(allData[0]);
   }
 
   void setUniversitiesAdmissionList() {
@@ -275,35 +270,34 @@ class RateController extends GetxController {
 
     // department_Id
     universityAdmissionList.clear();
-    var universityModel;
+    // var universityModel;
+    // var collageModel;
+    // var categoryModel;
 
-    for(var i = 0 ; i < admissionList.length ; i++) {
-      for(var j = 0 ; j < universityModelLists.length ; j++) {
-        if (admissionList[i].universityId == universityModelLists[j].universityId) {
-          universityModel = universityModelLists[j];
-          break;
-        }
-      }
-    }
+    // for(var i = 0 ; i < admissionList.length ; i++) {
+    //   for(var j = 0 ; j < universityModelLists.length ; j++) {
+    //     if (admissionList[i].universityId == universityModelLists[j].universityId) {
+    //       universityModel = universityModelLists[j];
+    //       break;
+    //     }
+    //   }
+    // }
+
+
 
     for (var admissionModel in admissionList) {
 
-
-      // final universityModel = universityModelLists.singleWhere((element) {
-      //   printInfo(info: 'admissionModel.universityId>>${element.universityId} = ${admissionModel.universityId}');
-      //   return element.universityId == admissionModel.universityId;
-      // });
-
-      final collageModel = collageList.firstWhereOrNull(
-          (element) => element.collageId == admissionModel.collageId);
+      // printInfo(info: 'collagesModelToJson>> ${collagesModelToJson(collageModel!)}');
       if (departmentList.isNotEmpty) {
           departmentModel = departmentList.firstWhereOrNull((element) => element.departmentId == admissionModel.departmentId);
       }
-      final totalModel = totalList.firstWhere((element) => element.totalId == admissionModel.totalId);
-      final rateMode = rateList.firstWhereOrNull((element) => element.totalId == admissionModel.rateId);
-      final superlative = superlativeList.firstWhere((element) => element.totalId == admissionModel.superlativeId);
-      final categoryModel = specialtyCategoryList.firstWhere((element) => element.dbId == admissionModel.categoryId);
 
+      final universityModel = universityModelLists.firstWhereOrNull((element) => element.universityId == admissionModel.universityId);
+      final totalModel = totalList.firstWhereOrNull((element) => element.totalId == admissionModel.totalId);
+      final rateMode = rateList.firstWhereOrNull((element) => element.totalId == admissionModel.rateId);
+      final superlative = superlativeList.firstWhereOrNull((element) => element.totalId == admissionModel.superlativeId);
+      final categoryModel = specialtyCategoryList.firstWhereOrNull((element) => element.dbId == admissionModel.categoryId);
+      final collageModel = collageList.firstWhereOrNull((element) => element.collageId == admissionModel.collageId);
 
       universityAdmissionList.add(UniversityAdmissionModel(
           universityModel: universityModel,
@@ -316,8 +310,8 @@ class RateController extends GetxController {
           superlativeModel: superlative));
 
       filter();
-      isUniversityLoaded(false);
     }
+    isUniversityLoaded(false);
   }
 
   void updateRangeSlider(SfRangeValues newValues) {
@@ -363,7 +357,7 @@ class RateController extends GetxController {
   void saveUniversityForm(int index, UniversityAdmissionModel universityModel) {
       savedUniversityIndex = index;
       universityModel.isSaved = true;
-      printInfo(info: 'saveUniversityForm');
+      printInfo(info: 'saveUniversityForm ${universityModel.universityModel!.universityNameEn} / ${universityModel.collageModel!.collageNameEn}');
       formController.addTextFormField();
       formController.storeValue(formController.list.length - 1, '${universityModel.universityModel!.universityNameEn!}/${universityModel.collageModel!.collageNameEn}');
       update();
@@ -372,8 +366,8 @@ class RateController extends GetxController {
   void removeUniversityForm(int index, UniversityAdmissionModel universityModel) {
       savedUniversityIndex = index;
       universityModel.isSaved = false;
-      printInfo(info: 'saveUniversityForm');
       if (formController.list.isNotEmpty) {
+        printInfo(info: 'saveUniversityForm');
         formController.removeTextFormField(formController.list.length - 1);
         savedUniversityIndex = -1;
       }
