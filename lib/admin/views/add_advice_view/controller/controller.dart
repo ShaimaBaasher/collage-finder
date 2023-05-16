@@ -41,7 +41,7 @@ class AddAdviceController extends GetxController {
 
   void uploadAdvice() async {
     isInsertingLoading(true);
-    // Images
+    // Imagesxx
     await getAdvices();
 
     adviceList.add(AdviceModel(

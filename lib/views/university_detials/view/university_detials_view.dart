@@ -1,5 +1,6 @@
 import 'package:collage_finder/views/university_detials/widgets/row_collage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -42,10 +43,10 @@ class UniversityDetailsView extends StatelessWidget {
                   );
                 }, errorBuilder: (BuildContext context, Object exception,
                         StackTrace? stackTrace) {
-                  return Image.asset(
-                    'assets/images/logo.png',
-                    height: 50.h,
-                    width: 50.w,
+                  return SvgPicture.asset(
+                    'assets/icons/logo.svg',
+                    width: 25.w,
+                    height: 15.h,
                     fit: BoxFit.fitWidth,
                   );
                 }),

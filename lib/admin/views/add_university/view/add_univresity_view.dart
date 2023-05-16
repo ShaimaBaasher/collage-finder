@@ -14,11 +14,11 @@ import '../../../../widgets/loading_widget.dart';
 enum Gender { male, female, all }
 
 class AddUniversityView extends StatelessWidget {
+
   AddUniversityView({Key? key}) : super(key: key);
+
   final controller = Get.find<AddUniversityController>();
   final form = GlobalKey<FormState>();
-
-  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {

@@ -52,7 +52,7 @@ class RowUniversities extends StatelessWidget {
                   width: 25.w,
                   height: 15.h,
                   fit: BoxFit.fitWidth,
-                );;
+                );
               }),
             ),
             SizedBox(height: 1.h,),

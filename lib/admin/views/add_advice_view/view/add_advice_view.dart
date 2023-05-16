@@ -116,6 +116,7 @@ class AddAdviceView extends StatelessWidget {
                         },
                         onFieldSubmitted: (_) {},
                       ),
+
                     ),
                   ],
                 ),

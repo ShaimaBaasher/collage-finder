@@ -156,16 +156,16 @@ class CollageController extends GetxController {
     collageList.clear();
     universityModel!.internalCollageList?.clear();
 
-    for (var i = 0; i < universityModel!.collages!.length; i++) {
-      for (var k = 0; k < innerCollageList.length; k++) {
-        if (innerCollageList[k].collageId == universityModel!.collages![i]) {
-          collageList.add(CollageModel(
-              collageId: innerCollageList[i].collageId,
-              collageNameEn: innerCollageList[i].collageNameEn,
-              isSaved: false));
-        }
+    if (universityModel!.collages != null) {
+      for (var collage in universityModel!.collages!) {
+        var model = innerCollageList.firstWhere((element) => element.collageId == collage);
+        collageList.add(CollageModel(
+            collageId: model.collageId,
+            collageNameEn: model.collageNameEn,
+            isSaved: false));
       }
     }
+
 
     checkIfCollageIsInLocalStorage();
 
