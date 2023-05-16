@@ -287,7 +287,6 @@ class RateController extends GetxController {
 
     for (var admissionModel in admissionList) {
 
-      // printInfo(info: 'collagesModelToJson>> ${collagesModelToJson(collageModel!)}');
       if (departmentList.isNotEmpty) {
           departmentModel = departmentList.firstWhereOrNull((element) => element.departmentId == admissionModel.departmentId);
       }
@@ -360,6 +359,7 @@ class RateController extends GetxController {
       printInfo(info: 'saveUniversityForm ${universityModel.universityModel!.universityNameEn} / ${universityModel.collageModel!.collageNameEn}');
       formController.addTextFormField();
       formController.storeValue(formController.list.length - 1, '${universityModel.universityModel!.universityNameEn!}/${universityModel.collageModel!.collageNameEn}');
+      savedUniversityIndex = -1;
       update();
   }
 

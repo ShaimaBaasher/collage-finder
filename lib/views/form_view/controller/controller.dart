@@ -15,11 +15,6 @@ class FormController extends GetxController {
   var fieldCount = 0.obs;
   var remainingCollagesCount = 50.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   dynamic storeValue(int i, String v) {
     bool valueFound = false;
     for (int j = 0; j < items.length; j++) {
