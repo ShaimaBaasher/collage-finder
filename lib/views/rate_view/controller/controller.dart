@@ -355,8 +355,8 @@ class RateController extends GetxController {
 
   void saveUniversityForm(int index, UniversityAdmissionModel universityModel) {
       savedUniversityIndex = index;
-      universityModel.isSaved = true;
-      printInfo(info: 'saveUniversityForm ${universityModel.universityModel!.universityNameEn} / ${universityModel.collageModel!.collageNameEn}');
+      universityAdmissionList[universityAdmissionList.indexWhere((element) => element.universityModel!.universityId == universityModel.universityModel!.universityId && element.categoryModel!.dbId == universityModel.categoryModel!.dbId)].isSaved = true;
+      filterList[filterList.indexWhere((element) => element.universityModel!.universityId == universityModel.universityModel!.universityId && element.categoryModel!.dbId == universityModel.categoryModel!.dbId)].isSaved = true;
       formController.addTextFormField();
       formController.storeValue(formController.list.length - 1, '${universityModel.universityModel!.universityNameEn!}/${universityModel.collageModel!.collageNameEn}');
       savedUniversityIndex = -1;
@@ -365,7 +365,8 @@ class RateController extends GetxController {
 
   void removeUniversityForm(int index, UniversityAdmissionModel universityModel) {
       savedUniversityIndex = index;
-      universityModel.isSaved = false;
+      universityAdmissionList[universityAdmissionList.indexWhere((element) => element.universityModel!.universityId == universityModel.universityModel!.universityId && element.categoryModel!.dbId == universityModel.categoryModel!.dbId)].isSaved = false;
+      filterList[filterList.indexWhere((element) => element.universityModel!.universityId == universityModel.universityModel!.universityId && element.categoryModel!.dbId == universityModel.categoryModel!.dbId)].isSaved = false;
       if (formController.list.isNotEmpty) {
         printInfo(info: 'saveUniversityForm');
         formController.removeTextFormField(formController.list.length - 1);
