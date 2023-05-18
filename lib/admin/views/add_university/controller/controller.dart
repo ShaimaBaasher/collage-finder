@@ -252,10 +252,8 @@ class AddUniversityController extends GetxController {
   }
 
   void addTextFormField() {
-    if (fieldCount.value <= 35) {
       fieldCount.value++;
       list.add(fieldCount.value);
-    }
     update();
   }
 
