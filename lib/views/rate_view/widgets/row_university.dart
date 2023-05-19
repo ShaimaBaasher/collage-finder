@@ -66,10 +66,10 @@ class RowUniversity extends StatelessWidget {
                         child: GetBuilder<RateController>(
                           builder: (_) {
                             return IconButton(
-                              icon:  Icon(universityModel.isSaved! || controller.savedUniversityIndex == index ? Icons.remove : Icons.add, size: 20),
-                              color: universityModel.isSaved! || controller.savedUniversityIndex == index ? Colors.red : Colors.green,
+                              icon:  Icon(universityModel.isSaved! ? Icons.remove : Icons.add, size: 20),
+                              color: universityModel.isSaved! ? Colors.red : Colors.green,
                               onPressed: () {
-                                universityModel.isSaved! || controller.savedUniversityIndex == index ?
+                                universityModel.isSaved! ?
                                 controller.removeUniversityForm(index, universityModel) :
                                 controller.saveUniversityForm(index, universityModel);
                               },

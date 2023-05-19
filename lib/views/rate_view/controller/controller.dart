@@ -14,7 +14,6 @@ import '../../../models/university_model.dart';
 import '../../form_view/controller/controller.dart';
 
 class RateController extends GetxController {
-
   final formController = Get.find<FormController>();
 
   var selectedDurationIndex = 0;
@@ -76,6 +75,7 @@ class RateController extends GetxController {
 
   var searchBox = '';
 
+  UniversityAdmissionModel? clickedUniversityModel;
 
   void goToHomeScreen() async {
     await Future.delayed(const Duration(seconds: 3));
@@ -148,7 +148,6 @@ class RateController extends GetxController {
     }
 
     setUniversitiesAdmissionList();
-
   }
 
   Future getAreas() async {
@@ -179,10 +178,10 @@ class RateController extends GetxController {
     final universities = allData[0] as Map<String, dynamic>;
     final list = universities['universities'] as List<dynamic>;
     for (var element in list) {
-
       for (var areaElement in areaList) {
         if (element['area_id'] == areaElement.areaId) {
-          areaModel = AreaModel(areaId: areaElement.areaId, areaName: areaElement.areaName);
+          areaModel = AreaModel(
+              areaId: areaElement.areaId, areaName: areaElement.areaName);
         }
       }
 
@@ -193,7 +192,6 @@ class RateController extends GetxController {
           areaModel: areaModel,
           universityNameEn: element['university_name_en'],
           universityNameAr: element['university_name_ar']));
-
     }
   }
 
@@ -236,7 +234,8 @@ class RateController extends GetxController {
     final collages = allData[0] as Map<String, dynamic>;
     final list = collages['totals'] as List<dynamic>;
     for (var element in list) {
-      totalList.add(TotalModel(totalId: element['total_Id'], total: element['total']));
+      totalList.add(
+          TotalModel(totalId: element['total_Id'], total: element['total']));
     }
   }
 
@@ -248,7 +247,8 @@ class RateController extends GetxController {
     final collages = allData[0] as Map<String, dynamic>;
     final list = collages['rates'] as List<dynamic>;
     for (var element in list) {
-      rateList.add(TotalModel(totalId: element['rate_Id'], total: element['rate']));
+      rateList
+          .add(TotalModel(totalId: element['rate_Id'], total: element['rate']));
     }
   }
 
@@ -283,20 +283,24 @@ class RateController extends GetxController {
     //   }
     // }
 
-
-
     for (var admissionModel in admissionList) {
-
       if (departmentList.isNotEmpty) {
-          departmentModel = departmentList.firstWhereOrNull((element) => element.departmentId == admissionModel.departmentId);
+        departmentModel = departmentList.firstWhereOrNull(
+            (element) => element.departmentId == admissionModel.departmentId);
       }
 
-      final universityModel = universityModelLists.firstWhereOrNull((element) => element.universityId == admissionModel.universityId);
-      final totalModel = totalList.firstWhereOrNull((element) => element.totalId == admissionModel.totalId);
-      final rateMode = rateList.firstWhereOrNull((element) => element.totalId == admissionModel.rateId);
-      final superlative = superlativeList.firstWhereOrNull((element) => element.totalId == admissionModel.superlativeId);
-      final categoryModel = specialtyCategoryList.firstWhereOrNull((element) => element.dbId == admissionModel.categoryId);
-      final collageModel = collageList.firstWhereOrNull((element) => element.collageId == admissionModel.collageId);
+      final universityModel = universityModelLists.firstWhereOrNull(
+          (element) => element.universityId == admissionModel.universityId);
+      final totalModel = totalList.firstWhereOrNull(
+          (element) => element.totalId == admissionModel.totalId);
+      final rateMode = rateList.firstWhereOrNull(
+          (element) => element.totalId == admissionModel.rateId);
+      final superlative = superlativeList.firstWhereOrNull(
+          (element) => element.totalId == admissionModel.superlativeId);
+      final categoryModel = specialtyCategoryList.firstWhereOrNull(
+          (element) => element.dbId == admissionModel.categoryId);
+      final collageModel = collageList.firstWhereOrNull(
+          (element) => element.collageId == admissionModel.collageId);
 
       universityAdmissionList.add(UniversityAdmissionModel(
           universityModel: universityModel,
@@ -322,26 +326,31 @@ class RateController extends GetxController {
 
   void filter() {
     final List<UniversityAdmissionModel> tripList = [];
-      if (searchBox.isNotEmpty) {
-        for (var item in universityAdmissionList) {
-          if (searchBox.toLowerCase().contains(item.universityModel!.universityNameEn!.toLowerCase()) || searchBox.toLowerCase().contains(item.collageModel!.collageNameEn!.toLowerCase()) &&
-              item.rateModel!.total >= priceSliderStart &&
-              item.rateModel!.total <= priceSliderEnd &&
-              selectedGenderItem == item.departmentModel!.genderId &&
-              selectedSpecialtyCategoryItem == item.categoryModel!.dbId && dropdownValue!.areaId == item.universityModel!.areaId) {
-            tripList.add(item);
-          }
-        }
-      } else {
-        for (var item in universityAdmissionList) {
-          if (item.rateModel!.total >= priceSliderStart &&
-                  item.rateModel!.total <= priceSliderEnd &&
-                  selectedGenderItem == item.departmentModel!.genderId &&
-                  selectedSpecialtyCategoryItem == item.categoryModel!.dbId && dropdownValue!.areaId == item.universityModel!.areaId) {
-            tripList.add(item);
-          }
+    if (searchBox.isNotEmpty) {
+      for (var item in universityAdmissionList) {
+        if (searchBox.toLowerCase().contains(
+                item.universityModel!.universityNameEn!.toLowerCase()) ||
+            searchBox.toLowerCase().contains(
+                    item.collageModel!.collageNameEn!.toLowerCase()) &&
+                item.rateModel!.total >= priceSliderStart &&
+                item.rateModel!.total <= priceSliderEnd &&
+                selectedGenderItem == item.departmentModel!.genderId &&
+                selectedSpecialtyCategoryItem == item.categoryModel!.dbId &&
+                dropdownValue!.areaId == item.universityModel!.areaId) {
+          tripList.add(item);
         }
       }
+    } else {
+      for (var item in universityAdmissionList) {
+        if (item.rateModel!.total >= priceSliderStart &&
+            item.rateModel!.total <= priceSliderEnd &&
+            selectedGenderItem == item.departmentModel!.genderId &&
+            selectedSpecialtyCategoryItem == item.categoryModel!.dbId &&
+            dropdownValue!.areaId == item.universityModel!.areaId) {
+          tripList.add(item);
+        }
+      }
+    }
 
     filterList.clear();
     filterList.addAll(tripList);
@@ -354,30 +363,61 @@ class RateController extends GetxController {
   }
 
   void saveUniversityForm(int index, UniversityAdmissionModel universityModel) {
-      savedUniversityIndex = index;
-      universityAdmissionList[universityAdmissionList.indexWhere((element) => element.universityModel!.universityId == universityModel.universityModel!.universityId && element.categoryModel!.dbId == universityModel.categoryModel!.dbId)].isSaved = true;
-      filterList[filterList.indexWhere((element) => element.universityModel!.universityId == universityModel.universityModel!.universityId && element.categoryModel!.dbId == universityModel.categoryModel!.dbId)].isSaved = true;
-      formController.addTextFormField();
-      formController.storeValue(formController.list.length - 1, '${universityModel.universityModel!.universityNameEn!}/${universityModel.collageModel!.collageNameEn}');
-      savedUniversityIndex = -1;
-      update();
+    savedUniversityIndex = index;
+
+    printInfo(info: 'index>${index}>${universityModel.universityModel!.universityId}>>${universityModel.collageModel!.collageId}>>>${universityModel.departmentModel!.departmentId}');
+
+    universityAdmissionList[universityAdmissionList.indexWhere((element) =>
+            element.universityModel!.universityId == universityModel.universityModel!.universityId && element.collageModel!.collageId == universityModel.collageModel!.collageId && element.departmentModel!.departmentId == universityModel.departmentModel!.departmentId)]
+        .isSaved = true;
+    // filterList[filterList.indexWhere((element) => element.universityModel!.universityId == universityModel.universityModel!.universityId && element.categoryModel!.dbId == universityModel.categoryModel!.dbId && element.departmentModel!.departmentId == universityModel.departmentModel!.departmentId)].isSaved = true;
+      for (var i = 0; i < filterList.length; i++) {
+        if (i == index && filterList[i].universityModel?.universityId == universityModel.universityModel!.universityId && filterList[i].collageModel!.collageId == universityModel.collageModel!.collageId && filterList[i].departmentModel!.departmentId == universityModel.departmentModel!.departmentId) {
+          filterList[i].isSaved = true;
+          break;
+        }
+      }
+
+    savedUniversityIndex = -1;
+    update();
+
+    formController.addTextFormField();
+    formController.storeValue(formController.list.length - 1,
+        '${universityModel.universityModel!.universityNameEn!}/${universityModel.collageModel!.collageNameEn}');
   }
 
-  void removeUniversityForm(int index, UniversityAdmissionModel universityModel) {
-      savedUniversityIndex = index;
-      universityAdmissionList[universityAdmissionList.indexWhere((element) => element.universityModel!.universityId == universityModel.universityModel!.universityId && element.categoryModel!.dbId == universityModel.categoryModel!.dbId)].isSaved = false;
-      filterList[filterList.indexWhere((element) => element.universityModel!.universityId == universityModel.universityModel!.universityId && element.categoryModel!.dbId == universityModel.categoryModel!.dbId)].isSaved = false;
-      if (formController.list.isNotEmpty) {
-        printInfo(info: 'saveUniversityForm');
-        formController.removeTextFormField(formController.list.length - 1);
-        savedUniversityIndex = -1;
+  void removeUniversityForm(
+      int index, UniversityAdmissionModel universityModel) {
+    savedUniversityIndex = index;
+    clickedUniversityModel = universityModel;
+
+    universityAdmissionList[universityAdmissionList.indexWhere((element) =>
+            element.universityModel!.universityId ==
+                universityModel.universityModel!.universityId &&
+            element.collageModel!.collageId == universityModel.collageModel!.collageId)]
+        .isSaved = false;
+
+    // filterList[filterList.indexWhere((element) => element.universityModel!.universityId == universityModel.universityModel!.universityId && element.categoryModel!.dbId == universityModel.categoryModel!.dbId && element.departmentModel!.departmentId == universityModel.departmentModel!.departmentId)]
+    //     .isSaved = false;
+
+    for (var i = 0; i < filterList.length; i++) {
+      if (i == index && filterList[i].universityModel?.universityId == universityModel.universityModel!.universityId && filterList[i].collageModel!.collageId == universityModel.collageModel!.collageId && filterList[i].departmentModel!.departmentId == universityModel.departmentModel!.departmentId) {
+        filterList[i].isSaved = false;
+        break;
       }
-      update();
+    }
+
+    savedUniversityIndex = -1;
+
+    if (formController.list.isNotEmpty) {
+      printInfo(info: 'saveUniversityForm');
+      formController.removeTextFormField(formController.list.length - 1);
+    }
+    update();
   }
 
   void updateRateController() {
     savedUniversityIndex = -1;
     update();
   }
-
 }
